@@ -29,5 +29,3 @@ $GLOBALS['TL_LANG']['tl_content']['fussball_wettbewerbs_id'] = array('ID des Wet
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_team'] = array('Name des Teams', 'Name des Teams. Wird im Widget hervorgehoben.');
 
-
-?>

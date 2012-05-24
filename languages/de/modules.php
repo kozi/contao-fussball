@@ -18,4 +18,3 @@ $GLOBALS['TL_LANG']['CTE']['fussball_widget'] = array('fussball.de Widget', 'Fü
 $GLOBALS['TL_LANG']['CTE']['fussball_highscore_graph'] = array('Grafik - Tabellenplatzentwicklung', 'Tabellenplatzentwicklung als Grafik (Google Chart Tools)');
 
 
-?>
