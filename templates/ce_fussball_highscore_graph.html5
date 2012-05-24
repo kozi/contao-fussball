@@ -1,0 +1,26 @@
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+	google.load('visualization', '1', {packages: ['corechart']});
+	
+	data  = {
+		maxValue: 19,
+		graph_id: '<?php echo $this->graph_id?>',
+		label: <?php echo json_encode($this->graph_label);?>,
+		dataLabel: <?php echo json_encode($this->graph_dataLabel);?>,
+		data: <?php echo json_encode($this->graph_data);?>,
+		width: <?php echo $this->size['width'];?>,
+		height: <?php echo $this->size['height'];?>,
+		
+	};
+	
+	google.setOnLoadCallback(function(){ drawVisualization(data); });
+</script>
+
+<div class="fussball_highscore_graph">
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+	<?php endif;?>
+
+    <div class="graph" id="<?php echo $this->graph_id?>" style="width: <?php echo $this->size['width'];?>px; height: <?php echo $this->size['height'];?>px;"></div>
+</div>
