@@ -24,11 +24,13 @@ if (strlen($GLOBALS['TL_CONFIG']['fussball_tourn_calendar']) > 0) {
 					'fussball_tournament' => array
 					(
 							'icon'       => 'system/modules/fussball_widget/html/icons/tournament.png',
-							'callback'   => 'TournamentRedirect',
+							'callback'   => 'FussballModule',
 					)
 	)));
 
 }
+
+
 
 if(TL_MODE == 'BE') {
 	$GLOBALS['TL_CSS'][]        = 'system/modules/fussball_widget/html/be_style.css';

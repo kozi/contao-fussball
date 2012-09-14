@@ -1,5 +1,5 @@
 <?php if (strpos($this->classUpcoming, 'first') !== false) : ?>
-	<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/html/tournament_list.css|screen"; ?>
+	<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/html/fussball-tournament.css|screen"; ?>
 	<div class="tournament_list">
 	<table class="tournament_table" cellpadding="2" cellspacing="2"><tbody>
 		<tr>

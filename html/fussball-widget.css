@@ -1,0 +1,22 @@
+#fussball_widget_highlighted_row td {
+	background-color:#FF7300 !important;
+	font-size:12px !important;;	
+	font-weight:bold !important;
+	color:#fff !important;	
+}
+
+#fussball_widget_highlighted_row td.fbdeAPIAufsteigerInactA,
+#fussball_widget_highlighted_row td.fbdeAPIAufsteigerInactB {
+	background-color:#FF7300 !important;
+}
+
+#fussball_widget_highlighted_row td.fbdeAPIAbsteigerInactB,
+#fussball_widget_highlighted_row td.fbdeAPIAbsteigerInactA {
+	background-color:#FF7300 !important;
+}
+
+#fussball_widget_highlighted_row a {
+	font-size:12px !important;;	
+	font-weight:bold !important;
+	color:#fff !important;	
+}

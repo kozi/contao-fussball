@@ -16,6 +16,8 @@
 /**
  * Add palettes to tl_content
  */
+
+
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_widget_legend},fussball_wettbewerbs_id,fussball_saison,fussball_team;{expert_legend:hide},cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_highscore_graph']   =
@@ -120,8 +122,10 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
 		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_goalgetter'],
 		'exclude'                 => true,
 		'inputType'               => 'multiColumnWizard',
-	'eval'                    => array(
-			
+		'save_callback'           => array(array('FussballModule', 'sortGoalGetterEntries')),
+		
+		'eval'                    => array(
+			'buttons' => array('down' => false, 'up' => false),
 			
 			'columnFields' => array
 			(

@@ -1,21 +1,4 @@
-<style type="text/css">
-#fussball_widget_highlighted_row td {
-	background-color:#FF7300 !important;
-	font-size:12px !important;;	
-	font-weight:bold !important;
-	color:#fff !important;	
-}
-
-#fussball_widget_highlighted_row td.fbdeAPIAufsteigerInactA {
-	background-color:#FF7300 !important;
-}
-
-#fussball_widget_highlighted_row a {
-	font-size:12px !important;;	
-	font-weight:bold !important;
-	color:#fff !important;	
-}
-</style>
+<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/html/fussball-widget.css|screen"; ?>
 <?php $id = 'fw'.$this->fussball_saison.$this->fussball_wettbewerbs_id; ?>
 
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>

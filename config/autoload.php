@@ -16,10 +16,10 @@
  */
 ClassLoader::addClasses(array
 (
+	'FussballModule'         => 'system/modules/fussball_widget/FussballModule.php',
 	'FussballHighscoreGraph' => 'system/modules/fussball_widget/FussballHighscoreGraph.php',
 	'FussballWidgetContent'  => 'system/modules/fussball_widget/FussballWidgetContent.php',
 	'FussballResultsContent' => 'system/modules/fussball_widget/FussballWidgetContent.php',
-	'TournamentRedirect'     => 'system/modules/fussball_widget/TournamentRedirect.php',
 	'ModuleEventlistFilter'  => 'system/modules/fussball_widget/ModuleEventlistFilter.php',
 	'SimpleDatabaseResult'   => 'system/modules/fussball_widget/SimpleDatabaseResult.php',
 ));
