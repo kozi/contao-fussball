@@ -3,6 +3,7 @@ CREATE TABLE `tl_content` (
   `fussball_saison` varchar(255) NOT NULL default '',
   `fussball_positions` text NULL,
   `fussball_results` text NULL,
+  `fussball_goalgetter` text NULL,
   `fussball_maxPositions` int(10) unsigned NOT NULL default '0',
   `fussball_team` varchar(255) NOT NULL default '',
   `fussball_filter_team` varchar(255) NOT NULL default '',

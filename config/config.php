@@ -13,6 +13,7 @@
  * @filesource
  */
 $GLOBALS['TL_CTE']['fussball']['fussball_tournament_list'] = 'TournamentListContent';
+$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter_list'] = 'GoalgetterListContent';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'FussballWidgetContent';
 $GLOBALS['TL_CTE']['fussball']['fussball_highscore_graph'] = 'FussballHighscoreGraph';
 $GLOBALS['TL_CTE']['fussball']['fussball_results']         = 'FussballResultsContent';

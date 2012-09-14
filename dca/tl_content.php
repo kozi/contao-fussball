@@ -32,7 +32,10 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament_list'] =
 .'{fussball_widget_legend},fussball_filter_team;'
 .'{expert_legend:hide},cssID,space';
 
-
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter_list'] = 
+'{title_legend},headline,type;'
+.'{fussball_widget_legend},fussball_goalgetter;'
+.'{expert_legend:hide},cssID,space';
 
 /**
  * Add fields to tl_module
@@ -106,11 +109,41 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_positions'] = array
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_maxPositions'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_maxPositions'],
-	'exclude'                 => true,
-	'inputType'               => 'text',
-	'eval'                    => array('rgxp' => 'digit')
+		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_maxPositions'],
+		'exclude'                 => true,
+		'inputType'               => 'text',
+		'eval'                    => array('rgxp' => 'digit')
 );
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
+(
+		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_goalgetter'],
+		'exclude'                 => true,
+		'inputType'               => 'multiColumnWizard',
+	'eval'                    => array(
+			
+			
+			'columnFields' => array
+			(
+					'fussball_gg_name' => array
+					(
+							'label'                 => &$GLOBALS['TL_LANG']['tl_content']['fussball_gg_name'],
+							'exclude'               => true,
+							'inputType'             => 'text',
+							'eval'                  => array('style'=>'width:300px', 'tl_class' => 'fussball_gg_name')
+					),
+					'fussball_gg_goals' => array
+					(
+							'label'                 => &$GLOBALS['TL_LANG']['tl_content']['fussball_gg_goals'],
+							'exclude'               => true,
+							'inputType'             => 'text',
+							'eval' 			        => array('style' => 'width:40px',  'rgxp' => 'digit', 'tl_class' => 'fussball_goalgetter_name_goals')
+					),
+			)			
+	)
+); // fussball_goalgetter ENDE
+		
+
 
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['size']['label'] = &$GLOBALS['TL_LANG']['tl_content']['fussball_graph_size'];

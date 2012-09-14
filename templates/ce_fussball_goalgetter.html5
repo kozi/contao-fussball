@@ -1,0 +1,24 @@
+<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/html/goalgetter_list.css|screen"; ?>
+<div class="<?php echo $this->class; ?> fussball_goalgetter block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif;?>
+
+<table class="goalgetter_table">
+<tbody>
+
+<?php foreach($this->goalgetter_list as $row) :?>
+
+	<tr class="<?php echo $row->cssClass; ?>">
+		<th class="position"><?php echo $row->position; ?>. </th>
+		<td class="names"><?php echo implode(', ', $row->names); ?></td>
+		<td class="goals"><?php echo $row->goals_view; ?></td>
+	</tr>
+	
+<?php endforeach; ?>
+
+</tbody>
+</table>
+
+</div>

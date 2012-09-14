@@ -32,5 +32,6 @@ TemplateLoader::addFiles(array
 	'ce_fussball_highscore_graph' => 'system/modules/fussball_widget/templates',
 	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',
 	'ce_fussball_results'         => 'system/modules/fussball_widget/templates',
+	'ce_fussball_goalgetter'      => 'system/modules/fussball_widget/templates',		
 	'event_tournament'            => 'system/modules/fussball_widget/templates',
 ));

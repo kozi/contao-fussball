@@ -16,6 +16,8 @@
 $GLOBALS['TL_LANG']['MOD']['fussball_tournament']      = array("Turnierteilnahmen", "Turnierteilnahmen");
 
 $GLOBALS['TL_LANG']['CTE']['fussball']                 = 'Fussball';
+$GLOBALS['TL_LANG']['CTE']['fussball_tournament_list'] = array('Fussball - Turnierliste', 'Turnierliste');
+$GLOBALS['TL_LANG']['CTE']['fussball_goalgetter_list'] = array('Fussball - Törschützenliste', 'Törschützenliste');
 $GLOBALS['TL_LANG']['CTE']['fussball_widget']          = array('Fussball - fussball.de Widget', 'Fügt das fussball.de Widget ein. Der API-Key muss in den Einstellungen hinterlegt werden.');
 $GLOBALS['TL_LANG']['CTE']['fussball_highscore_graph'] = array('Fussball - Tabellenplatzentwicklung', 'Tabellenplatzentwicklung als Grafik (Google Chart Tools)');
 $GLOBALS['TL_LANG']['CTE']['fussball_results']         = array('Fussball - Saisonverlauf', 'Stellt den Saisonverlauf in einer Tabelle dar.');
