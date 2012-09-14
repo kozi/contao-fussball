@@ -69,7 +69,10 @@ class FussballHighscoreGraph extends ContentElement {
 		$this->Template->graph_data  = $data;
 
 		$js = 'system/modules/fussball_widget/html/fussball-widget.js';
-		// Die Dateien müssen natürlich nur einmal eingebunden werden
+		if(!is_array($GLOBALS['TL_JAVASCRIPT'])) {
+			$GLOBALS['TL_JAVASCRIPT'] = array();
+		}
+		// Die Dateien müssen natürlich nur einmal eingebunden werden		
 		if(!in_array($js, $GLOBALS['TL_JAVASCRIPT'])) {
 			$GLOBALS['TL_JAVASCRIPT'][] = $js;
 		}

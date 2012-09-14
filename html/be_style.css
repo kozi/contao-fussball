@@ -1,0 +1,14 @@
+
+
+span.fussball_team {
+	display:inline-block;
+	width:180px;
+	border-color:#aaa;
+	background-color:#bbb;
+	color:#fff;
+}
+
+td.fussball_opponent span,
+td.fussball_opponent input.tl_text {
+	margin-left:2px;
+}

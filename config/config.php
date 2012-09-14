@@ -12,8 +12,24 @@
  * @license    LGPL
  * @filesource
  */
+$GLOBALS['TL_CTE']['fussball']['fussball_tournament_list'] = 'TournamentListContent';
+$GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'FussballWidgetContent';
+$GLOBALS['TL_CTE']['fussball']['fussball_highscore_graph'] = 'FussballHighscoreGraph';
+$GLOBALS['TL_CTE']['fussball']['fussball_results']         = 'FussballResultsContent';
 
+if (strlen($GLOBALS['TL_CONFIG']['fussball_tourn_calendar']) > 0) {
+	array_insert($GLOBALS['BE_MOD'], 1, array(
+			'content' => array(
+					'fussball_tournament' => array
+					(
+							'icon'       => 'system/modules/fussball_widget/html/icons/tournament.png',
+							'callback'   => 'TournamentRedirect',
+					)
+	)));
 
-$GLOBALS['TL_CTE']['includes']['fussball_widget']          = 'FussballWidgetContent';
-$GLOBALS['TL_CTE']['includes']['fussball_highscore_graph'] = 'FussballHighscoreGraph';
+}
 
+if(TL_MODE == 'BE') {
+	$GLOBALS['TL_CSS'][]        = 'system/modules/fussball_widget/html/be_style.css';
+	$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/html/be_script.js';
+}

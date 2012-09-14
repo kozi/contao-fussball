@@ -1,0 +1,32 @@
+
+.ce_fussball_results table {
+	width:100%;
+}
+
+.ce_fussball_results th,
+.ce_fussball_results tfoot td {
+	background-color:#333;
+	font-weight:bold;
+	color:#fff;
+}
+
+.ce_fussball_results th,
+.ce_fussball_results td {
+	padding:2px 4px;
+}
+
+.ce_fussball_results tr.odd  { background-color:#ccc; }
+.ce_fussball_results tr.even { background-color:#eee; }
+
+.ce_fussball_results td.result,
+.ce_fussball_results th.matchday,
+.ce_fussball_results td.points,
+.ce_fussball_results td.sum_goals,
+.ce_fussball_results td.sum_points {
+	font-weight:normal;
+	text-align:right;
+}
+
+.ce_fussball_results td.points span.ball {
+	display:none;
+}

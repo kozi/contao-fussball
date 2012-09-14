@@ -1,0 +1,54 @@
+
+.tournament_list table {
+	width:100%;
+}
+
+.tournament_list th,
+.tournament_list td {
+	padding:2px 4px;
+}
+
+.tournament_list th {
+	text-align:left;
+	font-weight:bold;
+	background-color:#333;
+	color:#fff;
+}
+
+.tournament_list .odd  { background-color:#ccc; }
+.tournament_list .even { background-color:#eee; }
+
+.tournament_list .type span,
+.tournament_list .confirm span {
+	display:block;
+	width:24px;
+	height:24px;
+}
+
+.tournament_legend {
+	padding:5px 2px;
+}
+.tournament_legend span, 
+.tournament_legend strong {
+	display:block;
+	float:left;
+	height:24px;
+	margin:0;
+	padding:0;
+}
+.tournament_legend strong {
+	padding:4px 10px 0 5px;	
+}
+
+.tournament_legend br {
+	clear:both;
+}
+
+.tournament_list .confirm span.confirmed  { background-image:url('icons/confirmed.png');}
+.tournament_list .confirm span.confirmed1 { background-image:url('icons/confirmed1.png');}
+
+.tournament_list .type span.asche { background-image:url('icons/type-asche.png'); }
+.tournament_list .type span.kunstrasen-halle { background-image:url('icons/type-kunstrasenhalle.png'); }
+.tournament_list .type span.kunstrasen { background-image:url('icons/type-kunstrasen.png'); }
+.tournament_list .type span.rasen { background-image:url('icons/type-rasen.png'); }
+.tournament_list .type span.halle { background-image:url('icons/type-halle.png'); }
