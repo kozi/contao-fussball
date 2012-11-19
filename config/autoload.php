@@ -14,21 +14,19 @@
 /**
  * Register the classes
  */
-ClassLoader::addClasses(array
-(
-	'FussballModule'         => 'system/modules/fussball_widget/FussballModule.php',
-	'FussballHighscoreGraph' => 'system/modules/fussball_widget/FussballHighscoreGraph.php',
-	'FussballWidgetContent'  => 'system/modules/fussball_widget/FussballWidgetContent.php',
-	'FussballResultsContent' => 'system/modules/fussball_widget/FussballWidgetContent.php',
-	'ModuleEventlistFilter'  => 'system/modules/fussball_widget/ModuleEventlistFilter.php',
-	'SimpleDatabaseResult'   => 'system/modules/fussball_widget/SimpleDatabaseResult.php',
+ClassLoader::addClasses(array(
+	'FussballModule'         => 'system/modules/fussball_widget/classes/FussballModule.php',
+	'FussballHighscoreGraph' => 'system/modules/fussball_widget/classes/FussballHighscoreGraph.php',
+	'FussballWidgetContent'  => 'system/modules/fussball_widget/classes/FussballWidgetContent.php',
+	'FussballResultsContent' => 'system/modules/fussball_widget/classes/FussballWidgetContent.php',
+	'ModuleEventlistFilter'  => 'system/modules/fussball_widget/classes/ModuleEventlistFilter.php',
+	'SimpleDatabaseResult'   => 'system/modules/fussball_widget/classes/SimpleDatabaseResult.php',
 ));
 
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array
-(
+TemplateLoader::addFiles(array(
 	'ce_fussball_highscore_graph' => 'system/modules/fussball_widget/templates',
 	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',
 	'ce_fussball_results'         => 'system/modules/fussball_widget/templates',

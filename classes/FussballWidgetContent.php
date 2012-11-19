@@ -58,7 +58,7 @@ class FussballWidgetContent extends ContentElement {
 		// Die Dateien müssen natürlich nur einmal eingebunden werden
 		if(!in_array($fussballAPI, $GLOBALS['TL_JAVASCRIPT'])) {
 			$GLOBALS['TL_JAVASCRIPT'][] = $fussballAPI;
-			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/html/fussball-widget.js';
+			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/assets/fussball-widget.js';
 		}
 	}
 	

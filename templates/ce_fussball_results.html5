@@ -1,4 +1,4 @@
-<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/html/fussball-results.css|screen"; ?>
+<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/assets/fussball-results.css|screen"; ?>
 
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 

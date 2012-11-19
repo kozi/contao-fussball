@@ -68,7 +68,7 @@ class FussballHighscoreGraph extends ContentElement {
 		$this->Template->graph_dataLabel = $this->getDataLabel($maxsize);
 		$this->Template->graph_data  = $data;
 
-		$js = 'system/modules/fussball_widget/html/fussball-widget.js';
+		$js = 'system/modules/fussball_widget/assets/fussball-widget.js';
 		if(!is_array($GLOBALS['TL_JAVASCRIPT'])) {
 			$GLOBALS['TL_JAVASCRIPT'] = array();
 		}

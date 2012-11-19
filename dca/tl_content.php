@@ -46,6 +46,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_results'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_results'],
 	'exclude'                 => true,
+	'sql'                     => "text NULL",
 	'inputType'               => 'multiColumnWizard',
 	'eval'                    => array(
 			
@@ -83,7 +84,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_saison'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_saison'],
 	'exclude'                 => true,
 	'inputType'               => 'text',
-	'eval'                    => array('mandatory'=>true)
+	'eval'                    => array('mandatory'=>true),
+	'sql'                     =>  "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_wettbewerbs_id'] = array
@@ -91,14 +93,16 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_wettbewerbs_id'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_wettbewerbs_id'],
 	'exclude'                 => true,
 	'inputType'               => 'text',
-	'eval'                    => array('mandatory'=>true)
+	'eval'                    => array('mandatory'=>true),
+	'sql'                     =>  "varchar(255) NOT NULL default ''"
 );
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_team'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_team'],
 	'exclude'                 => true,
 	'inputType'               => 'text',
-	'eval'                    => array()
+	'eval'                    => array(),
+	'sql'                     =>  "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_positions'] = array
@@ -106,7 +110,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_positions'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_positions'],
 	'exclude'                 => true,
 	'inputType'               => 'keyValueWizard',
-	'eval'                    => array('tl_class' => 'long')
+	'eval'                    => array('tl_class' => 'long'),
+	'sql'                     => "text NULL"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_maxPositions'] = array
@@ -114,7 +119,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_maxPositions'] = array
 		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_maxPositions'],
 		'exclude'                 => true,
 		'inputType'               => 'text',
-		'eval'                    => array('rgxp' => 'digit')
+		'eval'                    => array('rgxp' => 'digit'),
+		'sql'                     => "int(10) unsigned NOT NULL default '0'"
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
@@ -122,8 +128,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
 		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_goalgetter'],
 		'exclude'                 => true,
 		'inputType'               => 'multiColumnWizard',
+		'sql'                     => "text NULL",
 		'save_callback'           => array(array('FussballModule', 'sortGoalGetterEntries')),
-		
 		'eval'                    => array(
 			'buttons' => array('down' => false, 'up' => false),
 			
@@ -155,12 +161,15 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['size']['options'] = array('crop');
 
 
 // TODO :: Templateauswahl
+
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_filter_team'] = array
 (
 		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_filter_team'],
 		'exclude'                 => true,
 		'search'                  => true,
 		'inputType'               => 'select',
+		'sql'                     =>  "varchar(255) NOT NULL default ''",		
 		'options'				  => array_map('trim', explode(',', $GLOBALS['TL_CONFIG']['fussball_tourn_teams'])),
 		'eval'                    => array('maxlength'=>255, 'tl_class'=>'long', 'decodeEntities' => true, 'includeBlankOption' => true)
 );

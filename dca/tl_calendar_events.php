@@ -29,7 +29,6 @@
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['config']['onload_callback'][] = array('fussball_tl_calendar_events', 'tournamentCalendar');
 
-
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_clients'] = array
 (
 'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['fussball_tourn_clients'],
@@ -37,7 +36,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_clients'] = a
 'search'                  => true,
 'inputType'               => 'select',
 'options'				  => array_map('trim', explode(',', $GLOBALS['TL_CONFIG']['fussball_tourn_teams'])),
-'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50')
+'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_host'] = array
@@ -46,7 +46,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_host'] = arra
 'exclude'                 => true,
 'search'                  => true,
 'inputType'               => 'text',
-'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50')
+'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_location'] = array
@@ -55,7 +56,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_location'] = 
 'exclude'                 => true,
 'search'                  => true,
 'inputType'               => 'text',
-'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50')
+'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_type'] = array
@@ -65,7 +67,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_type'] = arra
 'search'                  => true,
 'inputType'               => 'select',
 'options'                 => array("Asche", "Kunstrasen", "Halle", "Kunstrasen (Halle)", "Rasen"),
-'eval'                    => array('tl_class'=>'w50', 'decodeEntities' => true)
+'eval'                    => array('tl_class'=>'w50', 'decodeEntities' => true),
+'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_confirmed'] = array
@@ -74,7 +77,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tourn_confirmed'] =
 'exclude'                 => true,
 'search'                  => true,
 'inputType'               => 'checkbox',
-'eval'                    => array('tl_class'=>'w50 m12')
+'eval'                    => array('tl_class'=>'w50 m12'),
+'sql'                     => "char(1) NOT NULL default ''"
 );
 
 

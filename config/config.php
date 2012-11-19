@@ -23,7 +23,7 @@ if (strlen($GLOBALS['TL_CONFIG']['fussball_tourn_calendar']) > 0) {
 			'content' => array(
 					'fussball_tournament' => array
 					(
-							'icon'       => 'system/modules/fussball_widget/html/icons/tournament.png',
+							'icon'       => 'system/modules/fussball_widget/assets/icons/tournament.png',
 							'callback'   => 'FussballModule',
 					)
 	)));
@@ -33,6 +33,6 @@ if (strlen($GLOBALS['TL_CONFIG']['fussball_tourn_calendar']) > 0) {
 
 
 if(TL_MODE == 'BE') {
-	$GLOBALS['TL_CSS'][]        = 'system/modules/fussball_widget/html/be_style.css';
-	$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/html/be_script.js';
+	$GLOBALS['TL_CSS'][]        = 'system/modules/fussball_widget/assets/be_style.css';
+	$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/assets/be_script.js';
 }
