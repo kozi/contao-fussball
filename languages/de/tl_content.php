@@ -23,6 +23,7 @@ $GLOBALS['TL_LANG']['tl_content']['fussball_graph_size']      = array('Höhe und
 $GLOBALS['TL_LANG']['tl_content']['fussball_saison']          = array('Saison', 'Saisonauswahl als vierstellige Zahl (Beispiel: Saison 2010/2011 entspricht: 1011)');
 $GLOBALS['TL_LANG']['tl_content']['fussball_wettbewerbs_id']  = array('ID des Wettbewerbs', 'Die ID kann man auf fussball.de nachgucken. Eine Anleitung gibt es hier: <a onclick="window.open(this.href); return false;" style="text-decoration:underline;" href="http://www.fussball.de/ergebnis-widget-fussball-de-fuer-deine-vereins-webseite-/id_17772204/index">fussball.de Widget einbauen</a>');
 $GLOBALS['TL_LANG']['tl_content']['fussball_team']            = array('Name des Teams', 'Name des Teams. Wird im Widget hervorgehoben.');
+$GLOBALS['TL_LANG']['tl_content']['fussball_filter_team']     = array('Mannschaft', 'Nur Turniere dieser Mannschaft zeigen.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_goalgetter']      = array('Torschützen', 'Torschützen und Toranzahl eintragen. Nur ein Name pro Zeile. Die Sortierung erfolgt automatisch.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_gg_name']         = array('Name', 'Name');
 $GLOBALS['TL_LANG']['tl_content']['fussball_gg_goals']        = array('Tore', 'Tore');
