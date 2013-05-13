@@ -1,0 +1,34 @@
+
+.ce_fussball_matches table {
+	width:100%;
+}
+
+.ce_fussball_matches th,
+.ce_fussball_matches tfoot td {
+	background-color:#333;
+	font-weight:bold;
+	color:#fff;
+}
+
+.ce_fussball_matches th,
+.ce_fussball_matches td {
+	padding:2px 4px;
+}
+
+.ce_fussball_matches tr.odd  { background-color:#ccc; }
+.ce_fussball_matches tr.even { background-color:#eee; }
+
+.ce_fussball_matches td.anstoss,
+.ce_fussball_matches td.ergebnis,
+.ce_fussball_matches td.points {
+	font-weight:normal;
+    text-align:right;
+}
+
+.ce_fussball_matches td.typ {
+    text-align:center;
+}
+
+.ce_fussball_matches td.points span.ball {
+	display:none;
+}
