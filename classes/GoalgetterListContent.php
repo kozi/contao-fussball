@@ -1,12 +1,13 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
+
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2012 Leo Feyer
+ * Copyright (C) 2005-2013 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2012 <http://kozianka-online.de/>
- * @author     Martin Kozianka <http://kozianka-online.de/>
+ * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball_widget 
  * @license    LGPL 
  * @filesource
@@ -15,8 +16,8 @@
 /**
  * Class GoalGetterListContent 
  *
- * @copyright  Martin Kozianka 2012
- * @author     Martin Kozianka <http://kozianka-online.de>
+ * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball_widget
  */
 
@@ -86,4 +87,3 @@ class GoalGetterListContent extends ContentElement {
 
 }
 
-?>

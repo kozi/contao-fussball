@@ -12,3 +12,8 @@ td.fussball_opponent span,
 td.fussball_opponent input.tl_text {
 	margin-left:2px;
 }
+
+
+td.col_confirmed {
+ text-align:center;
+}

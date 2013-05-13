@@ -1,13 +1,13 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2012 Leo Feyer
+ * Copyright (C) 2005-2013 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2012 <http://kozianka-online.de/>
- * @author     Martin Kozianka <http://kozianka-online.de/>
+ * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de/>
  * @package    fussball_widget
  * @license    LGPL
  * @filesource
@@ -22,18 +22,5 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['fussball_api_key'] = array(
 	'eval'		=>	array('mandatory'=>true)
 );
 
-$GLOBALS['TL_DCA']['tl_settings']['fields']['fussball_tourn_calendar'] = array(
-		'label'		=>	&$GLOBALS['TL_LANG']['tl_settings']['fussball_tourn_calendar'],
-		'exclude'	=>	true,
-		'inputType'	 =>	'select',
-		'foreignKey' => 'tl_calendar.title',
-		'eval'		=>	array('mandatory'=>false, 'includeBlankOption' => true)
-);
 
-$GLOBALS['TL_DCA']['tl_settings']['fields']['fussball_tourn_teams'] = array(
-		'label'		 =>	&$GLOBALS['TL_LANG']['tl_settings']['fussball_tourn_teams'],
-		'exclude'	 =>	true,
-		'inputType'	=>	'text',
-		'eval'		 =>	array('mandatory'=>false, 'tl_class' => 'long')
-);
 

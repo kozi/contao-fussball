@@ -1,36 +1,44 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2012 Leo Feyer
+ * Copyright (C) 2005-2013 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2012 <http://kozianka-online.de/>
- * @author     Martin Kozianka <http://kozianka-online.de/>
- * @package    fussball_widget
- * @license    LGPL
+ * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de>
+ * @package    fussball_widget 
+ * @license    LGPL 
  * @filesource
  */
-$GLOBALS['TL_CTE']['fussball']['fussball_tournament_list'] = 'TournamentListContent';
-$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter_list'] = 'GoalgetterListContent';
+
+
+
+$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'GoalgetterListContent';
+$GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'FussballTournamentContent';
+$GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'FussballMatchesContent';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'FussballWidgetContent';
-$GLOBALS['TL_CTE']['fussball']['fussball_highscore_graph'] = 'FussballHighscoreGraph';
-$GLOBALS['TL_CTE']['fussball']['fussball_results']         = 'FussballResultsContent';
 
-if (strlen($GLOBALS['TL_CONFIG']['fussball_tourn_calendar']) > 0) {
-	array_insert($GLOBALS['BE_MOD'], 1, array(
-			'content' => array(
-					'fussball_tournament' => array
-					(
-							'icon'       => 'system/modules/fussball_widget/assets/icons/tournament.png',
-							'callback'   => 'FussballModule',
-					)
-	)));
+array_insert($GLOBALS['BE_MOD'], 1, array('fussball' => array()));
 
-}
-
-
+array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
+    'fussball_teams' => array
+    (
+        'tables'     => array('tl_fussball_team'),
+        'icon'       => 'system/modules/fussball_widget/assets/icons/soccer.png',
+    ),
+    'fussball_matches' => array
+    (
+        'tables'     => array('tl_fussball_matches'),
+        'icon'       => 'system/modules/fussball_widget/assets/icons/chain.png',
+    ),
+    'fussball_tournament' => array
+    (
+        'tables'     => array('tl_fussball_tournament'),
+        'icon'       => 'system/modules/fussball_widget/assets/icons/tournament.png',
+    )
+));
 
 if(TL_MODE == 'BE') {
 	$GLOBALS['TL_CSS'][]        = 'system/modules/fussball_widget/assets/be_style.css';

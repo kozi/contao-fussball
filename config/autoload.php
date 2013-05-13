@@ -2,34 +2,38 @@
 
 /**
  * Contao Open Source CMS
- * 
- * Copyright (C) 2005-2012 Leo Feyer
- * 
- * @package Fussball_widget
- * @link    http://contao.org
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * Copyright (C) 2005-2013 Leo Feyer
+ *
+ *
+ * PHP version 5
+ * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de>
+ * @package    fussball_widget 
+ * @license    LGPL 
+ * @filesource
  */
 
 
 /**
  * Register the classes
  */
-ClassLoader::addClasses(array(
-	'FussballModule'         => 'system/modules/fussball_widget/classes/FussballModule.php',
-	'FussballHighscoreGraph' => 'system/modules/fussball_widget/classes/FussballHighscoreGraph.php',
-	'FussballWidgetContent'  => 'system/modules/fussball_widget/classes/FussballWidgetContent.php',
-	'FussballResultsContent' => 'system/modules/fussball_widget/classes/FussballWidgetContent.php',
-	'ModuleEventlistFilter'  => 'system/modules/fussball_widget/classes/ModuleEventlistFilter.php',
-	'SimpleDatabaseResult'   => 'system/modules/fussball_widget/classes/SimpleDatabaseResult.php',
+ClassLoader::addClasses(array
+(
+	'FussballTournamentContent'      => 'system/modules/fussball_widget/classes/FussballTournamentContent.php',
+	'GoalgetterListContent'          => 'system/modules/fussball_widget/classes/GoalgetterListContent.php',
+	'FussballWidgetContent'          => 'system/modules/fussball_widget/classes/FussballWidgetContent.php',
+	'FussballMatchesContent'         => 'system/modules/fussball_widget/classes/FussballMatchesContent.php',
+	'FussballDataManager'            => 'system/modules/fussball_widget/classes/FussballDataManager.php',
 ));
 
 /**
  * Register the templates
  */
-TemplateLoader::addFiles(array(
-	'ce_fussball_highscore_graph' => 'system/modules/fussball_widget/templates',
-	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',
-	'ce_fussball_results'         => 'system/modules/fussball_widget/templates',
-	'ce_fussball_goalgetter'      => 'system/modules/fussball_widget/templates',		
-	'event_tournament'            => 'system/modules/fussball_widget/templates',
+TemplateLoader::addFiles(array
+(
+
+	'ce_fussball_goalgetter'      => 'system/modules/fussball_widget/templates',	
+	'ce_fussball_matches'         => 'system/modules/fussball_widget/templates',
+	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',		
+	'ce_fussball_tournament'      => 'system/modules/fussball_widget/templates',
 ));
