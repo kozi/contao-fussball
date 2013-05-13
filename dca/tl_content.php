@@ -20,8 +20,7 @@
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_widget_legend},fussball_wettbewerbs_id,fussball_saison,fussball_team_id;{expert_legend:hide},cssID,space';
 
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] =
-'{title_legend},headline,type;'
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] = '{title_legend},headline,type;'
 .'{fussball_matches_legend},fussball_team_id,fussball_typ,fussball_past,fussball_future,fussball_from,fussball_to,fussball_order;{expert_legend:hide},cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] =
@@ -139,7 +138,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_to'] = array
     ),
     'sql'                     => "int(10) unsigned NULL",
 );
-
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
 (

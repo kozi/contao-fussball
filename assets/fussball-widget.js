@@ -1,57 +1,10 @@
 /*
- * Fussball Widget
- * http://kozianka-online.de/
- *
- * Copyright (c) 2011 Martin Kozianka
- *
- * Author: Martin Kozianka
+ * fussball_widget
+ * http://kozianka.de/
+ * Copyright (c) 2011-2013 Martin Kozianka
  *
  */
- 
-function drawVisualization(gData) {
-	// Some raw data (not necessarily accurate)
-	var areas     = gData.label;
-	var dataLabel = gData.dataLabel;
-	var areaData  = gData.data;
-	
 
-	// Create and populate the data table.
-	var data = new google.visualization.DataTable();
-	data.addColumn('string', 'Platz');
-	for (var i = 0; i < areas.length; ++i) {
-		data.addColumn('number', areas[i]);
-	}
-	data.addRows(dataLabel.length);
-	for (var i = 0; i < dataLabel.length; ++i) {
-		data.setCell(i, 0, dataLabel[i]);
-	}
-	
-	for (var i = 0; i < areas.length; ++i) {
-		var area = areaData[i];
-		for (var label = 0; label < dataLabel.length; ++label) {
-			data.setCell(label, i + 1, area[label]);
-		}
-	}
-	
-	// Create and draw the visualization.
-	var ac = new google.visualization.LineChart(document.getElementById(gData.graph_id));
-	ac.draw(data, {
-		titlePosition: 'none',
-		isStacked: true,
-		width: gData.width,
-		height: gData.height,		
-		chartArea:{left:"10px",top:"10px",width:"90%",height:"80%"},
-		legend: 'bottom',
-		pointSize: '5',
-		vAxis: {
-			direction: -1,
-			viewWindowMode: 'explicit', viewWindow: {min: 1, max: gData.maxValue}
-		},
-		hAxis: {title: "Spieltag"}
-	});
-}
- 
- 
 var FussballWidget = function() {
 	var id = null;
 	var div_id = null;

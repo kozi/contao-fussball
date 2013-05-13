@@ -29,9 +29,6 @@ $GLOBALS['TL_DCA']['tl_fussball_matches'] = array(
 ),
 
 
-
-
-
 // List
 'list' => array
 (

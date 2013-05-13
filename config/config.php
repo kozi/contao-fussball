@@ -40,7 +40,7 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
     )
 ));
 
-if(TL_MODE == 'BE') {
-	$GLOBALS['TL_CSS'][]        = 'system/modules/fussball_widget/assets/be_style.css';
-	$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/assets/be_script.js';
+if(TL_MODE === 'BE') {
+	$GLOBALS['TL_CSS'][]          = 'system/modules/fussball_widget/assets/be_style.css';
+	$GLOBALS['TL_JAVASCRIPT'][]   = 'system/modules/fussball_widget/assets/be_script.js';
 }
