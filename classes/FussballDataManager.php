@@ -43,7 +43,8 @@ class FussballDataManager extends System {
 		if ($result->numRows == 0) {
 			return false;
 		}
-		$teamObj = (Object) $result->row();
+        $teamObj = (Object) $result->row();
+
 
 		if (($teamObj->lastUpdate + (2 * $this->oneDayInSec)) > $this->now) {
 			// Only Update if last Update is minimum 2 days ago
@@ -66,7 +67,6 @@ class FussballDataManager extends System {
 	}
 
 	private function matchToDb($match, $team_id) {
-		
 
 		$dbMatch = array(
 			'tstamp'       => time(),
@@ -123,11 +123,13 @@ class FussballDataManager extends System {
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
+        $data = curl_exec($ch);
+        curl_close($ch);
 
-        $data = curl_close($ch);
         if ($data === null) {
             return false;
         }
+
         $data = '<?xml version="1.0" encoding="utf-8"?>'
             .'<html><head><title>Cal</title>'
             .'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'

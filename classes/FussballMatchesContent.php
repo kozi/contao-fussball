@@ -28,10 +28,7 @@ class FussballMatchesContent extends ContentElement {
     private $now           = 0;
     private $sum_points    = 0;
 	private $sum_goals     = array(0, 0);
-	/**
-	 * Display a wildcard in the back end
-	 * @return string
-	 */
+
 	public function generate() {
 
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')
@@ -57,11 +54,10 @@ class FussballMatchesContent extends ContentElement {
 
 	protected function compile() {
 
-
 		$this->import('FussballDataManager');
 		$this->FussballDataManager->updateMatches($this->fussball_team_id);
 
-        $this->now = time();
+        $this->now      = time();
         $matches_future = array();
         $matches_past   = array();
 
