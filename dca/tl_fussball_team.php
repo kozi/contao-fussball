@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 	),
 	'label' => array
 	(
-		'fields'                  => array('name', 'name_short', 'name_external', 'id_mannschaft', 'id_verein'),
+		'fields'                  => array('name', 'name_short', 'name_external', 'id_mannschaft', 'id_verein', 'lastUpdate'),
 		'showColumns'             => true,
 	),
 
@@ -142,7 +142,8 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
     ),
     'lastUpdate' => array
     (
-        'label'                   => array('LASTUPDATE'),
+        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['lastUpdate'],
+        'flag'                    => 8,
         'search'                  => false,
         'sql'                     => "int(10) unsigned NOT NULL default '0'",
     )

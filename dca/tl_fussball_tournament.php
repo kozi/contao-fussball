@@ -28,6 +28,10 @@ CREATE TABLE `tl_fussball_tournament` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 */
 
+if (!class_exists('tl_calendar_events')) {
+    require_once(TL_ROOT.'/system/modules/calendar/dca/tl_calendar_events.php');
+}
+
 $this->loadLanguageFile('tl_calendar_events');
 $this->loadLanguageFile('tl_fussball_matches');
 
@@ -202,7 +206,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'eval'                    => array('rgxp'=>'time', 'doNotCopy'=>true, 'tl_class'=>'w50'),
         'save_callback' => array
         (
-            array('tl_fussball_tournament', 'setEmptyEndTime')
+            array('tl_calendar_events', 'setEmptyEndTime')
         ),
         'sql'                     => "int(10) unsigned NULL"
     ),
@@ -224,7 +228,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'eval'                    => array('rgxp'=>'date', 'doNotCopy'=>true, 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
         'save_callback' => array
         (
-            array('tl_fussball_tournament', 'setEmptyEndDate')
+            array('tl_calendar_events', 'setEmptyEndDate')
         ),
         'sql'                     => "int(10) unsigned NULL"
     ),
@@ -234,7 +238,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
 );
 
 
-class tl_fussball_tournament extends tl_calendar_events {
+class tl_fussball_tournament extends Backend {
     private $teams = array();
     public function __construct() {
         parent::__construct();

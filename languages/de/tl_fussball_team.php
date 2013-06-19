@@ -7,3 +7,4 @@ $GLOBALS['TL_LANG']['tl_fussball_team']['name_short']           = array('Abkürz
 $GLOBALS['TL_LANG']['tl_fussball_team']['name_external']        = array('Externer Name', 'Name bei fussball.de');
 $GLOBALS['TL_LANG']['tl_fussball_team']['id_mannschaft']        = array('Mannschafts ID', 'Mannschafts ID');
 $GLOBALS['TL_LANG']['tl_fussball_team']['id_verein']            = array('Vereins ID', 'Vereins ID');
+$GLOBALS['TL_LANG']['tl_fussball_team']['lastUpdate']           = array('Letztes Update', 'Letztes Update');

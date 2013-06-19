@@ -14,14 +14,14 @@
  */
 
 /**
- * Class GoalGetterListContent 
+ * Class ContentFussballGoalgetter
  *
  * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball_widget
  */
 
-class GoalGetterListContent extends ContentElement {
+class ContentFussballGoalgetter extends ContentElement {
 	protected $strTemplate = 'ce_fussball_goalgetter';
 	private $ggArr = null;
 	
@@ -31,7 +31,7 @@ class GoalGetterListContent extends ContentElement {
 		if (TL_MODE == 'BE') {
 			$objTemplate = new BackendTemplate('be_wildcard');
 
-			$objTemplate->wildcard = '### GoalGetterList ###<table>';
+			$objTemplate->wildcard = '### Goalgetter ###<table>';
 
 			foreach ($this->ggArr as $gg) {
 				$objTemplate->wildcard .= '<tr><td style="padding:2px 6px;">'.$gg['fussball_gg_name'].'</td>';

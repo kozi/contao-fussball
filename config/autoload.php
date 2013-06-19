@@ -19,11 +19,14 @@
  */
 ClassLoader::addClasses(array
 (
-	'FussballTournamentContent'      => 'system/modules/fussball_widget/classes/FussballTournamentContent.php',
-	'GoalgetterListContent'          => 'system/modules/fussball_widget/classes/GoalgetterListContent.php',
-	'FussballWidgetContent'          => 'system/modules/fussball_widget/classes/FussballWidgetContent.php',
-	'FussballMatchesContent'         => 'system/modules/fussball_widget/classes/FussballMatchesContent.php',
-	'FussballDataManager'            => 'system/modules/fussball_widget/classes/FussballDataManager.php',
+    // Classes
+    'FussballDataManager'            => 'system/modules/fussball_widget/classes/FussballDataManager.php',
+
+    // Elements
+    'ContentFussballMatches'         => 'system/modules/fussball_widget/elements/ContentFussballMatches.php',
+    'ContentFussballTournament'      => 'system/modules/fussball_widget/elements/ContentFussballTournament.php',
+    'ContentFussballGoalgetter'      => 'system/modules/fussball_widget/elements/ContentFussballGoalgetter.php',
+    'ContentFussballWidget'          => 'system/modules/fussball_widget/elements/ContentFussballWidget.php',
 ));
 
 /**

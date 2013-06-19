@@ -15,14 +15,14 @@
 
 
 /**
- * Class FussballMatchesContent
+ * Class ContentFussballMatches
  *
  * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    Controller
  */
 
-class FussballMatchesContent extends ContentElement {
+class ContentFussballMatches extends ContentElement {
 	protected $strTemplate = 'ce_fussball_matches';
     private $team          = null;
     private $now           = 0;
@@ -54,8 +54,9 @@ class FussballMatchesContent extends ContentElement {
 
 	protected function compile() {
 
-		$this->import('FussballDataManager');
-		$this->FussballDataManager->updateMatches($this->fussball_team_id);
+
+        $this->import('FussballDataManager');
+        $this->FussballDataManager->updateMatches();
 
         $this->now      = time();
         $matches_future = array();

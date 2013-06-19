@@ -15,10 +15,12 @@
 
 
 
-$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'GoalgetterListContent';
-$GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'FussballTournamentContent';
-$GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'FussballMatchesContent';
-$GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'FussballWidgetContent';
+
+$GLOBALS['TL_CRON']['hourly'][]                            = array('FussballDataManager', 'checkFeaturedStop');
+$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContentGoalgetter';
+$GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContentFussballTournament';
+$GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContentFussballMatches';
+$GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'ContentFussballWidget';
 
 array_insert($GLOBALS['BE_MOD'], 1, array('fussball' => array()));
 

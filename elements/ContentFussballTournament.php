@@ -15,14 +15,14 @@
 
 
 /**
- * Class FussballTournamentContent
+ * Class ContentFussballTournament
  *
  * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    Controller
  */
 
-class FussballTournamentContent extends ContentElement {
+class ContentFussballTournament extends ContentElement {
     protected $strTemplate   = 'ce_fussball_tournament';
     private $teams           = NULL;
     private $team_ids        = array();

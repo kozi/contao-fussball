@@ -35,39 +35,47 @@ class FussballDataManager extends System {
 		$this->import('Database');
 		parent::__construct();
 	}
-	public function updateMatches($team_id) {
 
-		$result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')
-			->execute($team_id);
+    public function updateMatches() {
 
-		if ($result->numRows == 0) {
-			return false;
-		}
-        $teamObj = (Object) $result->row();
+        // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
+        $timestamp = $this->now - (2 * $this->oneDayInSec);
+        $result    = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE lastUpdate < ? ORDER BY lastUpdate ASC')
+            ->limit(1)->execute($timestamp);
+
+        // Wenn es ein Team mit alten Daten gibt, aktualisiere die Spiele dieses Teams
+        if ($result->numRows !== 0) {
+
+            $teamObj = (Object) $result->row();
+            $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
+
+            $this->log(sprintf($log, $teamObj->name, $teamObj->id_mannschaft, $teamObj->id_verein),
+                'FussballDataManager updateMatches()', TL_CRON);
+        }
+        else {
+            $this->log('Nothing to do.', 'FussballDataManager updateMatches()', TL_CRON);
+        }
+    }
+
+	private function updateTeamMatches($teamObj) {
+        $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
+        $matches = $this->getExternalData($teamObj->id_mannschaft, $teamObj->id_verein);
+
+        var_dump($matches);
+        die();
 
 
-		if (($teamObj->lastUpdate + (2 * $this->oneDayInSec)) > $this->now) {
-			// Only Update if last Update is minimum 2 days ago
-			return false;
-		}
-		else {
-            $matches = $this->getExternalData($teamObj->id_mannschaft, $teamObj->id_verein);
+        if ($matches === false) {
+            return false;
+        }
 
-            if ($matches === false) {
-                return false;
-            }
-
-			foreach ($matches as $match) {
-				$this->matchToDb($match, $team_id);
-			}
-			$result  = $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')
-				->execute(time(), $team_id);
-            return true;
-		}
+        foreach ($matches as $match) {
+            $this->matchToDb($match, $teamObj->id);
+        }
+        return true;
 	}
 
 	private function matchToDb($match, $team_id) {
-
 		$dbMatch = array(
 			'tstamp'       => time(),
 			'spielkennung' => $match[spieljahr].'-'.str_replace(' ', '-', $match[kennung]),

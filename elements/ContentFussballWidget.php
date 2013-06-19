@@ -15,14 +15,14 @@
 
 
 /**
- * Class FussballWidgetContent
+ * Class ContentFussballWidget
  *
  * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    Controller
  */
 
-class FussballWidgetContent extends ContentElement {
+class ContentFussballWidget extends ContentElement {
 	protected $strTemplate = 'ce_fussball_widget';
 
 	/**
