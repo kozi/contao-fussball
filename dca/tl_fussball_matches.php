@@ -50,17 +50,17 @@ $GLOBALS['TL_DCA']['tl_fussball_matches'] = array(
     (
         'edit' => array
         (
-            'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['edit'],
+            'label'               => &$GLOBALS['TL_LANG']['tl_fussball_matches']['edit'],
             'href'                => 'act=edit',
             'icon'                => 'edit.gif',
             'attributes'          => 'class="contextmenu"'
         ),
         'delete' => array
         (
-            'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['delete'],
+            'label'               => &$GLOBALS['TL_LANG']['tl_fussball_matches']['delete'],
             'href'                => 'act=delete',
             'icon'                => 'delete.gif',
-            'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_fussball_team']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+            'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_fussball_matches']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
         )
     )
 

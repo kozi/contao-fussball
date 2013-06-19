@@ -14,9 +14,8 @@
  */
 
 
+$GLOBALS['TL_CRON']['hourly'][]                            = array('FussballDataManager', 'updateMatches');
 
-
-$GLOBALS['TL_CRON']['hourly'][]                            = array('FussballDataManager', 'checkFeaturedStop');
 $GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContentGoalgetter';
 $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContentFussballTournament';
 $GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContentFussballMatches';

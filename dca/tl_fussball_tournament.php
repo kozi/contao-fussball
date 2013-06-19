@@ -13,21 +13,6 @@
  * @filesource
  */
 
-
-/*
-CREATE TABLE `tl_fussball_tournament` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `tstamp` int(10) unsigned NOT NULL default '0',
-  `title` varchar(255) NOT NULL default '',
-  `team_id` int(10) unsigned NOT NULL default '0',
-  `host` varchar(255) NOT NULL default '',
-  `ort` varchar(255) NOT NULL default '',
-  `field_type` varchar(255) NOT NULL default '',
-  `confirmed` char(1) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-*/
-
 if (!class_exists('tl_calendar_events')) {
     require_once(TL_ROOT.'/system/modules/calendar/dca/tl_calendar_events.php');
 }

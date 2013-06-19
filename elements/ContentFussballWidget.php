@@ -51,14 +51,13 @@ class ContentFussballWidget extends ContentElement {
 	}
 
 	protected function addJavascriptFiles($api_key) {
-		
-		
+
 		$fussballAPI = 'http://static.fussball.de/fbdeAPI/js/fbdeAPIFunctions.js?schluessel='.$api_key;
 
 		// Die Dateien müssen natürlich nur einmal eingebunden werden
 		if(!in_array($fussballAPI, $GLOBALS['TL_JAVASCRIPT'])) {
 			$GLOBALS['TL_JAVASCRIPT'][] = $fussballAPI;
-			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/assets/fussball-widget.js';
+			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball_widget/assets/fussball-widget.js|static';
 		}
 	}
 	

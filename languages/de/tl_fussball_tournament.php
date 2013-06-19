@@ -11,4 +11,7 @@ $GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type']           = array("P
 $GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed']            = array("Zusage", "Wurde die Teilnahme bestätigt?");
 $GLOBALS['TL_LANG']['tl_fussball_tournament']['details']              = array("Anmerkungen", "Anmerkungen zu diesem Turnier");
 
+$GLOBALS['TL_LANG']['tl_fussball_tournament']['edit']                 = array('Editieren', 'Dieses Turnier editieren');
+$GLOBALS['TL_LANG']['tl_fussball_tournament']['delete']               = array('Löschen', 'Dieses Turnier löschen');
+$GLOBALS['TL_LANG']['tl_fussball_tournament']['deleteConfirm']        = 'Wollen Sie dieses Turnier (ID %s) wirklich löschen?';
 

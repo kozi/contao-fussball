@@ -8,3 +8,7 @@ $GLOBALS['TL_LANG']['tl_fussball_team']['name_external']        = array('Externe
 $GLOBALS['TL_LANG']['tl_fussball_team']['id_mannschaft']        = array('Mannschafts ID', 'Mannschafts ID');
 $GLOBALS['TL_LANG']['tl_fussball_team']['id_verein']            = array('Vereins ID', 'Vereins ID');
 $GLOBALS['TL_LANG']['tl_fussball_team']['lastUpdate']           = array('Letztes Update', 'Letztes Update');
+
+$GLOBALS['TL_LANG']['tl_fussball_team']['edit']                 = array('Editieren', 'Dieses Mannschaft editieren');
+$GLOBALS['TL_LANG']['tl_fussball_team']['delete']               = array('Löschen', 'Dieses Mannschaft löschen');
+$GLOBALS['TL_LANG']['tl_fussball_team']['deleteConfirm']        = 'Wollen Sie diese Mannschaft (ID %s) wirklich löschen?';
