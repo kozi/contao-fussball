@@ -94,7 +94,6 @@ class ContentFussballMatches extends ContentElement {
             $matches = array_merge($matches_future, $matches_past);
         }
 
-
 		$this->Template->sum_points = $this->sum_points;
 		$this->Template->sum_goals  = $this->sum_goals;
 		$this->Template->matches    = $matches;

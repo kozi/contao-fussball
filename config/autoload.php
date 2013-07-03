@@ -22,6 +22,7 @@ ClassLoader::addClasses(array
     // Classes
     'FussballDataManager'            => 'system/modules/fussball_widget/classes/FussballDataManager.php',
     'FussballTools'                  => 'system/modules/fussball_widget/classes/FussballTools.php',
+
     // Elements
     'ContentFussballMatches'         => 'system/modules/fussball_widget/elements/ContentFussballMatches.php',
     'ContentFussballTournament'      => 'system/modules/fussball_widget/elements/ContentFussballTournament.php',
@@ -34,7 +35,7 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-
+    // ContentElement Templates
 	'ce_fussball_goalgetter'      => 'system/modules/fussball_widget/templates',	
 	'ce_fussball_matches'         => 'system/modules/fussball_widget/templates',
 	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',		

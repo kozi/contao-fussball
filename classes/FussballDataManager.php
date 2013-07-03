@@ -115,5 +115,3 @@ class FussballDataManager extends System {
 
 }
 
-
-
