@@ -74,7 +74,7 @@ class FussballTools {
 
 
                 $a = $tr->find('td', 2)->find('a', 0);
-                $match['manh']   = ($a != null) ? trim($a->innertext) : trim($tr->find('td', 2)->plaintext);
+                $match['manh']   = ($a != null) ? trim($a->find('text', 0)->plaintext) : trim($tr->find('td', 2)->plaintext);
 
                 // Spalte 3 ist der Bindestrich
 
