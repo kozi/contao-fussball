@@ -16,7 +16,7 @@
 
 $GLOBALS['TL_CRON']['hourly'][]                            = array('FussballDataManager', 'updateMatches');
 
-$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContentGoalgetter';
+$GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContentFussballGoalgetter';
 $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContentFussballTournament';
 $GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContentFussballMatches';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'ContentFussballWidget';

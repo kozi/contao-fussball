@@ -56,7 +56,16 @@ class ContentFussballMatches extends ContentElement {
 
 
         $this->import('FussballDataManager');
-        $this->FussballDataManager->updateMatches();
+
+        $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id_mannschaft = ?')
+                            ->execute('2111009001401302');
+        if ($result->numRows !== 0) {
+            $teamObj = (Object) $result->row();
+            $this->FussballDataManager->updateTeamMatches($teamObj);
+        }
+
+
+
 
         $this->now      = time();
         $matches_future = array();

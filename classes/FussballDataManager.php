@@ -22,9 +22,11 @@
  * @package    Controller
  */
 
+
+// Required for FussballTools
+require_once(TL_ROOT.'/system/modules/fussball_widget/classes/simple_html_dom.php');
+
 class FussballDataManager extends System {
-	private $days          = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
-	private $posturl       = "http://ergebnisdienst.fussball.de/api/fbed/fbedVereinsspielplan.php";
 	private $team_id       = 0;
 	private $now           = 0;
 	private $matches       = array();
@@ -43,7 +45,7 @@ class FussballDataManager extends System {
         $result    = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE lastUpdate < ? ORDER BY lastUpdate ASC')
             ->limit(1)->execute($timestamp);
 
-        // Wenn es ein Team mit alten Daten gibt, aktualisiere die Spiele dieses Teams
+        // Wenn es ein Team mit "alten Daten" gibt, aktualisiere die Spiele dieses Teams
         if ($result->numRows !== 0) {
 
             $teamObj = (Object) $result->row();
@@ -52,20 +54,18 @@ class FussballDataManager extends System {
             $this->log(sprintf($log, $teamObj->name, $teamObj->id_mannschaft, $teamObj->id_verein),
                 'FussballDataManager updateMatches()', TL_CRON);
         }
-        else {
-            $this->log('Nothing to do.', 'FussballDataManager updateMatches()', TL_CRON);
-        }
+
     }
 
-	private function updateTeamMatches($teamObj) {
+	public function updateTeamMatches($teamObj) {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
-        $matches = $this->getExternalData($teamObj->id_mannschaft, $teamObj->id_verein);
 
-        var_dump($matches);
-        die();
+        $von    = date("d.m.Y", (time() - (182 * $this->oneDayInSec)));
+        $bis    = date("d.m.Y", (time() + (182 * $this->oneDayInSec)));
 
+        $matches = FussballTools::getMatches($teamObj->action_url, $teamObj->team_id, $von, $bis);
 
-        if ($matches === false) {
+        if ($matches === false || (is_array($matches) && count($matches) === 0)) {
             return false;
         }
 
@@ -77,16 +77,16 @@ class FussballDataManager extends System {
 
 	private function matchToDb($match, $team_id) {
 		$dbMatch = array(
-			'tstamp'       => time(),
-			'spielkennung' => $match[spieljahr].'-'.str_replace(' ', '-', $match[kennung]),
-			'team_id'      => $team_id,
-			'anstoss'      => $this->strDateToTimestamp($match[date], $match[time]),
-			'heim'         => $match[heim],
-			'gast'         => $match[gast],
-			'typ'          => $match[typ],
-			'location'     => ($match[loc] !== null) ? $match[loc] : '',
-            'ergebnis'     => $match[erg],
-			// 'spielklasse'  => $match[spielklasse],
+			'tstamp'        => time(),
+			'spielkennung'  => $match['kennung'].'-'.str_replace(' ', '-', $match['id']),
+			'team_id'       => $team_id,
+			'anstoss'       => FussballTools::getTimestampFromDateAndTimeString($match['date'], $match['time']),
+			'heim'          => $match['manh'],
+			'gast'          => $match['mana'],
+			'typ'           => $match['typ'],
+			'location'      => ($match['loc'] !== null) ? $match['loc'] : '',
+            'ergebnis'      => $match['erg'],
+			'spielklasse'   => $match['klasse'],
 
 		);
 
@@ -112,151 +112,6 @@ class FussballDataManager extends System {
                 ->set($dbMatch)->execute($spielkennung);
 		}
 	}
-
-
-	private function getExternalData($mannschaft, $verein) {
-		$von    = date("d.m.Y", (time() - (182 * $this->oneDayInSec)));
-		$bis    = date("d.m.Y", (time() + (182 * $this->oneDayInSec)));
-
-		$postvars = "edAustragungsort0=0&edAustragungsort1=&edAustragungsort2="
-			."&edDatumBis=".$bis
-			."&edDatumVon=".$von
-			."&edMannschaftChk0=&edMannschaftChk1=1&edMannschaften="
-			."%7B%22".$mannschaft."%22%3A%20"."1"."%7D"
-			."&edSpielstaette=1&edVereinId=".$verein;
-
-		$ch = curl_init($this->posturl);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $data = curl_exec($ch);
-        curl_close($ch);
-
-        if ($data === null) {
-            return false;
-        }
-
-        $data = '<?xml version="1.0" encoding="utf-8"?>'
-            .'<html><head><title>Cal</title>'
-            .'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
-            .'</head><body>'.$data.'</body></html>';
-
-		$dom  = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadHTML($data);
-		$dom->preserveWhiteSpace = false;
-
-		$tables = $dom->getElementsByTagName('table');
-		if ($tables->length === 0) { $this->error = "Kein table-Tag gefunden."; return false; }
-		
-		$rows = $tables->item(0)->getElementsByTagName('tr');
-		if ($rows->length === 0) { $this->error = "Kein tr-Tag gefunden.";  return false; } 
-		
-		$matches = array(); $match = array();
-		foreach ($rows as $row) {
-
-			$cols = $row->getElementsByTagName('td');
-			if ($cols->length > 4) {
-
-				// Zeile mit Mannschaften und Uhrzeit
-				$aTag = $cols->item(0)->getElementsByTagName('a');
-				if ($aTag->length === 1) {
-					$spieljahr = $aTag->item(0)->getAttribute('href');
-					$spieljahr = preg_replace("#http://ergebnisdienst.fussball.de/.*/spieljahr#" , "" , $spieljahr);
-					$spieljahr = preg_replace("#/.*#" , "" , $spieljahr);
-					$match['spieljahr'] = $spieljahr;
-				}
-
-				$match['kennung'] = $cols->item(0)->nodeValue;
-				$match['heim']    = $cols->item(1)->nodeValue;
-				$match['gast']    = $cols->item(2)->nodeValue;
-				$match['time']    = $cols->item(3)->nodeValue;
-				$match['erg']     = trim( str_replace(" *", "", $cols->item(4)->nodeValue) );
-
-				
-				if ($match['erg'] === $this->strAbgesagt) {
-					$match['loc'] = 'Spiel abgesagt.';
-				}
-
-				if ($cols->length > 5) {
-					$match['typ'] = $cols->item(6)->nodeValue;
-				}
-
-			}
-			else {
-				for ($i=0;$i<$cols->length; $i++) {
-					$val = $cols->item($i)->nodeValue;
-					
-					if ($this->isDate($val)) {
-						if (sizeof($match) > 0) {
-							$matches[] = $match;
-						}
-						$match = array();
-						$match['date'] = $val;
-					}
-					else if (!array_key_exists('loc',$match) && ((strpos($val,"Sportplatz")!==false) || (strpos($val," // ")!==false)) ) {
-
-						$val = preg_replace("/[^a-zA-Z0-9_äöüÄÖÜß \/]/" , "" , $val);
-
-						$arr = explode(" // ", $val);
-						if (count($arr) === 3 ) {
-							// Der erste Wert ist nur der Name des Sportplatzes
-							$val = implode(", ", array_slice($arr,1));
-						}
-						$match['loc'] = $val;
-					}
-		
-				} // for
-		
-			} // else
-		
-		} //foreach
-
-		// Das letzte Spiel muss auch noch mit
-		if (sizeof($match) > 0) {
-			$matches[] = $match;
-		}
-
-		return $matches;
-	}
-
-
-	private function isDate($str = '') {
-		if (strlen($str) === 0) return false;
-
-		foreach($this->days as $day) {
-			if (strpos($str, $day) !== false) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private function strDateToTimestamp($dateStr, $timeStr) {
-		$dateStr = str_replace($this->days, array('','','','','','',''), $dateStr);
-		$dateStr = str_replace(array(',', ' '), array('',''), $dateStr);
-
-		$tmp     = array_reverse(explode('.', $dateStr));
-		$dateStr = implode('-', $tmp).' '.$timeStr.':00';
-
-		return strtotime($dateStr);
-	}
-
-
-    public function sortGoalGetterEntries($var, $dc) {
-        $arr = unserialize($var);
-
-        function usort_sortGoalGetterEntries($a, $b) {
-            $res = intval($a['fussball_gg_goals']) - intval($b['fussball_gg_goals']);
-            if ($res == 0) return strcmp($a['fussball_gg_name'], $b['fussball_gg_name']);
-            if ($res >  0) return -1;
-            return 1;
-        }
-
-        usort($arr, 'usort_sortGoalGetterEntries');
-        return serialize($arr);
-    }
 
 }
 

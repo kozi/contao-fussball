@@ -144,7 +144,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
 		'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_goalgetter'],
 		'exclude'                 => true,
 		'inputType'               => 'multiColumnWizard',
-		'save_callback'           => array(array('FussballModule', 'sortGoalGetterEntries')),
+		'save_callback'           => array(array('tl_content_fussball', 'sortGoalgetterEntries')),
         'sql'                     => "blob NULL",
 		'eval'                    => array(
 			'buttons' => array('down' => false, 'up' => false),
@@ -177,6 +177,20 @@ class tl_content_fussball extends Backend {
             $varValue = null;
         }
         return $varValue;
+    }
+
+    public function sortGoalgetterEntries($var, $dc) {
+        $arr = unserialize($var);
+
+        function usort_sortGoalgetterEntries($a, $b) {
+            $res = intval($a['fussball_gg_goals']) - intval($b['fussball_gg_goals']);
+            if ($res == 0) return strcmp($a['fussball_gg_name'], $b['fussball_gg_name']);
+            if ($res >  0) return -1;
+            return 1;
+        }
+
+        usort($arr, 'usort_sortGoalgetterEntries');
+        return serialize($arr);
     }
 
 }

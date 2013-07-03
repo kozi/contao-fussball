@@ -183,7 +183,7 @@ $GLOBALS['TL_DCA']['tl_fussball_matches'] = array(
 class tl_fussball_matches extends Backend {
     private $teams = array();
 	public function __construct() {
-		parent::__construct();
+        parent::__construct();
 		$this->import('BackendUser', 'User');
 
         $result = $this->Database->execute('SELECT * FROM tl_fussball_team');

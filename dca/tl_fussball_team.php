@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 // Palettes
 'palettes' => array
 (
-	'default'                     => '{title_legend},name,name_short,id_mannschaft,id_verein,name_external'
+	'default'                     => '{title_legend},name,name_short,id_mannschaft,id_verein,name_external;{spielplan_legend}, action_url, team_id'
 ),
 
 // Fields
@@ -140,6 +140,29 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
+    'action_url' => array
+    (
+        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['action_url'],
+        'exclude'                 => true,
+        'search'                  => true,
+        'sorting'                 => true,
+        'flag'                    => 1,
+        'inputType'               => 'text',
+        'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'long'),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    ),
+    'team_id' => array
+    (
+        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['team_id'],
+        'exclude'                 => true,
+        'search'                  => true,
+        'sorting'                 => true,
+        'flag'                    => 1,
+        'inputType'               => 'text',
+        'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'long'),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    ),
+
     'lastUpdate' => array
     (
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['lastUpdate'],
