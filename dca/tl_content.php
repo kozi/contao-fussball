@@ -17,7 +17,7 @@
  * Add palettes to tl_content
  */
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_widget_legend},fussball_wettbewerbs_id,fussball_saison,fussball_team_id;{expert_legend:hide},cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_widget_legend},fussball_wettbewerbs_id,fussball_mandant,fussball_team_id;{expert_legend:hide},cssID,space';
 
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] = '{title_legend},headline,type;'
@@ -34,9 +34,9 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] =
 .'{expert_legend:hide},cssID,space';
 
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_saison'] = array
+$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_mandant'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_saison'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_mandant'],
 	'exclude'                 => true,
 	'inputType'               => 'text',
 	'eval'                    => array('mandatory'=>true),
