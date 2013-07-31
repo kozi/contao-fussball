@@ -46,6 +46,9 @@ class ContentFussballWidget extends ContentElement {
 	}
 
 	protected function compile() {
+
+        // TODO Get external team name
+        $this->Template->team = "TODO";
 		$api_key = $GLOBALS['TL_CONFIG']['fussball_api_key'];
 		$this->addJavascriptFiles($api_key);
 	}
