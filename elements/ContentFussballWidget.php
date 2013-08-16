@@ -47,8 +47,12 @@ class ContentFussballWidget extends ContentElement {
 
 	protected function compile() {
 
-        // TODO Get external team name
-        $this->Template->team = "TODO";
+        // Get external team name
+        $result = $this->Database->prepare("SELECT * FROM tl_fussball_team WHERE id = ?")->execute($this->fussball_team_id);
+        if ($result->numRows === 1) {
+            $this->Template->fussball_team = $result->name_external;
+        }
+
 		$api_key = $GLOBALS['TL_CONFIG']['fussball_api_key'];
 		$this->addJavascriptFiles($api_key);
 	}

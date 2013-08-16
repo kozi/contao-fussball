@@ -23,8 +23,8 @@ $GLOBALS['TL_LANG']['tl_content']['fussball_order']['options']       = array('as
 $GLOBALS['TL_LANG']['tl_content']['fussball_typ']                    = array('Spieltyp', 'Typ des Spiel (z.B. Freundschaftsspiel)');
 $GLOBALS['TL_LANG']['tl_content']['fussball_typ']['options']         = array('me' => 'Meisterschaftsspiel', 'fr' => 'Freundschaftsspiel');
 
-$GLOBALS['TL_LANG']['tl_content']['fussball_future']                 = array('Zukünftige Spiele', 'Anzahl der kommenden Spiele (Alle Spiele bei keiner Angabe)');
-$GLOBALS['TL_LANG']['tl_content']['fussball_past']                   = array('Vergangene Spiele', 'Anzahl der vergangenen Spiele (Alle Spiele bei keiner Angabe)');
+$GLOBALS['TL_LANG']['tl_content']['fussball_future']                 = array('Zukünftige Spiele', 'Anzahl der kommenden Spiele.');
+$GLOBALS['TL_LANG']['tl_content']['fussball_past']                   = array('Vergangene Spiele', 'Anzahl der vergangenen Spiele.');
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_from']                   = array('Spiele von', 'Zeige Spiele ab diesem Datum.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_to']                     = array('Spiele bis', 'Zeige Spiele bis zu diesem Datum.');

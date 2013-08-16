@@ -67,24 +67,28 @@ class ContentFussballMatches extends ContentElement {
         }
 
         // Zukünftige Spiele
-        $db_limit = ($this->fussball_future == '') ? 0 : $this->fussball_future;
-        $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
+        if ($this->fussball_future != '0') {
+            $db_limit = intval($this->fussball_future);
+            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
             .' WHERE team_id = ?'.$db_typ.'AND anstoss > '.$this->now.' ORDER BY anstoss '.$db_order)
-            ->limit($db_limit)->execute($this->fussball_team_id);
+                ->limit($db_limit)->execute($this->fussball_team_id);
 
-        while($result->next()) {
-            $matches_future[] =$this->getMatch($result->row(), $count++);
+            while($result->next()) {
+                $matches_future[] =$this->getMatch($result->row(), $count++);
+            }
         }
 
         // Vergangene Spiele
-        $db_limit = ($this->fussball_future == '') ? 0 : $this->fussball_future;
-        $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
+        if ($this->fussball_past != '0') {
+            $db_limit = intval($this->fussball_past);
+            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
             .' WHERE team_id = ?'.$db_typ.'AND anstoss <= '.$this->now.' ORDER BY anstoss '.$db_order)
-            ->limit($db_limit)->execute($this->fussball_team_id);
+                ->limit($db_limit)->execute($this->fussball_team_id);
 
 
-        while($result->next()) {
-            $matches_past[] = $this->getMatch($result->row(), $count++);
+            while($result->next()) {
+                $matches_past[] = $this->getMatch($result->row(), $count++);
+            }
         }
 
         if ($db_order === 'ASC') {
@@ -98,7 +102,7 @@ class ContentFussballMatches extends ContentElement {
 		$this->Template->sum_goals  = $this->sum_goals;
 		$this->Template->matches    = $matches;
 		$this->Template->team       = $this->team;
-		
+
 	}
 
     private function getMatch($row, $count) {

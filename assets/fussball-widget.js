@@ -14,7 +14,7 @@ var FussballWidget = function() {
 return {
 
 	ergebnisse: function() {
-		this.wettbewerb.zeigeWettbewerb(this.div_id);
+		this.wettbewerb.zeigeBegegnungen(this.div_id);
 		return false;
 	},
 	tabelle: function() {
@@ -22,21 +22,15 @@ return {
 		return false;
 
 	},
-	init: function(id, mandant, wettbewerbs_id, team) {
+	init: function(id, wettbewerbs_id, mandant, team) {
 		// id setzen
 		this.id = id;
 		this.div_id = 'id' + this.id;
 		
 		this.wettbewerb = new fussballdeAPI();
 
-        // mandant
-        this.wettbewerb.setzeMandant(mandant);
-
-        // wettbewerbs_id
         this.wettbewerb.setzeWettbewerb(wettbewerbs_id);
-
-
-
+        this.wettbewerb.setzeMandant(mandant);
 		
 		if (team.length > 0) {
 			this.team = team;
