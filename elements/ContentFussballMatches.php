@@ -31,9 +31,6 @@ class ContentFussballMatches extends ContentElement {
 
 	public function generate() {
 
-        $this->import('FussballDataManager');
-        $this->FussballDataManager->updateMatches();
-
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')
             ->execute($this->fussball_team_id);
 

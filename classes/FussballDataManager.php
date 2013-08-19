@@ -27,16 +27,27 @@
 require_once(TL_ROOT.'/system/modules/fussball_widget/classes/simple_html_dom.php');
 
 class FussballDataManager extends System {
-	private $team_id       = 0;
+    private $team_id       = 0;
 	private $now           = 0;
-	private $matches       = array();
 	private $oneDayInSec   = 86400;
 
 	function __construct() {
-		$this->now = time();
+		$this->now     = time();
 		$this->import('Database');
 		parent::__construct();
 	}
+
+
+    public function updateCalendar() {
+        $result = $this->Database->execute("SELECT id, title, fussball_team_id
+                    FROM tl_calendar WHERE fussball_team_id != 0");
+        while($result->next()) {
+            $cal = (Object) $result->row();
+            echo '<h2>Called '.$cal->title.' '.$cal->fussball_team_id.'</h2>';
+            $this->updateCalenderEvents($cal);
+        }
+    }
+
 
     public function updateMatches() {
 
@@ -75,9 +86,63 @@ class FussballDataManager extends System {
         return true;
 	}
 
+    private function updateCalenderEvents($calendar) {
+        /* Delete all calendar events inserted by fussball_widget extension
+        $this->Database->prepare('DELETE FROM tl_calendar_events WHERE pid = ? AND fussball_matches_id != 0')
+            ->execute($calendar->id);
+        */
+
+        // Get all matches from tl_fussball_match for $calendar->fussball_team_id
+        $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE team_id = ?')
+            ->execute($calendar->fussball_team_id);
+
+        while ($result->next()) {
+            $this->calendarEvent($calendar, $result->row());
+        }
+    }
+
+
+    private function calendarEvent($calendar, $match) {
+        $erg   = (strlen($match['ergebnis']) > 0) ? ' '.$match['ergebnis'] : '';
+        $loc   = str_replace("\n", ' <br>', $match['location']);
+        $title = $match['heim'].' - '.$match['gast'].' ['.$match['typ'].']'.$erg;
+        $text  = implode(" <br>", array(
+            $title,
+            date('d.m.Y H:i', $match['anstoss']),
+            $loc,
+            (strlen($erg) > 0) ?  'Ergebnis:'.$erg : ''
+        ));
+
+        $evenData      = array(
+            'fussball_matches_id' => $match['id'],
+            'tstamp'    => $this->now,
+            'pid'       => $calendar->id,
+            'title'     => $title,
+            'alias'     => standardize($title.' '.date("d-m-Y", $match['anstoss'])),
+            'teaser'    => $text,
+            'location'  => $loc,
+            'addTime'   => 1,
+            'startTime' => $match['anstoss'],
+            'endTime'   => $match['anstoss'] + 6300,
+            'startDate' => $match['anstoss'],
+            'endDate'   => NULL,
+            'published' => 1,
+        );
+
+        $result = $this->Database->prepare('SELECT id FROM tl_calendar_events WHERE fussball_matches_id = ?')
+            ->limit(1)->executeUncached($match['id']);
+        if($result->numRows == 1) {
+            $evenData['id'] = $result->id;
+        }
+
+        $calEventModel = new CalendarEventsModel();
+        $calEventModel->setRow($evenData)->save();
+
+    }
+
 	private function matchToDb($match, $team_id) {
 		$dbMatch = array(
-			'tstamp'        => time(),
+			'tstamp'        => $this->now,
 			'spielkennung'  => $match['kennung'].'-'.str_replace(' ', '-', $match['id']),
 			'team_id'       => $team_id,
 			'anstoss'       => FussballTools::getTimestampFromDateAndTimeString($match['date'], $match['time']),

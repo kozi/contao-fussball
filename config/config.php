@@ -13,13 +13,14 @@
  * @filesource
  */
 
-
 $GLOBALS['TL_CRON']['hourly'][]                            = array('FussballDataManager', 'updateMatches');
+$GLOBALS['TL_CRON']['daily'][]                             = array('FussballDataManager', 'updateCalendar');
 
 $GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContentFussballGoalgetter';
 $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContentFussballTournament';
 $GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContentFussballMatches';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'ContentFussballWidget';
+
 
 array_insert($GLOBALS['BE_MOD'], 1, array('fussball' => array()));
 
