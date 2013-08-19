@@ -31,6 +31,9 @@ class ContentFussballMatches extends ContentElement {
 
 	public function generate() {
 
+        $this->import('FussballDataManager');
+        $this->FussballDataManager->updateMatches();
+
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')
             ->execute($this->fussball_team_id);
 
@@ -54,12 +57,15 @@ class ContentFussballMatches extends ContentElement {
 
 	protected function compile() {
 
+
+
+
         $this->now      = time();
         $matches_future = array();
         $matches_past   = array();
 
         $count          = 0;
-        $db_order       = ($this->fussball_order == 'desc') ? 'DESC': 'ASC';
+        $matches_order  = ($this->fussball_order == 'desc') ? 'DESC': 'ASC';
         $db_typ         = '';
 
         if (strlen($this->fussball_typ) > 0) {
@@ -70,7 +76,7 @@ class ContentFussballMatches extends ContentElement {
         if ($this->fussball_future != '0') {
             $db_limit = intval($this->fussball_future);
             $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
-            .' WHERE team_id = ?'.$db_typ.'AND anstoss > '.$this->now.' ORDER BY anstoss '.$db_order)
+            .' WHERE team_id = ?'.$db_typ.'AND anstoss > '.$this->now.' ORDER BY anstoss ASC')
                 ->limit($db_limit)->execute($this->fussball_team_id);
 
             while($result->next()) {
@@ -82,7 +88,7 @@ class ContentFussballMatches extends ContentElement {
         if ($this->fussball_past != '0') {
             $db_limit = intval($this->fussball_past);
             $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
-            .' WHERE team_id = ?'.$db_typ.'AND anstoss <= '.$this->now.' ORDER BY anstoss '.$db_order)
+            .' WHERE team_id = ?'.$db_typ.'AND anstoss <= '.$this->now.' ORDER BY anstoss DESC')
                 ->limit($db_limit)->execute($this->fussball_team_id);
 
 
@@ -91,12 +97,16 @@ class ContentFussballMatches extends ContentElement {
             }
         }
 
-        if ($db_order === 'ASC') {
-            $matches = array_merge($matches_past, $matches_future);
+        $matches = array_merge($matches_future, $matches_past);
+        if ($matches_order == 'DESC') {
+            usort($matches, function($a, $b) { return ($b->anstoss - $a->anstoss); });
+        } else {
+            usort($matches, function($a, $b) { return ($a->anstoss - $b->anstoss); });
         }
-        else {
-            $matches = array_merge($matches_future, $matches_past);
-        }
+
+        // Sort by matches_order
+        // $matches = array_merge($matches_past, $matches_future);
+
 
 		$this->Template->sum_points = $this->sum_points;
 		$this->Template->sum_goals  = $this->sum_goals;
@@ -130,11 +140,8 @@ class ContentFussballMatches extends ContentElement {
             return -1;
         }
 
-        if ($match->heim == $this->team->name_external) {
-            $isHome = true;
-        }
-
-        $arr  = explode(':', $match->ergebnis);
+        $isHome = ($match->heim == $this->team->name_external);
+        $arr    = explode(':', $match->ergebnis);
 
         if (count($arr) !== 2) {
             return -1;

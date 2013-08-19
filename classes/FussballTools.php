@@ -11,7 +11,7 @@ class FussballTools {
             ."&_=".time();
 
         $mainContent    = file_get_contents($url);
-        $mainContent    = str_replace(array('%0A','var mainContent = "'), '', $mainContent);
+        $mainContent    = str_replace(array('%0A','var mainContent = "', '<wbr>'), '', $mainContent);
         $mainContent    = htmlspecialchars_decode($mainContent);
         $mainContent    = substr($mainContent, 0, strlen($mainContent) - 2);
 
@@ -79,8 +79,7 @@ class FussballTools {
                 // Spalte 3 ist der Bindestrich
 
                 $a = $tr->find('td', 4)->find('a', 0);
-                $match['mana']   = ($a != null) ? trim($a->innertext) : trim($tr->find('td', 4)->plaintext);
-
+                $match['mana']   = ($a != null) ? trim($a->find('text', 0)->plaintext) : trim($tr->find('td', 4)->plaintext);
 
                 // Ergebnis
                 $textEl          = $tr->find('td', 5)->find('text', 0);
@@ -107,6 +106,12 @@ class FussballTools {
         // Das letzte Spiel muss auch noch mit
         if ($match !== null && sizeof($match) > 0) {
             $matches[] = $match;
+        }
+
+        foreach ($matches as &$oneMatch) {
+            foreach ($oneMatch as $key => $value) {
+                $oneMatch[$key] = str_replace('&nbsp;', ' ', strip_tags($value));
+            }
         }
 
         return $matches;
