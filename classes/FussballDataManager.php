@@ -39,11 +39,11 @@ class FussballDataManager extends System {
 
 
     public function updateCalendar() {
+        // TODO Turniere auch in den Kalender einfügen
         $result = $this->Database->execute("SELECT id, title, fussball_team_id
                     FROM tl_calendar WHERE fussball_team_id != 0");
         while($result->next()) {
             $cal = (Object) $result->row();
-            echo '<h2>Called '.$cal->title.' '.$cal->fussball_team_id.'</h2>';
             $this->updateCalenderEvents($cal);
         }
     }
