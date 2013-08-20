@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
     ),
     'bgcolor' => array
     (
-        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['bgColor'],
+        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['bgcolor'],
         'exclude'                 => true,
         'search'                  => true,
         'sorting'                 => true,
