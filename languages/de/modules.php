@@ -10,4 +10,5 @@ $GLOBALS['TL_LANG']['CTE']['fussball_goalgetter']      = array('Fussball - Törs
 $GLOBALS['TL_LANG']['CTE']['fussball_matches']         = array('Fussball - Spiele', 'Zeigt die Spiele einer Mannschaft an.');
 $GLOBALS['TL_LANG']['CTE']['fussball_tournament']      = array('Fussball - Turnierliste', 'Turnierliste');
 $GLOBALS['TL_LANG']['CTE']['fussball_widget']          = array('Fussball - fussball.de Widget', 'Fügt das fussball.de Widget ein. Der API-Key muss in den Einstellungen hinterlegt werden.');
+$GLOBALS['TL_LANG']['CTE']['fussball_calendar']        = array('Fussball - Kalenderansicht', 'Zeigt eine Kalenderansicht der Spieltermine');
 

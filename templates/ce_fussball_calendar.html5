@@ -1,0 +1,59 @@
+<div class="<?php echo $this->class; ?> fussball_calendar block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif;?>
+
+<script src="system/modules/fussball_widget/assets/fullcalendar/fullcalendar.min.js"></script>
+<link rel="stylesheet" href="system/modules/fussball_widget/assets/fullcalendar/fullcalendar.css">
+
+<script>
+
+    $(document).ready(function() {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#fussball_calendar').fullCalendar({
+            defaultView: 'agendaWeek',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaWeek,agendaDay,month'
+            },
+            firstDay: 1,
+            axisFormat: 'H:mm',
+            minTime: '8:00',
+            maxTime: '22:00',
+            timeFormat: {
+                '': 'H:mm',
+                agenda: 'H:mm{ - H:mm}'
+            },
+            buttonText: {
+                today: 'Heute',
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag'
+            },
+
+            monthNames: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+            monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+            dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
+            dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
+            allDayText: 'Tag',
+
+            editable: false,
+            events: {
+                url: '{{env::path}}{{env::request}}?fullcalendar=json',
+                color: '#333333',
+                textColor: '#333333'
+            }
+        });
+
+    });
+
+</script>
+    <div id="fussball_calendar"></div>
+</div>

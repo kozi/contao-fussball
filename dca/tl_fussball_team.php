@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 	),
 	'label' => array
 	(
-		'fields'                  => array('name', 'name_short', 'name_external', 'team_id', 'lastUpdate'),
+		'fields'                  => array('name', 'name_short', 'name_external', 'lastUpdate'),
 		'showColumns'             => true,
 	),
 
@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 // Palettes
 'palettes' => array
 (
-	'default'                     => '{title_legend},name,name_short,name_external;{spielplan_legend}, action_url, team_id'
+	'default'                     => '{title_legend},name,name_short,name_external,bgcolor;{spielplan_legend}, action_url, team_id'
 ),
 
 // Fields
@@ -117,8 +117,19 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'sorting'                 => true,
         'flag'                    => 1,
         'inputType'               => 'text',
-        'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
+        'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
         'sql'                     => "varchar(255) NOT NULL default ''",
+    ),
+    'bgcolor' => array
+    (
+        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['bgColor'],
+        'exclude'                 => true,
+        'search'                  => true,
+        'sorting'                 => true,
+        'flag'                    => 1,
+        'inputType'               => 'text',
+        'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
+        'sql'                     => "varchar(64) NOT NULL default ''",
     ),
     'action_url' => array
     (
@@ -128,7 +139,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'sorting'                 => true,
         'flag'                    => 1,
         'inputType'               => 'text',
-        'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'long'),
+        'eval'                    => array('mandatory'=>false, 'maxlength'=>255, 'tl_class' => 'long'),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
     'team_id' => array
@@ -139,7 +150,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'sorting'                 => true,
         'flag'                    => 1,
         'inputType'               => 'text',
-        'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'long'),
+        'eval'                    => array('mandatory'=>false, 'maxlength'=>255, 'tl_class' => 'long'),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
 

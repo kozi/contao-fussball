@@ -28,6 +28,12 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] =
 .'{fussball_widget_legend},fussball_team_id_array;'
 .'{expert_legend:hide},cssID,space';
 
+
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_calendar'] =
+    '{title_legend},headline,type;'
+    .'{fussball_widget_legend},fussball_team_id_array;'
+    .'{expert_legend:hide},cssID,space';
+
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] =
 '{title_legend},headline,type;'
 .'{fussball_widget_legend},fussball_goalgetter;'

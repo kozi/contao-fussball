@@ -28,6 +28,7 @@ ClassLoader::addClasses(array
     'ContentFussballTournament'      => 'system/modules/fussball_widget/elements/ContentFussballTournament.php',
     'ContentFussballGoalgetter'      => 'system/modules/fussball_widget/elements/ContentFussballGoalgetter.php',
     'ContentFussballWidget'          => 'system/modules/fussball_widget/elements/ContentFussballWidget.php',
+    'ContentFussballFullCalendar'    => 'system/modules/fussball_widget/elements/ContentFussballFullCalendar.php',
 ));
 
 /**
@@ -38,6 +39,7 @@ TemplateLoader::addFiles(array
     // ContentElement Templates
 	'ce_fussball_goalgetter'      => 'system/modules/fussball_widget/templates',	
 	'ce_fussball_matches'         => 'system/modules/fussball_widget/templates',
-	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',		
-	'ce_fussball_tournament'      => 'system/modules/fussball_widget/templates',
+	'ce_fussball_widget'          => 'system/modules/fussball_widget/templates',
+    'ce_fussball_tournament'      => 'system/modules/fussball_widget/templates',
+    'ce_fussball_calendar'        => 'system/modules/fussball_widget/templates',
 ));
