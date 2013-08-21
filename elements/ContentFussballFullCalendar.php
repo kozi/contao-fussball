@@ -28,6 +28,7 @@ class ContentFussballFullCalendar extends ContentElement {
     protected $strTemplate = 'ce_fussball_calendar';
 
 	public function generate() {
+
 		if (TL_MODE == 'BE') {
 			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### FullCalendar ###';
@@ -71,7 +72,7 @@ class ContentFussballFullCalendar extends ContentElement {
         $result = $this->Database->execute("SELECT * FROM tl_fussball_matches
             WHERE team_id IN (".implode(',', $this->teamIds).")");
         while ($result->next()) {
-            $this->events[] = FullCal::fullCalEventFromMatchEntry($result->row(), '#'.$this->teams[$result->team_id]['bgcolor'][0]);
+            $this->events[] = FullCal::fullCalEventFromMatchEntry($result->row(), $this->teams[$result->team_id]);
         }
 
     }
@@ -83,9 +84,9 @@ class ContentFussballFullCalendar extends ContentElement {
 class FullCal {
     public static $matchLength = 6300;
 
-    public static function fullCalEventFromMatchEntry($match, $bgColor) {
+    public static function fullCalEventFromMatchEntry($match, $team) {
         $erg   = (strlen($match['ergebnis']) > 0) ? ' '.$match['ergebnis'] : '';
-        $title = $match['heim'].' - '.$match['gast'].' ['.$match['typ'].']'.$erg;
+        $title = $team['name_short'].': '.$match['heim'].' - '.$match['gast'].' ['.$match['typ'].']'.$erg;
 
         return static::fullCalEvent(
             $match['id'],
@@ -93,7 +94,7 @@ class FullCal {
             $match['anstoss'],
             $match['anstoss'] + static::$matchLength,
             false,
-            $bgColor
+            $team['bgcolor'][0]
         );
     }
 

@@ -17,3 +17,8 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_matches_id'] = arra
     'label'                   => array('FUSSBALL_MATCHES_ID', 'FUSSBALL_MATCHES_ID'),
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
 );
+
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tournament_id'] = array(
+    'label'                   => array('FUSSBALL_TOURNAMENT_ID', 'FUSSBALL_TOURNAMENT_ID'),
+    'sql'                     => "int(10) unsigned NOT NULL default '0'",
+);

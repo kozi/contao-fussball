@@ -17,7 +17,6 @@
  * Add palettes to tl_calendar
  */
 
-
 $GLOBALS['TL_DCA']['tl_calendar']['config']['onload_callback'][] = array('FussballDataManager', 'updateCalendar');
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['default']        .= ';{fussball_widget_legend:closed},fussball_team_id';
 

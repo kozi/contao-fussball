@@ -37,9 +37,20 @@ class FussballDataManager extends System {
 		parent::__construct();
 	}
 
-
     public function updateCalendar() {
-        // TODO Turniere auch in den Kalender einfügen
+
+        // Delete all calendar events inserted by fussball_widget extension
+        // without matching entry in tl_fussball_matches or tl_fussball_tournament
+        $this->Database->execute("DELETE FROM tl_calendar_events
+            WHERE fussball_matches_id != 0
+            AND fussball_matches_id NOT IN (SELECT id FROM tl_fussball_matches)");
+
+        $this->Database->execute("DELETE FROM tl_calendar_events
+            WHERE fussball_tournament_id != 0
+            AND fussball_tournament_id NOT IN (SELECT id FROM tl_fussball_tournament)");
+
+
+
         $result = $this->Database->execute("SELECT id, title, fussball_team_id
                     FROM tl_calendar WHERE fussball_team_id != 0");
         while($result->next()) {
@@ -87,22 +98,67 @@ class FussballDataManager extends System {
 	}
 
     private function updateCalenderEvents($calendar) {
-        /* Delete all calendar events inserted by fussball_widget extension
-        $this->Database->prepare('DELETE FROM tl_calendar_events WHERE pid = ? AND fussball_matches_id != 0')
-            ->execute($calendar->id);
-        */
+        $this->loadLanguageFile('tl_fussball_tournament');
 
         // Get all matches from tl_fussball_match for $calendar->fussball_team_id
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE team_id = ?')
             ->execute($calendar->fussball_team_id);
 
         while ($result->next()) {
-            $this->calendarEvent($calendar, $result->row());
+            $this->calendarEventMatch($calendar, $result->row());
+        }
+
+        // Get all tournaments from tl_fussball_tournament for $calendar->fussball_team_id
+
+        $result = $this->Database->prepare('SELECT * FROM tl_fussball_tournament WHERE team_id = ?')
+            ->execute($calendar->fussball_team_id);
+
+        while ($result->next()) {
+            $this->calendarEventTournament($calendar, $result->row());
         }
     }
 
+    private function calendarEventTournament($calendar, $tournament) {
+        $title = $tournament['title'].' [TU]';
+        $text  = implode(" <br>", array(
+            $title,
+            $GLOBALS['TL_LANG']['tl_fussball_tournament']['host'][0].': '. $tournament['host'],
+            $GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].': '.$tournament['field_type'],
+            $GLOBALS['TL_LANG']['tl_fussball_tournament']['location'][0].': '.$tournament['location'],
+            $GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'][0].': '.($tournament['confirmed'] == '1' ? 'Ja': 'Nein'),
+            $tournament['details']
+        ));
 
-    private function calendarEvent($calendar, $match) {
+
+        $eventData      = array(
+            'fussball_tournament_id' => $tournament['id'],
+            'tstamp'    => $this->now,
+            'pid'       => $calendar->id,
+            'title'     => $title,
+            'alias'     => standardize($title.' '.date("d-m-Y", $tournament['startDate'])),
+            'teaser'    => $text,
+            'location'  => $tournament['location'],
+            'addTime'   => $tournament['addTime'],
+            'startTime' => $tournament['startTime'],
+            'endTime'   => $tournament['endTime'],
+            'startDate' => $tournament['startDate'],
+            'endDate'   => $tournament['endDate'],
+            'published' => 1,
+        );
+
+        $result = $this->Database->prepare('SELECT id FROM tl_calendar_events WHERE fussball_tournament_id = ?')
+            ->limit(1)->executeUncached($tournament['id']);
+        if($result->numRows == 1) {
+            $eventData['id'] = $result->id;
+        }
+
+        $calEventModel = new CalendarEventsModel();
+        $calEventModel->setRow($eventData)->save();
+
+    }
+
+
+    private function calendarEventMatch($calendar, $match) {
         $erg   = (strlen($match['ergebnis']) > 0) ? ' '.$match['ergebnis'] : '';
         $loc   = str_replace("\n", ' <br>', $match['location']);
         $title = $match['heim'].' - '.$match['gast'].' ['.$match['typ'].']'.$erg;
@@ -113,7 +169,7 @@ class FussballDataManager extends System {
             (strlen($erg) > 0) ?  'Ergebnis:'.$erg : ''
         ));
 
-        $evenData      = array(
+        $eventData      = array(
             'fussball_matches_id' => $match['id'],
             'tstamp'    => $this->now,
             'pid'       => $calendar->id,
@@ -132,11 +188,11 @@ class FussballDataManager extends System {
         $result = $this->Database->prepare('SELECT id FROM tl_calendar_events WHERE fussball_matches_id = ?')
             ->limit(1)->executeUncached($match['id']);
         if($result->numRows == 1) {
-            $evenData['id'] = $result->id;
+            $eventData['id'] = $result->id;
         }
 
         $calEventModel = new CalendarEventsModel();
-        $calEventModel->setRow($evenData)->save();
+        $calEventModel->setRow($eventData)->save();
 
     }
 

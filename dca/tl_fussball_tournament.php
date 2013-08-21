@@ -31,6 +31,10 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
     'sql' => array(
         'keys' => array('id' => 'primary')
     ),
+    'onsubmit_callback' => array
+    (
+        array('tl_fussball_tournament', 'adjustTime'),
+    ),
 ),
 
 // List
@@ -237,6 +241,41 @@ class tl_fussball_tournament extends Backend {
         }
     }
 
+
+    public function adjustTime(DataContainer $dc) {
+
+        // Return if there is no active record (override all)
+        if (!$dc->activeRecord) {
+            return;
+        }
+
+        $arrSet['startTime'] = $dc->activeRecord->startDate;
+        $arrSet['endTime']   = $dc->activeRecord->startDate;
+
+        // Set end date
+        if (strlen($dc->activeRecord->endDate)) {
+            if ($dc->activeRecord->endDate > $dc->activeRecord->startDate) {
+                $arrSet['endDate'] = $dc->activeRecord->endDate;
+                $arrSet['endTime'] = $dc->activeRecord->endDate;
+            }
+            else {
+                $arrSet['endDate'] = $dc->activeRecord->startDate;
+                $arrSet['endTime'] = $dc->activeRecord->startDate;
+            }
+        }
+
+        // Add time
+        if ($dc->activeRecord->addTime) {
+            $arrSet['startTime'] = strtotime(date('Y-m-d', $arrSet['startTime']) . ' ' . date('H:i:s', $dc->activeRecord->startTime));
+            $arrSet['endTime']   = strtotime(date('Y-m-d', $arrSet['endTime']) . ' ' . date('H:i:s', $dc->activeRecord->endTime));
+        }
+        // Adjust end time of "all day" events
+        elseif ((strlen($dc->activeRecord->endDate) && $arrSet['endDate'] == $arrSet['endTime']) || $arrSet['startTime'] == $arrSet['endTime']) {
+            $arrSet['endTime'] = (strtotime('+ 1 day', $arrSet['endTime']) - 1);
+        }
+        $this->Database->prepare("UPDATE tl_fussball_tournament %s WHERE id=?")->set($arrSet)->execute($dc->id);
+    }
+
     public function changeTeamIdField() {
 
     }
@@ -250,12 +289,13 @@ class tl_fussball_tournament extends Backend {
         $team    = $this->teams[$team_id];
         $args[0] = $team->name_short;
 
-        $args[3] = Date::parse('d.m.Y', $row['startDate']);
-        $args[4] = Date::parse('d.m.Y', $row['endDate']);
+        $args[3] = Date::parse('d.m.Y', $row['startDate']).'&nbsp;';
+
+        $args[4] = ($row['endDate'] != null) ? Date::parse('d.m.Y', $row['endDate']).'&nbsp;' : '';
 
         if ($row['addTime']) {
-            $args[3] .= '&nbsp;'.Date::parse('H:i', $row['startTime']);
-            $args[4] .= '&nbsp;'.Date::parse('H:i', $row['endTime']);
+            $args[3] .= Date::parse('H:i', $row['startTime']);
+            $args[4] .= Date::parse('H:i', $row['endTime']);
         }
 
         $imgSRC  = Image::get('system/modules/fussball_widget/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
