@@ -121,12 +121,12 @@ class FussballDataManager extends System {
     private function calendarEventTournament($calendar, $tournament) {
         $title = $tournament['title'].' [TU]';
         $text  =
-            $title
-            ." <br>".$GLOBALS['TL_LANG']['tl_fussball_tournament']['host'][0].': '. $tournament['host']
-            .", ".$GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'][0].': '.($tournament['confirmed'] == '1' ? 'Ja': 'Nein')
-            ." <br>".$GLOBALS['TL_LANG']['tl_fussball_tournament']['location'][0].': '.$tournament['location']
-            .", ".$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].': '.$tournament['field_type']
-            ." <br>".$tournament['details']
+            .'<span class="title">'.$title.'</span>'
+            .' <br><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['host'][0].':</strong> '. $tournament['host']
+            .', <strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'][0].':</strong> '.($tournament['confirmed'] == '1' ? 'Ja': 'Nein')
+            .' <br><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['location'][0].':</strong> '.$tournament['location']
+            .', <strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].':</strong> '.$tournament['field_type']
+            .' <br>'.$tournament['details']
         ;
 
 

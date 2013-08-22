@@ -20,7 +20,7 @@
 
 .tournament_list .type span,
 .tournament_list .confirm span {
-	display:block;
+	display:inline-block;
 	width:24px;
 	height:24px;
 }
