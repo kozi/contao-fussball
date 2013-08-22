@@ -3,10 +3,14 @@
     width:609px !important;
 }
 
+
 .ce_fussball_widget .egmMain,
 .ce_fussball_widget iframe {
     margin:0 auto !important;
     width:611px !important;
+}
+.ce_fussball_widget iframe {
+    height:80px !important;
 }
 
 .ce_fussball_widget #fussballdeAPI .fbdeAPItoplogo {

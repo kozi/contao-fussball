@@ -40,8 +40,9 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 	),
 	'label' => array
 	(
-		'fields'                  => array('name', 'name_short', 'name_external', 'lastUpdate'),
+		'fields'                  => array('bgcolor', 'name', 'name_short', 'name_external', 'lastUpdate'),
 		'showColumns'             => true,
+        'label_callback'          => array('tl_fussball_team', 'labelCallback')
 	),
 
 
@@ -168,6 +169,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 );
 
 class tl_fussball_team extends Backend {
+    private $tmplBgcolor = '<span class="fussball_bgcolor" style="background-color:#%s;">&nbsp;</span>';
 
 	public function __construct() {
 		parent::__construct();
@@ -178,6 +180,9 @@ class tl_fussball_team extends Backend {
 		if ($args === null) {
 			return $label;
 		}
+
+        $bgcolor = unserialize($row['bgcolor']);
+        $args[0] = sprintf($this->tmplBgcolor, $bgcolor[0]);
 		return $args;
 	}
 }

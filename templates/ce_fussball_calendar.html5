@@ -1,20 +1,14 @@
 <div class="<?php echo $this->class; ?> fussball_calendar block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
-<?php if ($this->headline): ?>
-	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+    <?php if ($this->headline): ?>
+    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 <?php endif;?>
 
 <script src="system/modules/fussball_widget/assets/fullcalendar/fullcalendar.min.js"></script>
 <link rel="stylesheet" href="system/modules/fussball_widget/assets/fullcalendar/fullcalendar.css">
 
 <script>
-
     $(document).ready(function() {
-
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
 
         $('#fussball_calendar').fullCalendar({
             defaultView: 'agendaWeek',
@@ -37,7 +31,9 @@
                 week: 'Woche',
                 day: 'Tag'
             },
-
+            eventAfterAllRender: function(view) {
+                $('.fc-content .fc-view > div > div').filter(':last').height(600);
+            },
             monthNames: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
@@ -53,7 +49,9 @@
         });
 
     });
-
 </script>
-    <div id="fussball_calendar"></div>
+
+<div id="fussball_calendar"></div>
+
+
 </div>

@@ -13,6 +13,11 @@ span.fussball_team {
 	color:#fff;
 }
 
+span.fussball_bgcolor {
+    display:inline-block;
+    width:32px;
+}
+
 td.fussball_opponent span,
 td.fussball_opponent input.tl_text {
 	margin-left:2px;
