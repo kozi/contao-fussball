@@ -44,10 +44,14 @@ class ContentFussballTeams extends ContentElement {
         $i = 0;
         $result = $this->Database->prepare("SELECT DISTINCT team_id FROM tl_fussball_matches WHERE anstoss > ?")->execute(time()) ;
         while ($result->next()) {
-            $team           = $this->allTeams[$result->team_id];
+            $team           = clone $this->allTeams[$result->team_id];
             $team->cssClass = $team->alias.(($i++ % 2) ? ' odd' : ' even');
             $this->activeTeams[$team->id] = $team;
         }
+
+        usort($this->activeTeams, function($a, $b) {
+            return strcmp($a->name, $b->name);
+        });
 
         $this->Template->allTeams    = $this->allTeams;
         $this->Template->activeTeams = $this->activeTeams;
