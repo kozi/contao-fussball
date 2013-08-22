@@ -51,13 +51,18 @@ class ContentFussballFullCalendar extends ContentElement {
 	}
 			
 	protected function compile() {
-        $year  = date('Y');
-        $month = date('m');
+        $legendTeams = array();
 
-        $this->getEvents();
+
+        $result      = $this->Database->prepare("SELECT DISTINCT team_id FROM tl_fussball_matches
+                          WHERE anstoss > ?")->execute(time()) ;
+        while ($result->next()) {
+            $legendTeams[$result->team_id] = $this->teams[$result->team_id];
+        }
+        $this->Template->legendTeams = $legendTeams;
 
         if ('json' === Input::get('fullcalendar')) {
-
+            $this->getEvents();
             echo json_encode($this->events);
             exit;
         }
