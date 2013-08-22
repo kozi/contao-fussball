@@ -108,7 +108,7 @@ class FullCal {
         );
 
         if ($url     !== false) $event['url']             = $url;
-        if ($bgColor !== false) $event['backgroundColor'] = $bgColor;
+        if ($bgColor !== false) $event['backgroundColor'] = '#'.$bgColor;
 
         return $event;
     }
