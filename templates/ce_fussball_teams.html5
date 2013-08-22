@@ -1,0 +1,16 @@
+
+<div class="<?php echo $this->class; ?> fussball_teams block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif;?>
+
+<table class="team_table">
+    <?php foreach($this->activeTeams as $team) :?>
+        <tr class="<?php echo $team->cssClass; ?>">
+            <?php echo var_dump($team); ?>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+</div>

@@ -39,6 +39,11 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] =
 .'{fussball_widget_legend},fussball_goalgetter;'
 .'{expert_legend:hide},cssID,space';
 
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_teams'] =
+    '{title_legend},headline,type;'
+    .'{fussball_widget_legend},fussball_template;'
+    .'{expert_legend:hide},cssID,space';
+
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_mandant'] = array
 (

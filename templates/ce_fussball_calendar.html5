@@ -50,17 +50,17 @@
 
     });
 </script>
-<div class="legendTeams">
-    <ul>
-    <?php foreach($this->legendTeams as $team): ?>
-        <li style="background-color: #<?php echo $team['bgcolor'][0]; ?>">
-            [<?php echo $team['name_short']; ?>] <?php echo $team['name']; ?>
-        </li>
-    <?php endforeach; ?>
-    </ul>
-</div>
 
 <div id="fussball_calendar"></div>
 
+<div class="legendTeams">
+    <ul>
+        <?php foreach($this->legendTeams as $team): ?>
+            <li style="background-color: #<?php echo $team['bgcolor'][0]; ?>">
+                <?php echo $team['name']; ?> [<?php echo $team['name_short']; ?>]
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 
 </div>

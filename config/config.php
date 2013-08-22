@@ -21,6 +21,7 @@ $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContentFussballTou
 $GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContentFussballMatches';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'ContentFussballWidget';
 $GLOBALS['TL_CTE']['fussball']['fussball_calendar']        = 'ContentFussballFullCalendar';
+$GLOBALS['TL_CTE']['fussball']['fussball_teams']           = 'ContentFussballTeams';
 
 
 array_insert($GLOBALS['BE_MOD'], 1, array('fussball' => array()));
