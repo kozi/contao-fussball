@@ -110,7 +110,11 @@ class FussballTools {
 
         foreach ($matches as &$oneMatch) {
             foreach ($oneMatch as $key => $value) {
-                $oneMatch[$key] = str_replace('&nbsp;', ' ', strip_tags($value));
+                $oneMatch[$key] = str_replace(
+                    array('&nbsp;', '&#8209;'),
+                    array(' '     ,'-'),
+                    strip_tags($value)
+                );
             }
         }
 
