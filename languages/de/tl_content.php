@@ -16,9 +16,10 @@ $GLOBALS['TL_LANG']['tl_content']['fussball_is_homematch']           = array("He
 $GLOBALS['TL_LANG']['tl_content']['fussball_opponent']               = array("Spiel", "Spiel");
 $GLOBALS['TL_LANG']['tl_content']['fussball_result']                 = array("Ergebnis", "Ergebnis");
 
-$GLOBALS['TL_LANG']['tl_content']['fussball_team_id']                = array('Mannschaft', 'Zeige Spiele der gewählten Mannschaft.');
+$GLOBALS['TL_LANG']['tl_content']['fussball_team_id']                = array('Mannschaft', 'Nur die gewählte Mannschaft.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_team_id_array']          = array('Mannschaften', 'Zeige Turniere der gewählten Mannschaften.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_order']                  = array('Sortierung', 'Auf oder absteigende Sortierung nach Anstoßzeit');
+$GLOBALS['TL_LANG']['tl_content']['fussball_template']               = array('Team-Template', 'Verwende folgendes Template zur Anzeige.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_order']['options']       = array('asc' => 'Aufsteigend', 'desc' => 'Absteigend');
 $GLOBALS['TL_LANG']['tl_content']['fussball_typ']                    = array('Spieltyp', 'Typ des Spiel (z.B. Freundschaftsspiel)');
 $GLOBALS['TL_LANG']['tl_content']['fussball_typ']['options']         = array('me' => 'Meisterschaftsspiel', 'fr' => 'Freundschaftsspiel');

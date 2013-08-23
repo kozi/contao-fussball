@@ -13,6 +13,13 @@
  * @filesource
  */
 
+
+$GLOBALS['fussball_widget']['team_attributes'] = array(
+    'Trainer/Betreuer', 'Trainer', 'Betreuer', 'Kontakt', 'Jahrgang',
+    'Trainingszeiten', 'Facebook', 'Mannschaftsverantwortlicher'
+);
+
+
 $GLOBALS['TL_CRON']['hourly'][]                            = array('FussballDataManager', 'updateMatches');
 $GLOBALS['TL_CRON']['daily'][]                             = array('FussballDataManager', 'updateCalendar');
 
@@ -21,7 +28,7 @@ $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContentFussballTou
 $GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContentFussballMatches';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'ContentFussballWidget';
 $GLOBALS['TL_CTE']['fussball']['fussball_calendar']        = 'ContentFussballFullCalendar';
-$GLOBALS['TL_CTE']['fussball']['fussball_teams']           = 'ContentFussballTeams';
+$GLOBALS['TL_CTE']['fussball']['fussball_team']            = 'ContentFussballTeam';
 
 
 array_insert($GLOBALS['BE_MOD'], 1, array('fussball' => array()));

@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 	),
 	'label' => array
 	(
-		'fields'                  => array('bgcolor', 'name', 'name_short', 'alias', 'name_external', 'lastUpdate'),
+		'fields'                  => array('bgcolor', 'name', 'team_attributes', 'lastUpdate'),
 		'showColumns'             => true,
         'label_callback'          => array('tl_fussball_team', 'labelCallback')
 	),
@@ -70,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 // Palettes
 'palettes' => array
 (
-	'default'                     => '{title_legend},name,name_short,name_external,alias,bgcolor;{spielplan_legend}, action_url, team_id'
+	'default'                     => '{title_legend},name,name_short,name_external,alias,bgcolor;{team_attr_legend},team_attributes;{spielplan_legend},action_url,team_id'
 ),
 
 // Fields
@@ -143,6 +143,18 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
         'sql'                     => "varchar(64) NOT NULL default ''",
     ),
+
+    'team_attributes' => array
+    (
+        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['team_attributes'],
+        'exclude'                 => true,
+        'search'                  => false,
+        'sorting'                 => false,
+        'inputType'		          => 'multiColumnWizard',
+        'eval'			          => array('mandatory'=>false,'columnsCallback'=>array('tl_fussball_team', 'teamAttributes')),
+        'sql'                     => "blob NULL",
+    ),
+
     'action_url' => array
     (
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['action_url'],
@@ -181,21 +193,52 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 
 class tl_fussball_team extends Backend {
     private $tmplBgcolor = '<span class="fussball_bgcolor" style="background-color:#%s;">&nbsp;</span>';
+    private $tmplTeamAttribute = '<strong>%s</strong>: %s<br>';
 
 	public function __construct() {
 		parent::__construct();
 		$this->import('BackendUser', 'User');		
 	}
 
-	public function labelCallback($row, $label, DataContainer $dc, $args = null) {
+    public function labelCallback($row, $label, DataContainer $dc, $args = null) {
 		if ($args === null) {
 			return $label;
 		}
 
         $bgcolor = unserialize($row['bgcolor']);
         $args[0] = sprintf($this->tmplBgcolor, $bgcolor[0]);
+        $args[1] = implode('<br>', array(
+            $row['name'],
+            'Abkürzung: '.$row['name_short'],
+            'Alias: '.$row['alias']
+        ));
+
+        $args[2] = '';
+        $team_attributes = unserialize($row['team_attributes']);
+        foreach ($team_attributes as $attribute) {
+            $args[2] .= sprintf($this->tmplTeamAttribute, $attribute['fussball_ta_key'], $attribute['fussball_ta_value']);
+        }
 		return $args;
 	}
+
+    public function teamAttributes() {
+        return array
+        (
+            'fussball_ta_key' => array
+            (
+                'label'                 => 'Attribut',
+                'inputType'             => 'select',
+                'options'            	=> $GLOBALS['fussball_widget']['team_attributes'],
+                'eval' 			        => array('style' => 'width:180px')
+            ),
+            'fussball_ta_value' => array
+            (
+                'label'                 => 'Wert',
+                'inputType'             => 'text',
+                'eval' 		            => array('style'=>'width:420px')
+            )
+        );
+    }
 }
 
 

@@ -1,0 +1,17 @@
+<div class="<?php echo $this->class; ?> ce_fussball_team block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif;?>
+
+<?php if($this->allTeams): ?>
+<ul>
+    <?php echo $this->allTeams; ?>
+</ul>
+<?php endif; ?>
+
+<?php if($this->team): ?>
+    <?php echo $this->team; ?>
+<?php endif; ?>
+
+</div>

@@ -8,6 +8,7 @@ $GLOBALS['TL_LANG']['tl_fussball_team']['name_short']           = array('Abkürz
 $GLOBALS['TL_LANG']['tl_fussball_team']['name_external']        = array('Externer Name', 'Name bei fussball.de');
 $GLOBALS['TL_LANG']['tl_fussball_team']['lastUpdate']           = array('Letztes Update', 'Letztes Update');
 $GLOBALS['TL_LANG']['tl_fussball_team']['bgcolor']              = array('Farbe', 'Hintergrundfarbe für Kalenderereignisse.');
+$GLOBALS['TL_LANG']['tl_fussball_team']['team_attributes']      = array('Attribute', 'Teamattribute');
 
 $GLOBALS['TL_LANG']['tl_fussball_team']['action_url']           = array('URL', 'Muss aus der Vereinsseite bei fussball.de ausgelesen werden.');
 $GLOBALS['TL_LANG']['tl_fussball_team']['team_id']              = array('Team-ID', 'Muss ebenfalls aus der Vereinsseite bei fussball.de ausgelesen werden.');

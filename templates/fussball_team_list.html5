@@ -1,0 +1,3 @@
+<li class="<?php echo $this->class; ?> fussball_team"<?php echo $this->cssID; ?>>
+    <?php echo $this->team->name; ?>, <?php echo $this->team->name_short; ?>, <?php echo $this->team->alias; ?>
+</li>
