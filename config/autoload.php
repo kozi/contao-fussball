@@ -30,6 +30,7 @@ ClassLoader::addClasses(array
     'ContentFussballWidget'          => 'system/modules/fussball_widget/elements/ContentFussballWidget.php',
     'ContentFussballFullCalendar'    => 'system/modules/fussball_widget/elements/ContentFussballFullCalendar.php',
     'ContentFussballTeam'            => 'system/modules/fussball_widget/elements/ContentFussballTeam.php',
+    'ContentFussballInfobox'         => 'system/modules/fussball_widget/elements/ContentFussballInfobox.php',
 ));
 
 /**

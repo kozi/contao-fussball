@@ -17,6 +17,8 @@
  * Add palettes to tl_content
  */
 
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_infobox']  = $GLOBALS['TL_DCA']['tl_content']['palettes']['text'];
+
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_widget_legend},fussball_wettbewerbs_id,fussball_mandant,fussball_team_id;{expert_legend:hide},cssID,space';
 
 
