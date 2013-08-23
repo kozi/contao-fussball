@@ -151,7 +151,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'search'                  => false,
         'sorting'                 => false,
         'inputType'		          => 'multiColumnWizard',
-        'eval'			          => array('mandatory'=>false,'columnsCallback'=>array('tl_fussball_team', 'teamAttributes')),
+        'eval'			          => array('mandatory'=>false, 'allowHtml' => true, 'columnsCallback'=>array('tl_fussball_team', 'teamAttributes')),
         'sql'                     => "blob NULL",
     ),
 
@@ -235,7 +235,7 @@ class tl_fussball_team extends Backend {
             (
                 'label'                 => 'Wert',
                 'inputType'             => 'text',
-                'eval' 		            => array('style'=>'width:420px')
+                'eval' 		            => array('style'=>'width:420px', 'allowHtml' => true)
             )
         );
     }
