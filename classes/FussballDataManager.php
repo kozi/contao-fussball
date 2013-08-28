@@ -73,7 +73,7 @@ class FussballDataManager extends System {
             $teamObj = (Object) $result->row();
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
 
-            $this->log(sprintf($log, $teamObj->name, $teamObj->id_mannschaft, $teamObj->id_verein),
+            $this->log(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id),
                 'FussballDataManager updateMatches()', TL_CRON);
         }
 

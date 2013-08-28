@@ -12,7 +12,7 @@
             <th>Anstoß</th>
             <th>Heim</th>
             <th>Gast</th>
-            <th colspan="2">Ergebnis/Punkte</th>
+            <th colspan="2"><abbr title="Ergebnis/Punkte">Erg.</th>
         </tr>
     </thead>
     <tbody>

@@ -13,6 +13,7 @@ span.fussball_team {
 	color:#fff;
 }
 
+
 .ce_fussball_infobox {
     padding:5px 10px;
     margin:10px;
@@ -26,6 +27,12 @@ span.fussball_team {
 td.col_bgcolor {
     position:relative;
 }
+
+td.col_team_attributes {
+    overflow:hidden;
+    white-space: nowrap;
+}
+
 span.fussball_bgcolor {
     display:block;
     width:100%;

@@ -16,7 +16,8 @@
 
 $GLOBALS['fussball_widget']['team_attributes'] = array(
     'Trainer/Betreuer', 'Trainer', 'Betreuer', 'Kontakt', 'Jahrgang',
-    'Trainingszeiten', 'Facebook', 'Mannschaftsverantwortlicher'
+    'Trainingszeiten', 'Facebook', 'Mannschaftsverantwortlicher',
+    'Obmänner','Doodle'
 );
 
 
