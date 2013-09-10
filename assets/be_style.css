@@ -28,11 +28,6 @@ td.col_bgcolor {
     position:relative;
 }
 
-td.col_team_attributes {
-    overflow:hidden;
-    white-space: nowrap;
-}
-
 span.fussball_bgcolor {
     display:block;
     width:100%;

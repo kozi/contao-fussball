@@ -46,6 +46,11 @@ class ContentFussballWidget extends ContentElement {
 	}
 
 	protected function compile() {
+        global $objPage;
+
+        // Get API-Key from root page
+        $objRootPage = PageModel::findByPk($objPage->rootId);
+        $this->addJavascriptFiles($objRootPage->fussball_api_key);
 
         // Get external team name
         $result = $this->Database->prepare("SELECT * FROM tl_fussball_team WHERE id = ?")->execute($this->fussball_team_id);
@@ -53,8 +58,6 @@ class ContentFussballWidget extends ContentElement {
             $this->Template->fussball_team = $result->name_external;
         }
 
-		$api_key = $GLOBALS['TL_CONFIG']['fussball_api_key'];
-		$this->addJavascriptFiles($api_key);
 	}
 
 	protected function addJavascriptFiles($api_key) {

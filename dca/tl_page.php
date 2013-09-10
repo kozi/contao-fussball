@@ -12,14 +12,15 @@
  * @license    LGPL
  * @filesource
  */
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{fussball_widget_legend},fussball_api_key';
 
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{fussball_widget_legend},fussball_api_key,fussball_tourn_calendar,fussball_tourn_teams';
-
-$GLOBALS['TL_DCA']['tl_settings']['fields']['fussball_api_key'] = array(
-	'label'		=>	&$GLOBALS['TL_LANG']['tl_settings']['fussball_api_key'],
+$GLOBALS['TL_DCA']['tl_page']['fields']['fussball_api_key'] = array(
+	'label'		=>	&$GLOBALS['TL_LANG']['tl_page']['fussball_api_key'],
 	'exclude'	=>	true,
 	'inputType'	=>	'text',
-	'eval'		=>	array('mandatory'=>true)
+    'sql'       =>  "varchar(255) NOT NULL default ''",
+	'eval'		=>	array('mandatory'=>true),
+
 );
 
 
