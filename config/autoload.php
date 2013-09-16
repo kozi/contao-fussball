@@ -47,4 +47,7 @@ TemplateLoader::addFiles(array
     'ce_fussball_team'            => 'system/modules/fussball_widget/templates',
     'fussball_team_list'          => 'system/modules/fussball_widget/templates',
     'fussball_team_single'        => 'system/modules/fussball_widget/templates',
+
+    // Mobile template
+    'ce_fussball_matches_mobile'  => 'system/modules/fussball_widget/templates',
 ));

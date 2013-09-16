@@ -53,9 +53,11 @@ class ContentFussballMatches extends ContentElement {
 	}
 
 	protected function compile() {
+        global $objPage;
 
-
-
+        if ($objPage->isMobile) {
+            $this->Template = new FrontendTemplate('ce_fussball_matches_mobile');
+        }
 
         $this->now      = time();
         $matches_future = array();
@@ -103,7 +105,6 @@ class ContentFussballMatches extends ContentElement {
 
         // Sort by matches_order
         // $matches = array_merge($matches_past, $matches_future);
-
 
 		$this->Template->sum_points = $this->sum_points;
 		$this->Template->sum_goals  = $this->sum_goals;
