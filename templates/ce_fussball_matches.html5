@@ -2,32 +2,46 @@
 
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
-<?php if ($this->headline): ?>
-	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+    <?php if ($this->headline): ?>
+    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 <?php endif;?>
 <table>
     <thead>
-        <tr>
-            <th class="typ">Typ</th>
-            <th class="anstoss">Anstoß</th>
-            <th class="heim">Heim</th>
-            <th class="gast">Gast</th>
-            <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</th>
-        </tr>
+    <tr>
+        <th class="typ">Typ</th>
+        <th class="anstoss">Anstoß</th>
+        <th class="heim">Heim</th>
+        <th class="gast">Gast</th>
+        <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</th>
+    </tr>
     </thead>
     <tbody>
 
 
-<?php $i=0; foreach($this->matches as $match): $match->cssClass .= ($i++ % 2 ==0) ? ' odd': ' even'; ?>
-    <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->spielkennung; ?>">
-        <td class="typ"><img src="/system/modules/fussball_widget/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
-        <td class="anstoss"><?php echo $match->datum; ?></td>
-        <td class="heim"><?php echo $match->heim; ?></td>
-        <td class="gast"><?php echo $match->gast; ?></td>
-        <td class="ergebnis"><?php echo $match->ergebnis; ?></td>
-        <td class="points"><?php if ($match->points != -1) echo $match->points; ?></td>
+    <?php $i=0; foreach($this->matches as $match): $match->cssClass .= ($i++ % 2 ==0) ? ' odd': ' even'; ?>
+        <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->spielkennung; ?>">
+            <td class="typ"><img src="/system/modules/fussball_widget/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
+            <td class="anstoss"><?php echo $match->datum; ?></td>
+            <td class="heim">
+                <?php if ($this->team->name_external == $match->heim): ?>
+                    <span class="name"><?php echo $match->heim; ?></span>
+                    <span class="name_short"><?php echo $this->team->name_short_external; ?></span>
+                <?php else: ?>
+                    <?php echo $match->heim; ?>
+                <?php endif; ?>
+            </td>
+            <td class="gast">
+                <?php if ($this->team->name_external == $match->gast): ?>
+                    <span class="name"><?php echo $match->gast; ?></span>
+                    <span class="name_short"><?php echo $this->team->name_short_external; ?></span>
+                <?php else: ?>
+                    <?php echo $match->gast; ?>
+                <?php endif; ?>
+            </td>
+            <td class="ergebnis"><?php echo $match->ergebnis; ?></td>
+            <td class="points"><?php if ($match->points != -1) echo $match->points; ?></td>
 
-    </tr>
-<?php endforeach; ?>
-</tbody></table>
+        </tr>
+    <?php endforeach; ?>
+    </tbody></table>
 </div>

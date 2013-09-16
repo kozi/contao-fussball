@@ -3,6 +3,8 @@
 
 $GLOBALS['TL_LANG']['tl_fussball_team']['title_legend']         = 'Mannschaft';
 $GLOBALS['TL_LANG']['tl_fussball_team']['spielplan_legend']     = 'Parameter für automatische Spielplanupdates';
+$GLOBALS['TL_LANG']['tl_fussball_team']['team_attr_legend']     = 'Attribute';
+
 $GLOBALS['TL_LANG']['tl_fussball_team']['name']                 = array('Name', 'Name');
 $GLOBALS['TL_LANG']['tl_fussball_team']['name_short']           = array('Abkürzung', 'Abkürzung');
 $GLOBALS['TL_LANG']['tl_fussball_team']['name_external']        = array('Externer Name', 'Name bei fussball.de');

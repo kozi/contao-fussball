@@ -24,6 +24,15 @@
 	font-weight:normal;
     text-align:right;
 }
+.ce_fussball_matches td.heim span.name,
+.ce_fussball_matches td.gast span.name {
+    font-weight:bold;
+}
+.ce_fussball_matches td.heim span.name_short,
+.ce_fussball_matches td.gast span.name_short {
+    display:none;
+}
+
 
 .ce_fussball_matches td.typ {
     text-align:center;
