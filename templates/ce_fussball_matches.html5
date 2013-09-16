@@ -8,11 +8,11 @@
 <table>
     <thead>
         <tr>
-            <th>Typ</th>
-            <th>Anstoß</th>
-            <th>Heim</th>
-            <th>Gast</th>
-            <th colspan="2"><abbr title="Ergebnis/Punkte">Erg.</th>
+            <th class="typ">Typ</th>
+            <th class="anstoss">Anstoß</th>
+            <th class="heim">Heim</th>
+            <th class="gast">Gast</th>
+            <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</th>
         </tr>
     </thead>
     <tbody>
