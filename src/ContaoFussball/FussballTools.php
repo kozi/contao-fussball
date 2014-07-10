@@ -1,5 +1,7 @@
 <?php
 
+namespace ContaoFussball;
+
 class FussballTools {
 
     private static $strAbgesagt = 'Abg.';
@@ -15,7 +17,7 @@ class FussballTools {
         $mainContent    = htmlspecialchars_decode($mainContent);
         $mainContent    = substr($mainContent, 0, strlen($mainContent) - 2);
 
-        $html           = str_get_html($mainContent);
+        $html           = \HtmlDomParser::str_get_html($mainContent);
         $matches        = array();
         $match_date     = '';
         $match          = null;
@@ -207,18 +209,5 @@ class FussballTools {
         return $tstamp;
     }
 
-}
-
-class Verein {
-    public $id;
-    public $action;
-    public $title;
-    public $alias;
-    public function __construct($strId, $strAction, $strTitle, $strAlias) {
-        $this->id     = $strId;
-        $this->action = $strAction;
-        $this->title  = $strTitle;
-        $this->alias  = $strAlias;
-    }
 }
 

@@ -12,7 +12,7 @@
  * @license    LGPL 
  * @filesource
  */
-
+namespace ContaoFussball;
 
 /**
  * Class FussballDataManager
