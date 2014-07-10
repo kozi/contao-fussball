@@ -38,17 +38,17 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
     'fussball_teams' => array
     (
         'tables'     => array('tl_fussball_team'),
-        'icon'       => 'system/modules/fussball_widget/assets/icons/soccer.png',
+        'icon'       => 'system/modules/fussball/assets/icons/soccer.png',
     ),
     'fussball_matches' => array
     (
         'tables'     => array('tl_fussball_matches'),
-        'icon'       => 'system/modules/fussball_widget/assets/icons/chain.png',
+        'icon'       => 'system/modules/fussball/assets/icons/chain.png',
     ),
     'fussball_tournament' => array
     (
         'tables'     => array('tl_fussball_tournament'),
-        'icon'       => 'system/modules/fussball_widget/assets/icons/tournament.png',
+        'icon'       => 'system/modules/fussball/assets/icons/tournament.png',
     )
 ));
 

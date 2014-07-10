@@ -25,8 +25,9 @@
     "require": {
         "php": ">=5.3",
         "contao/core": ">=3.2,<4",
-        "sunra/php-simple-html-dom-parser": "~1.5"
-    },
+        "sunra/php-simple-html-dom-parser": "~1.5",
+        "menatwork/contao-multicolumnwizard": "~3"
+},
     "replace": {
         "contao-legacy/fussball_widget": "*"
     },
