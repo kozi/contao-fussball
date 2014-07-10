@@ -13,7 +13,6 @@
  * @filesource
  */
 
-
 $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 
 // Config
@@ -244,7 +243,7 @@ class tl_fussball_team extends Backend {
                 'label'                 => 'Attribut',
                 'inputType'             => 'select',
                 'options'            	=> $GLOBALS['fussball_widget']['team_attributes'],
-                'eval' 			        => array('style' => 'width:180px')
+                'eval' 			        => array('style' => 'width:220px')
             ),
             'fussball_ta_value' => array
             (

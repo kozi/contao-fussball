@@ -1,7 +1,7 @@
 /*
  * fussball_widget
  * http://kozianka.de/
- * Copyright (c) 2011-2013 Martin Kozianka
+ * Copyright (c) 2011-2014 Martin Kozianka
  *
  */
 if (!String.prototype.fulltrim) {
