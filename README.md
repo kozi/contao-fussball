@@ -1,4 +1,4 @@
-fussball_widget
+contao-fussball
 ===============
 
 Contao Erweiterung um z.B. den Widget von fussball.de einzubinden.

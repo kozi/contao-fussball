@@ -2,13 +2,13 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2013 Leo Feyer
+ * Copyright (C) 2005-2014 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2013 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
- * @package    fussball_widget
+ * @package    fussball
  * @license    LGPL
  * @filesource
  */
@@ -224,11 +224,15 @@ class tl_fussball_team extends Backend {
             'Alias: '.$row['alias']
         ));
 
-        $args[2] = '';
+        $args[2]         = '';
         $team_attributes = unserialize($row['team_attributes']);
-        foreach ($team_attributes as $attribute) {
-            $args[2] .= sprintf($this->tmplTeamAttribute, $attribute['fussball_ta_key'], $attribute['fussball_ta_value']);
+
+        if (is_array($team_attributes)) {
+            foreach ($team_attributes as $attribute) {
+                $args[2] .= sprintf($this->tmplTeamAttribute, $attribute['fussball_ta_key'], $attribute['fussball_ta_value']);
+            }
         }
+
 		return $args;
 	}
 

@@ -4,8 +4,8 @@
     <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
 <?php endif;?>
 
-<script src="system/modules/fussball_widget/assets/fullcalendar/fullcalendar.min.js"></script>
-<link rel="stylesheet" href="system/modules/fussball_widget/assets/fullcalendar/fullcalendar.css">
+<script src="system/modules/fussball/assets/fullcalendar/fullcalendar.min.js"></script>
+<link rel="stylesheet" href="system/modules/fussball/assets/fullcalendar/fullcalendar.css">
 
 <script>
     $(document).ready(function() {

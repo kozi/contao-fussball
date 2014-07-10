@@ -1,4 +1,4 @@
-<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/assets/fussball-matches.css|screen"; ?>
+<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball/assets/fussball-matches.css|screen"; ?>
 
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
@@ -19,7 +19,7 @@
 
     <?php $i=0; foreach($this->matches as $match): $match->cssClass .= ($i++ % 2 ==0) ? ' odd': ' even'; ?>
         <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->spielkennung; ?>">
-            <td class="typ"><img src="/system/modules/fussball_widget/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
+            <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
             <td class="anstoss"><?php echo $match->datum; ?></td>
             <td class="spiel">
                 <?php if ($this->team->name_external == $match->heim): ?>

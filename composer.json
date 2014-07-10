@@ -1,0 +1,44 @@
+{
+    "name":"martin-kozianka/contao-fussball",
+    "description":"Contao Fussball - Erweiterung zur Verwaltung eines Amateurvereins",
+    "keywords":["contao", "fussball", "verein"],
+    "type":"contao-module",
+    "license":"LGPL-3.0+",
+    "authors":[
+        {
+            "name":"Martin Kozianka",
+            "email":"martin@kozianka.de",
+            "homepage":"http://kozianka.de/",
+            "role":"Developer"
+        }
+    ],
+    "support":{
+        "email":"martin@kozianka.de",
+        "issues":"https://github.com/kozi/contao-fussball/issues",
+        "irc":"irc://irc.freenode.org/contao.dev",
+        "source":"https://github.com/kozi/contao-fussball"
+
+    },
+    "require":{
+        "php":">=5.3",
+        "contao/core":">=3.2,<4",
+        "sunra/php-simple-html-dom-parser": "~1.5"
+    },
+    "replace":{
+        "contao-legacy/fussball_widget": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "ContaoFussball": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra":{
+        "contao": {
+            "sources":{
+                "contao": "system/modules/fussball"
+            }
+        }
+    }
+}

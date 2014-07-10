@@ -1,4 +1,4 @@
-<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball_widget/assets/fussball-widget.css|screen"; ?>
+<?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball/assets/fussball-widget.css|screen"; ?>
 <?php $id = 'fw'.str_replace('-', '_', $this->fussball_mandant.$this->fussball_wettbewerbs_id); ?>
 
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
