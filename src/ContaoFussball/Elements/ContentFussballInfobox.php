@@ -21,7 +21,7 @@ namespace ContaoFussball\Elements;
  * @package    fussball
  */
 
-class ContentFussballInfobox extends ContentText {
+class ContentFussballInfobox extends \ContentText {
 
     protected function compile() {
         parent::compile();
