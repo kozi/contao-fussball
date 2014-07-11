@@ -23,9 +23,14 @@ namespace ContaoFussball;
  */
 
 class FussballDataManager extends \System {
+    const oneDayInSec      = 86400;
+    const matchLengthInSec = 6300;
+
+
     private $team_id       = 0;
 	private $now           = 0;
-	private $oneDayInSec   = 86400;
+
+
 
 	function __construct() {
 		$this->now     = time();
@@ -59,7 +64,7 @@ class FussballDataManager extends \System {
     public function updateMatches() {
 
         // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
-        $timestamp = $this->now - (2 * $this->oneDayInSec);
+        $timestamp = $this->now - (2 * static::oneDayInSec);
         $result    = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE lastUpdate < ? ORDER BY lastUpdate ASC')
             ->limit(1)->execute($timestamp);
 
@@ -78,8 +83,8 @@ class FussballDataManager extends \System {
 	public function updateTeamMatches($teamObj) {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
-        $von    = date("d.m.Y", (time() - (182 * $this->oneDayInSec)));
-        $bis    = date("d.m.Y", (time() + (182 * $this->oneDayInSec)));
+        $von    = date("d.m.Y", (time() - (182 * static::oneDayInSec)));
+        $bis    = date("d.m.Y", (time() + (182 * static::oneDayInSec)));
 
         $matches = FussballTools::getMatches($teamObj->action_url, $teamObj->team_id, $von, $bis);
 
@@ -177,7 +182,7 @@ class FussballDataManager extends \System {
             'location'  => $loc,
             'addTime'   => 1,
             'startTime' => $match['anstoss'],
-            'endTime'   => $match['anstoss'] + 6300,
+            'endTime'   => $match['anstoss'] + static::matchLengthInSec,
             'startDate' => $match['anstoss'],
             'endDate'   => NULL,
             'published' => 1,

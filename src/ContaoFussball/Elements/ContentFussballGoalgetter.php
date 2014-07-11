@@ -57,7 +57,7 @@ class ContentFussballGoalgetter extends \ContentElement {
 			if (array_key_exists($goals, $arr)) {
 				$arr[$goals]->names[] = $name;
 			} else {
-				$arr[$goals] = new stdClass();
+				$arr[$goals] = new \stdClass();
 				$arr[$goals]->goals = $goals;
 				$arr[$goals]->names = array($name);
 			}
