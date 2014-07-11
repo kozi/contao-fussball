@@ -40,7 +40,7 @@ class FussballDataManager extends \System {
 
     public function updateCalendar() {
 
-        // Delete all calendar events inserted by fussball_widget extension
+        // Delete all calendar events inserted by fussball extension
         // without matching entry in tl_fussball_matches or tl_fussball_tournament
         $this->Database->execute("DELETE FROM tl_calendar_events
             WHERE fussball_matches_id != 0

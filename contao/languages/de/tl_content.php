@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_matches_legend']         = 'Spiele';
-$GLOBALS['TL_LANG']['tl_content']['fussball_widget_legend']          = 'Fussball';
+$GLOBALS['TL_LANG']['tl_content']['fussball_legend']          = 'Fussball';
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_mandant']                = array('Mandant', 'Mandant');
 $GLOBALS['TL_LANG']['tl_content']['fussball_wettbewerbs_id']         = array('ID des Wettbewerbs', 'Die ID kann man auf fussball.de nachgucken. Eine Anleitung gibt es hier: <a onclick="window.open(this.href); return false;" style="text-decoration:underline;" href="http://www.fussball.de/ergebnis-widget-fussball-de-fuer-deine-vereins-webseite-/id_17772204/index">fussball.de Widget einbauen</a>');

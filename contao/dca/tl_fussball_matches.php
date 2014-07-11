@@ -202,8 +202,8 @@ class tl_fussball_matches extends Backend {
         $team       = $this->teams[$team_id];
         $args[0]    = $team->name_short;
 
-        $imgSRC     = Image::get('system/modules/fussball_widget/assets/icons/match_typ_'.standardize($row['typ']).'.png', 14, 14);
-        $args[5]    = Image::getHtml($imgSRC, $row['typ'], 'title="'.$row['typ'].'"');
+        $imgSRC     = \Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 14, 14);
+        $args[5]    = \Image::getHtml($imgSRC, $row['typ'], 'title="'.$row['typ'].'"');
 
 		return $args;
 	}

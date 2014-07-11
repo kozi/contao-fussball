@@ -19,7 +19,7 @@
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_infobox']  = $GLOBALS['TL_DCA']['tl_content']['palettes']['text'];
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_widget_legend},fussball_wettbewerbs_id,fussball_mandant,fussball_team_id;{expert_legend:hide},cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_legend},fussball_wettbewerbs_id,fussball_mandant,fussball_team_id;{expert_legend:hide},cssID,space';
 
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] = '{title_legend},headline,type;'
@@ -27,23 +27,23 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] = '{title_legen
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] =
 '{title_legend},headline,type;'
-.'{fussball_widget_legend},fussball_team_id_array;'
+.'{fussball_legend},fussball_team_id_array;'
 .'{expert_legend:hide},cssID,space';
 
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_calendar'] =
     '{title_legend},headline,type;'
-    .'{fussball_widget_legend},fussball_team_id_array;'
+    .'{fussball_legend},fussball_team_id_array;'
     .'{expert_legend:hide},cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] =
 '{title_legend},headline,type;'
-.'{fussball_widget_legend},fussball_goalgetter;'
+.'{fussball_legend},fussball_goalgetter;'
 .'{expert_legend:hide},cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_team'] =
     '{title_legend},headline,type;'
-    .'{fussball_widget_legend},fussball_team_id,fussball_template;'
+    .'{fussball_legend},fussball_team_id,fussball_template;'
     .'{expert_legend:hide},cssID,space';
 
 

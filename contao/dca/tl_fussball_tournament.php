@@ -298,8 +298,8 @@ class tl_fussball_tournament extends Backend {
             $args[4] .= Date::parse('H:i', $row['endTime']);
         }
 
-        $imgSRC  = Image::get('system/modules/fussball_widget/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
-        $args[5] = Image::getHtml($imgSRC);
+        $imgSRC  = \Image::get('system/modules/fussball/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
+        $args[5] = \Image::getHtml($imgSRC);
 
         return $args;
     }
