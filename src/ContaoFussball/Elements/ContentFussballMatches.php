@@ -122,7 +122,7 @@ class ContentFussballMatches extends \ContentElement {
         $match->points = $this->getPoints($match);
         // Datum formatieren
 
-        $match->datum = Date::parse('D, d.m.y H:i', $match->anstoss);
+        $match->datum = \Date::parse('D, d.m.y H:i', $match->anstoss);
 
         $match->cssClass  =  'match points'.$match->points;
         $match->cssClass .=  $match->inPast ? ' past' : ' future';

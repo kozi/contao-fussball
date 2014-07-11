@@ -49,7 +49,7 @@ class ContentFussballWidget extends \ContentElement {
         global $objPage;
 
         // Get API-Key from root page
-        $objRootPage = PageModel::findByPk($objPage->rootId);
+        $objRootPage = \PageModel::findByPk($objPage->rootId);
         $this->addJavascriptFiles($objRootPage->fussball_api_key);
 
         // Get external team name

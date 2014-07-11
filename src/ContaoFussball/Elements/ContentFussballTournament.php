@@ -74,30 +74,28 @@ class ContentFussballTournament extends \ContentElement {
             .' ORDER BY tl_fussball_tournament.startDate ASC, tl_fussball_tournament.startTime ASC')
             ->limit($db_limit)->execute($this->fussball_team_id);
 
+        $i = 0;
         while($result->next()) {
             $t = (Object) $result->row();
 
-
-
-
-            $t->date = $this->parseDate('D, d.m.y', $t->startDate);
+            $t->date = \Date::parse('D, d.m.y', $t->startDate);
             if (strlen($t->endDate) === 0 || $t->endDate == $t->startDate) {
                 if($t->addTime == '1') {
                     // Startzeit hinzufügen
-                    $t->date .= Date::parse(', H:i', $t->startTime);
+                    $t->date .= \Date::parse(', H:i', $t->startTime);
                     // Endzeit hinzufügen
                     if ($t->startTime < $t->endTime) {
-                        $t->date .= Date::parse('-H:i', $t->endTime);
+                        $t->date .= \Date::parse('-H:i', $t->endTime);
                     }
                 }
             } else {
                 if($t->addTime != '1') {
-                    $t->date .= Date::parse(' - D, d.m.y', $t->endDate);
+                    $t->date .= \Date::parse(' - D, d.m.y', $t->endDate);
                 }
                 else {
-                    $t->date .= Date::parse(', H:i', $t->startTime);
-                    $t->date .= Date::parse(' - D, d.m.y', $t->endDate);
-                    $t->date .= Date::parse(', H:i', $t->endTime);
+                    $t->date .= \Date::parse(', H:i', $t->startTime);
+                    $t->date .= \Date::parse(' - D, d.m.y', $t->endDate);
+                    $t->date .= \Date::parse(', H:i', $t->endTime);
                 }
             }
 
