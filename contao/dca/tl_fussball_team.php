@@ -243,13 +243,13 @@ class tl_fussball_team extends Backend {
                 'label'                 => 'Attribut',
                 'inputType'             => 'select',
                 'options'            	=> $GLOBALS['fussball']['team_attributes'],
-                'eval' 			        => array('style' => 'width:220px')
+                'eval' 			        => array('style' => 'width:200px')
             ),
             'fussball_ta_value' => array
             (
                 'label'                 => 'Wert',
                 'inputType'             => 'text',
-                'eval' 		            => array('style'=>'width:420px', 'allowHtml' => true)
+                'eval' 		            => array('style'=>'width:380px', 'allowHtml' => true)
             )
         );
     }
