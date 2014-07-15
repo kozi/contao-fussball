@@ -13,11 +13,11 @@
  * @filesource
  */
 $GLOBALS['fussball']['team_attributes'] = array(
-    'Trainer/Betreuer', 'Trainer', 'Betreuer', 'Kontakt', 'Jahrgang',
-    'Trainingszeiten', 'Facebook', 'Mannschaftsverantwortlicher',
-    'Obmänner','Doodle','Koordinator'
+    'Betreuer', 'Doodle', 'Facebook', 'Jahrgang',
+    'Kontakt', 'Koordinator', 'Mannschaftsverantwortlicher', 'Obmänner',
+    'Trainer', 'Trainer/Betreuer', 'Trainingszeiten',
 );
-uksort($GLOBALS['fussball']['team_attributes'], 'strcasecmp');
+
 
 
 $GLOBALS['TL_CRON']['hourly'][]                            = array('ContaoFussball\FussballDataManager', 'updateMatches');
