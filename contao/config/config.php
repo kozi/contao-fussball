@@ -19,7 +19,6 @@ $GLOBALS['fussball']['team_attributes'] = array(
 );
 
 
-
 $GLOBALS['TL_CRON']['hourly'][]                            = array('ContaoFussball\FussballDataManager', 'updateMatches');
 $GLOBALS['TL_CRON']['daily'][]                             = array('ContaoFussball\FussballDataManager', 'updateCalendar');
 

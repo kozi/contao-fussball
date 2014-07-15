@@ -184,8 +184,8 @@ class FussballTools {
         return $vereine;
     }
 
-    public static function getVerein($strId, $strAction, $strTitle, $strAlias) {
-        return new Verein($strId, $strAction, $strTitle, $strAlias);
+    public static function getVerein($strId, $strAction, $strTitle) {
+        return new Verein($strId, $strAction, $strTitle);
     }
 
     public static function getTimestampFromDateAndTimeString($str, $time) {

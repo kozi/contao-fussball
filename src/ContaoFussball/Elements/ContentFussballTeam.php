@@ -38,8 +38,8 @@ class ContentFussballTeam extends \ContentElement {
             $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')->limit(1)->execute($this->fussball_team_id);
             if($result->numRows == 1) {
                 $team = (Object) $result->row();
-                $team->cssID      = ' id="'.$team->alias.'"';
-                $team->class      = $team->alias;
+                $team->cssID      = ' id="'.standardize($team->name).'"';
+                $team->class      = standardize($team->name);
                 $this->teamAttributes($team);
                 $this->tmplTeam->team = $team;
                 $this->Template->team = $this->tmplTeam->parse();
@@ -54,7 +54,7 @@ class ContentFussballTeam extends \ContentElement {
             $team = (Object) $result->row();
             $bgcolorArr = unserialize($team->bgcolor);
             $team->bgcolor  = (is_array($bgcolorArr)) ? '#'.$bgcolorArr[0] : $team->bgcolor;
-            $team->cssClass = $team->alias.(($i++ % 2) ? ' odd' : ' even');
+            $team->cssClass = standardize($team->name).(($i++ % 2) ? ' odd' : ' even');
             $this->teamAttributes($team);
 
             $this->teamsArr[$team->id] = $team;
@@ -73,7 +73,7 @@ class ContentFussballTeam extends \ContentElement {
 
         while ($result->next()) {
             $team                 = $this->teamsArr[$result->team_id];
-            $team->cssClass       = $team->alias.(($i++ % 2) ? ' odd' : ' even');
+            $team->cssClass       = standardize($team->name).(($i++ % 2) ? ' odd' : ' even');
             $this->tmplTeam->team = $team;
             $strTeams            .= $this->tmplTeam->parse();
         }

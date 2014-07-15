@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 // Palettes
 'palettes' => array
 (
-	'default'                     => '{title_legend},name,name_short,name_external,alias,name_short_external,bgcolor;{team_attr_legend},team_attributes;{spielplan_legend},action_url,team_id'
+	'default'                     => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;{team_attr_legend},team_attributes;{spielplan_legend},action_url,team_id'
 ),
 
 // Fields
@@ -101,17 +101,6 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
     'name_short' => array
     (
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['name_short'],
-        'exclude'                 => true,
-        'search'                  => true,
-        'sorting'                 => true,
-        'flag'                    => 1,
-        'inputType'               => 'text',
-        'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'),
-        'sql'                     => "varchar(255) NOT NULL default ''",
-    ),
-    'alias' => array
-    (
-        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['alias'],
         'exclude'                 => true,
         'search'                  => true,
         'sorting'                 => true,
@@ -219,8 +208,7 @@ class tl_fussball_team extends Backend {
         $args[0] = sprintf($this->tmplBgcolor, $bgcolor[0]);
         $args[1] = implode('<br>', array(
             $row['name'],
-            'Abkürzung: '.$row['name_short'],
-            'Alias: '.$row['alias']
+            'Abkürzung: '.$row['name_short']
         ));
 
         $args[2]         = '';

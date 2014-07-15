@@ -6,12 +6,10 @@ class Verein {
     public $id;
     public $action;
     public $title;
-    public $alias;
-    public function __construct($strId, $strAction, $strTitle, $strAlias) {
+    public function __construct($strId, $strAction, $strTitle) {
         $this->id     = $strId;
         $this->action = $strAction;
         $this->title  = $strTitle;
-        $this->alias  = $strAlias;
     }
 }
 
