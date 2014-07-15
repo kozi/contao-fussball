@@ -17,7 +17,7 @@ class FussballTools {
         $mainContent    = htmlspecialchars_decode($mainContent);
         $mainContent    = substr($mainContent, 0, strlen($mainContent) - 2);
 
-        $html           = \HtmlDomParser::str_get_html($mainContent);
+        $html           = \Sunra\PhpSimple\HtmlDomParser::str_get_html($mainContent);
         $matches        = array();
         $match_date     = '';
         $match          = null;
