@@ -247,7 +247,7 @@ class FussballDataManager extends \System {
 		}
 	}
 
-    public static function updateCalendarColors() {
+    private static function updateCalendarColors() {
         $calObj = \CalendarModel::findAll();
         foreach($calObj as $calendar) {
             $teamObj = Models\FussballTeamModel::findByPk($calendar->fussball_team_id);

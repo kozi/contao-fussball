@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         'flag'                    => 1,
         'inputType'               => 'text',
         'eval'                    => array('maxlength'=>6, 'multiple'=>true, 'size'=>2, 'colorpicker'=>true, 'isHexColor'=>true, 'decodeEntities'=>true, 'tl_class'=>'w50 wizard'),
-        'sql'                     => "varchar(64) NOT NULL default ''",
+        'sql'                     => "varchar(64) NOT NULL default ''"
     ),
 
     'team_attributes' => array
