@@ -40,6 +40,11 @@ class FussballDataManager extends \System {
 
     public function updateCalendar() {
 
+        // Update calendar color if field is available
+        if($this->Database->fieldExists('fullcal_color', 'tl_calendar')) {
+            self::updateCalendarColors();
+        }
+
         // Delete all calendar events inserted by fussball extension
         // without matching entry in tl_fussball_matches or tl_fussball_tournament
         $this->Database->execute("DELETE FROM tl_calendar_events
@@ -241,6 +246,17 @@ class FussballDataManager extends \System {
                 ->set($dbMatch)->execute($spielkennung);
 		}
 	}
+
+    public static function updateCalendarColors() {
+        $calObj = \CalendarModel::findAll();
+        foreach($calObj as $calendar) {
+            $teamObj = Models\FussballTeamModel::findByPk($calendar->fussball_team_id);
+            if ($teamObj !== null) {
+                $calObj->fullcal_color = $teamObj->bgcolor;
+                $calObj->save();
+            }
+        }
+    }
 
 }
 
