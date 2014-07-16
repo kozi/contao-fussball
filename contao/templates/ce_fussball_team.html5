@@ -14,9 +14,9 @@
 <?php endif;?>
 
 <?php if ($this->arrTeams): ?>
-    <ul>
+    <ul class="team_list">
     <?php foreach($this->arrTeams as $team):?>
-        <li><?php var_dump($team);?></li>
+        <li><?php echo $team->name;?></li>
     <?php endforeach;?>
     </ul>
 <?php endif;?>
