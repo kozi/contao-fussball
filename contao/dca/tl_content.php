@@ -43,9 +43,8 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] =
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_team'] =
     '{title_legend},headline,type;'
-    .'{fussball_legend},fussball_team_id,fussball_template;'
+    .'{fussball_legend},fussball_team_id;'
     .'{expert_legend:hide},cssID,space';
-
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_mandant'] = array
 (
@@ -73,16 +72,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_team_id'] = array
     'foreignKey'              => 'tl_fussball_team.name',
     'eval'                    => array('tl_class' => 'w50', 'includeBlankOption' => true),
     'sql'                     => "int(10) unsigned NULL",
-);
-
-$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_template'] = array
-(
-    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_template'],
-    'exclude'                 => true,
-    'inputType'               => 'select',
-    'options_callback'        => array('tl_content_fussball', 'getFussballTemplates'),
-    'eval'                    => array('tl_class' => 'w50'),
-    'sql'                     => "varchar(255) NOT NULL default ''",
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_team_id_array'] = array
@@ -215,19 +204,4 @@ class tl_content_fussball extends Backend {
         usort($arr, 'usort_sortGoalgetterEntries');
         return serialize($arr);
     }
-
-    public function getFussballTemplates(DataContainer $dc) {
-        $intPid = $dc->activeRecord->pid;
-        $prefix = $dc->activeRecord->type.'_';
-
-        if ($this->Input->get('act') == 'overrideAll') {
-            $intPid = $this->Input->get('id');
-            $prefix = 'fussball_teams_';
-        }
-
-        return $this->getTemplateGroup($prefix, $intPid);
-    }
-
-
-
 }

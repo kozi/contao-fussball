@@ -26,7 +26,6 @@ $GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContaoFussball\Ele
 $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContaoFussball\Elements\ContentFussballTournament';
 $GLOBALS['TL_CTE']['fussball']['fussball_matches']         = 'ContaoFussball\Elements\ContentFussballMatches';
 $GLOBALS['TL_CTE']['fussball']['fussball_widget']          = 'ContaoFussball\Elements\ContentFussballWidget';
-$GLOBALS['TL_CTE']['fussball']['fussball_calendar']        = 'ContaoFussball\Elements\ContentFussballFullCalendar';
 $GLOBALS['TL_CTE']['fussball']['fussball_team']            = 'ContaoFussball\Elements\ContentFussballTeam';
 $GLOBALS['TL_CTE']['texts']['fussball_infobox']            = 'ContaoFussball\Elements\ContentFussballInfobox';
 

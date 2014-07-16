@@ -77,6 +77,7 @@ class ContentFussballTeam extends \ContentElement {
             $this->tmplTeam->team = $team;
             $strTeams            .= $this->tmplTeam->parse();
         }
+
         $this->Template->activeTeams = $strTeams;
     }
 
