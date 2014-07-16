@@ -67,7 +67,6 @@ class ContentFussballTeam extends \ContentElement {
         while ($result->next()) {
             $arrTeams[$result->team_id]->isActive = true;
         }
-
         $this->Template->arrTeams = $arrTeams;
     }
 

@@ -1,17 +1,24 @@
 <div class="<?php echo $this->class; ?> ce_fussball_team block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
-<?php if ($this->headline): ?>
-	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php if ($this->team): ?>
+    <h1><?php echo $this->team->name; ?></h1>
+
+    <div class="ce_list">
+        <ul class="team_attributes">
+            <?php foreach($this->team->attributes as $key => $value) : ?>
+                <li><strong><?php echo $key; ?></strong>: <?php echo $value; ?></li>
+            <?php endforeach; ?>
+        </ul>
+
+    </div>
 <?php endif;?>
 
-<?php if($this->allTeams): ?>
-<ul>
-    <?php echo $this->allTeams; ?>
-</ul>
-<?php endif; ?>
-
-<?php if($this->team): ?>
-    <?php echo $this->team; ?>
-<?php endif; ?>
+<?php if ($this->arrTeams): ?>
+    <ul>
+    <?php foreach($this->arrTeams as $team):?>
+        <li><?php var_dump($team);?></li>
+    <?php endforeach;?>
+    </ul>
+<?php endif;?>
 
 </div>
