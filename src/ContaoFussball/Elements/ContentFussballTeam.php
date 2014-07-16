@@ -46,15 +46,21 @@ class ContentFussballTeam extends \ContentElement {
             }
         }
 
-        $i        = 0;
-        $arrTeams = array();
-        $result   = $this->Database->execute('SELECT * FROM tl_fussball_team ORDER BY name');
+        $i           = 0;
+        $arrTeams    = array();
+        $addCalendar = $this->Database->fieldExists('fullcal_color', 'tl_calendar');
+        $result      = $this->Database->execute('SELECT * FROM tl_fussball_team ORDER BY name');
         while($result->next()) {
             $team           = (Object) $result->row();
             $bgcolorArr     = unserialize($team->bgcolor);
             $team->bgcolor  = (is_array($bgcolorArr)) ? '#'.$bgcolorArr[0] : $team->bgcolor;
             $team->cssClass = standardize($team->name).(($i++ % 2) ? ' odd' : ' even');
             $this->teamAttributes($team);
+
+            if($addCalendar) {
+                $this->addCalendarInfo($team);
+            }
+
             $arrTeams[$team->id] = $team;
         }
 
@@ -64,10 +70,23 @@ class ContentFussballTeam extends \ContentElement {
             AND tl_fussball_matches.anstoss > ? ORDER BY tl_fussball_team.name")
             ->execute(time()) ;
 
+
+        while ($result->next()) {
+            $arrTeams[$result->team_id]->isActive = true;
+        }
+
+
         while ($result->next()) {
             $arrTeams[$result->team_id]->isActive = true;
         }
         $this->Template->arrTeams = $arrTeams;
+    }
+
+    private function addCalendarInfo(&$team) {
+        $calObj = \CalendarModel::findOneBy('fussball_team_id', $team->id);
+        if ($calObj) {
+            $team->calendar = (object) $calObj->row();
+        }
     }
 
     private function teamAttributes(&$team) {

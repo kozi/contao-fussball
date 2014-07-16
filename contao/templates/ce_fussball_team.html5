@@ -16,7 +16,12 @@
 <?php if ($this->arrTeams): ?>
     <ul class="team_list">
     <?php foreach($this->arrTeams as $team):?>
-        <li><?php echo $team->name;?></li>
+        <li>
+            <?php echo $team->name;?>
+            <?php if ($team->calendar): ?>
+                <?php var_dump($team->calendar); ?>
+            <?php endif;?>
+        </li>
     <?php endforeach;?>
     </ul>
 <?php endif;?>
