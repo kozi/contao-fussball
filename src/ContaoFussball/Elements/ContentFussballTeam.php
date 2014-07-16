@@ -65,10 +65,10 @@ class ContentFussballTeam extends \ContentElement {
             ->execute(time()) ;
 
         while ($result->next()) {
-            $this->teamsArr[$result->team_id]->isActive = true;
+            $arrTeams[$result->team_id]->isActive = true;
         }
 
-        $this->Template->arrTeams = $team;
+        $this->Template->arrTeams = $arrTeams;
     }
 
     private function teamAttributes(&$team) {

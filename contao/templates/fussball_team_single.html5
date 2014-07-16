@@ -1,15 +1,5 @@
 <div class="<?php echo $this->class; ?> fussball_team"<?php echo $this->cssID; ?>>
 
-<h1><?php echo $this->team->name; ?></h1>
-
-    <div class="ce_list">
-
-<ul class="team_attributes">
-    <?php foreach($this->team->attributes as $key => $value) : ?>
-        <li><strong><?php echo $key; ?></strong>: <?php echo $value; ?></li>
-    <?php endforeach; ?>
-</ul>
 
 </div>
 
-</div>
