@@ -37,34 +37,27 @@ class ContentFussballTeam extends \ContentElement {
         if ($this->fussball_team_id != '0') {
             $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')->limit(1)->execute($this->fussball_team_id);
             if($result->numRows == 1) {
-                $team = (Object) $result->row();
-                $team->cssID      = ' id="'.standardize($team->name).'"';
-                $team->class      = standardize($team->name);
+                $team         = (Object) $result->row();
+                $team->cssID  = ' id="'.standardize($team->name).'"';
+                $team->class  = standardize($team->name);
                 $this->teamAttributes($team);
-                $this->tmplTeam->team = $team;
-                $this->Template->team = $this->tmplTeam->parse();
+                $this->Template->team = $team;
                 return;
             }
         }
 
         $i        = 0;
-        $strTeams = '';
+        $arrTeams = array();
         $result   = $this->Database->execute('SELECT * FROM tl_fussball_team ORDER BY name');
         while($result->next()) {
-            $team = (Object) $result->row();
-            $bgcolorArr = unserialize($team->bgcolor);
+            $team           = (Object) $result->row();
+            $bgcolorArr     = unserialize($team->bgcolor);
             $team->bgcolor  = (is_array($bgcolorArr)) ? '#'.$bgcolorArr[0] : $team->bgcolor;
             $team->cssClass = standardize($team->name).(($i++ % 2) ? ' odd' : ' even');
             $this->teamAttributes($team);
-
-            $this->teamsArr[$team->id] = $team;
-            $this->tmplTeam->team      = $team;
-            $strTeams                 .= $this->tmplTeam->parse();
+            $arrTeams[$team->id] = $team;
         }
-        $this->Template->allTeams    = $strTeams;
 
-        $i        = 0;
-        $strTeams = '';
         $result   = $this->Database->prepare("SELECT DISTINCT tl_fussball_matches.team_id AS team_id
             FROM tl_fussball_matches, tl_fussball_team
             WHERE tl_fussball_matches.team_id = tl_fussball_team.id
@@ -72,13 +65,10 @@ class ContentFussballTeam extends \ContentElement {
             ->execute(time()) ;
 
         while ($result->next()) {
-            $team                 = $this->teamsArr[$result->team_id];
-            $team->cssClass       = standardize($team->name).(($i++ % 2) ? ' odd' : ' even');
-            $this->tmplTeam->team = $team;
-            $strTeams            .= $this->tmplTeam->parse();
+            $this->teamsArr[$result->team_id]->isActive = true;
         }
 
-        $this->Template->activeTeams = $strTeams;
+        $this->Template->arrTeams = $team;
     }
 
     private function teamAttributes(&$team) {
