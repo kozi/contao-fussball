@@ -1,3 +1,7 @@
+.ce_fussball_widget {
+    line-height:normal !important;
+}
+
 .ce_fussball_widget #fussballdeAPI {
     margin:0 auto !important;
     width:609px !important;
@@ -8,8 +12,14 @@
     margin:0 auto !important;
     width:611px !important;
 }
+
 .ce_fussball_widget iframe {
     height:80px !important;
+}
+
+.ce_fussball_widget td {
+    line-height:normal !important;
+    white-space:nowrap !important;
 }
 
 .ce_fussball_widget #fussballdeAPI .fbdeAPItoplogo {

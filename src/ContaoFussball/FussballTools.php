@@ -54,7 +54,6 @@ class FussballTools {
                     if (is_array($match) && !array_key_exists('loc', $match)) {
                         $match['loc'] = $location;
                     }
-
                 }
 
             }
