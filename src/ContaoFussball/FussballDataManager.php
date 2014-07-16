@@ -251,10 +251,12 @@ class FussballDataManager extends \System {
         $calObj = \CalendarModel::findAll();
         foreach($calObj as $calendar) {
             $teamObj = Models\FussballTeamModel::findByPk($calendar->fussball_team_id);
-            if ($teamObj !== null) {
-                $calObj->fullcal_color = $teamObj->bgcolor;
-                $calObj->save();
+
+            if ($teamObj !== null && $calendar->fullcal_color !== $teamObj->bgcolor) {
+                $calendar->fullcal_color = $teamObj->bgcolor;
+                $calendar->save();
             }
+
         }
     }
 
