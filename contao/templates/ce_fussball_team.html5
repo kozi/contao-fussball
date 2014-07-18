@@ -19,7 +19,7 @@
         <li>
             <?php echo $team->name;?>
             <?php if ($team->calendar): ?>
-                <?php var_dump($team->calendar); ?>
+                (<?php echo $team->calendar->ical_alias; ?>)
             <?php endif;?>
         </li>
     <?php endforeach;?>
