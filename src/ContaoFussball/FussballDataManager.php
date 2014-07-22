@@ -85,8 +85,13 @@ class FussballDataManager extends \System {
         // Wenn es ein Team mit "alten Daten" gibt, aktualisiere die Spiele dieses Teams
         if ($teamObj) {
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
-            $this->log(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id),
-                'FussballDataManager updateMatches()', TL_CRON);
+            $message = sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id);
+            $this->log($message, 'FussballDataManager updateMatches()', TL_CRON);
+
+            if (\Input::get('key') === 'update') {
+                \Message::add($message, 'TL_INFO');
+                \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
+            }
         }
 
     }
