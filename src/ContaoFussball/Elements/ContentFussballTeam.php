@@ -85,7 +85,11 @@ class ContentFussballTeam extends \ContentElement {
     private function addCalendarInfo(&$team) {
         $calObj = \CalendarModel::findOneBy('fussball_team_id', $team->id);
         if ($calObj) {
-            $team->calendar = (object) $calObj->row();
+            $team->cal = (object) array(
+                'name'  => $calObj->name,
+                'alias' => $calObj->ical_alias,
+                'color' => unserialize($calObj->fullcal_color)
+            );
         }
     }
 

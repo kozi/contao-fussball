@@ -18,8 +18,8 @@
             <?php foreach($this->arrTeams as $team):?>
                 <tr>
                     <td class="name"><?php echo $team->name;?></td>
-                    <?php if ($team->calendar): ?>
-                        <td class="calendar"><?php echo $team->calendar->ical_alias; ?></td>
+                    <?php if ($team->cal): ?>
+                        <td class="cal"><?php echo $team->cal->alias; ?></td>
                     <?php endif;?>
                 </tr>
             <?php endforeach;?>
