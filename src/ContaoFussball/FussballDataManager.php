@@ -93,6 +93,10 @@ class FussballDataManager extends \System {
                 \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
             }
         }
+        else if (\Input::get('key') === 'update') {
+            \Message::add('Nothing to do!', 'TL_INFO');
+            \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
+        }
 
     }
 
