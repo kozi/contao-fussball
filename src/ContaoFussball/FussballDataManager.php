@@ -67,14 +67,14 @@ class FussballDataManager extends \System {
     public function updateMatches() {
 
         // Manuelles Update mit übergebener id
-        if ($teamObj = Models\FussballTeamModel::findByPk(\Input::get('id'))) {
+        if ($teamObj = FussballTeamModel::findByPk(\Input::get('id'))) {
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team <strong>%s (%s, %s)</strong>" : "No matches found for Team <strong>%s (%s, %s)</strong>";
             \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
             \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
         }
 
         // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
-        $teamObj   = Models\FussballTeamModel::findWithArray(array(
+        $teamObj   = FussballTeamModel::findWithArray(array(
                 'column'  => array('tl_fussball_team.lastUpdate < ?'),
                 'value'   => $this->now - (2 * static::ONE_DAY_SEC),
                 'return'  => 'Model',
@@ -100,7 +100,7 @@ class FussballDataManager extends \System {
 
     }
 
-	public function updateTeamMatches(Models\FussballTeamModel $teamObj) {
+	public function updateTeamMatches(FussballTeamModel $teamObj) {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
         $von    = date("d.m.Y", (time() - (182 * static::ONE_DAY_SEC)));
@@ -270,7 +270,7 @@ class FussballDataManager extends \System {
     private static function updateCalendarColors() {
         $calObj = \CalendarModel::findAll();
         foreach($calObj as $calendar) {
-            $teamObj = Models\FussballTeamModel::findByPk($calendar->fussball_team_id);
+            $teamObj = FussballTeamModel::findByPk($calendar->fussball_team_id);
 
             if ($teamObj !== null && $calendar->fullcal_color !== $teamObj->bgcolor) {
                 $calendar->fullcal_color = $teamObj->bgcolor;
@@ -278,6 +278,29 @@ class FussballDataManager extends \System {
             }
 
         }
+    }
+
+    public function sorting() {
+        $id    = \Input::get('id');
+        $up    = \Input::get('sort') === 'up';
+        $count = 1;
+        $teams = \FussballTeamModel::findAll(array('order' => 'sorting ASC'));
+        foreach ($teams as $teamObj) {
+            if ($teamObj->id == $id) {
+                    $teamObj->sorting = ($up) ? (($count-1) * 16)-1 : (($count+1) * 16)+1;
+            }
+            else {
+                $teamObj->sorting = ($count++ * 16);
+            }
+
+            $teamObj->save();
+        }
+        $team   = \FussballTeamModel::findByPk($id);
+
+        $team->sorting;
+
+        \Message::add($id.' '.\Input::get('sort'), 'TL_INFO');
+        \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
     }
 
 }

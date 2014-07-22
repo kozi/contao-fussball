@@ -38,6 +38,7 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
         'tables'     => array('tl_fussball_team'),
         'icon'       => 'system/modules/fussball/assets/icons/soccer.png',
         'update'     => array('ContaoFussball\FussballDataManager', 'updateMatches'),
+        'sorting'    => array('ContaoFussball\FussballDataManager', 'sorting'),
     ),
     'fussball_matches' => array
     (
