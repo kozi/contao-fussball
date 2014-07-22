@@ -89,7 +89,7 @@ class ContentFussballTeam extends \ContentElement {
                 'name'   => $calObj->name,
                 'alias'  => $calObj->ical_alias,
                 'color'  => unserialize($calObj->fullcal_color),
-                'webcal' => str_replace('http', 'webcal', Environment::get('url')).'/'.$calObj->ical_alias.'.ics'
+                'webcal' => str_replace('http', 'webcal', \Environment::get('url')).'/'.$calObj->ical_alias.'.ics'
             );
         }
     }
