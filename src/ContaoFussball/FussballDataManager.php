@@ -66,25 +66,32 @@ class FussballDataManager extends \System {
 
     public function updateMatches() {
 
+        // Manuelles Update mit übergebener id
+        if ($teamObj = Models\FussballTeamModel::findByPk(\Input::get('id'))) {
+            $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
+            \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
+            Controller::redirect(\Environment::get('script').'?do=fussball_teams');
+        }
+
         // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
-        $timestamp = $this->now - (2 * static::ONE_DAY_SEC);
-        $result    = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE lastUpdate < ? ORDER BY lastUpdate ASC')
-            ->limit(1)->execute($timestamp);
+        $teamObj   = Models\FussballTeamModel::find(array(
+                'column'  => array('tl_fussball_team.lastUpdate < ?'),
+                'value'   => $this->now - (2 * static::ONE_DAY_SEC),
+                'return'  => 'Model',
+                'limit'   =>   1,
+                'order'   => 'lastUpdate ASC'
+        ));
 
         // Wenn es ein Team mit "alten Daten" gibt, aktualisiere die Spiele dieses Teams
-        if ($result->numRows !== 0) {
-
-            $teamObj = (Object) $result->row();
+        if ($teamObj) {
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
-
-            \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
             $this->log(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id),
                 'FussballDataManager updateMatches()', TL_CRON);
         }
 
     }
 
-	public function updateTeamMatches($teamObj) {
+	public function updateTeamMatches(Models\FussballTeamModel $teamObj) {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
         $von    = date("d.m.Y", (time() - (182 * static::ONE_DAY_SEC)));
