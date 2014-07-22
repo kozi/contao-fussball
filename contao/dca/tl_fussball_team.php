@@ -54,6 +54,13 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 			'icon'                => 'edit.gif',
 			'attributes'          => 'class="contextmenu"'
 		),
+        'updateMatches' => array
+        (
+            'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['updateMatches'],
+            'href'                => 'key=update',
+            'icon'                => 'reload.gif',
+            'attributes'          => 'class="contextmenu"'
+        ),
 		'delete' => array
 		(
 			'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['delete'],
