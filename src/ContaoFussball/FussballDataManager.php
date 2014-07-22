@@ -55,8 +55,6 @@ class FussballDataManager extends \System {
             WHERE fussball_tournament_id != 0
             AND fussball_tournament_id NOT IN (SELECT id FROM tl_fussball_tournament)");
 
-
-
         $result = $this->Database->execute("SELECT id, title, fussball_team_id
                     FROM tl_calendar WHERE fussball_team_id != 0");
         while($result->next()) {
@@ -79,6 +77,7 @@ class FussballDataManager extends \System {
             $teamObj = (Object) $result->row();
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
 
+            \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
             $this->log(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id),
                 'FussballDataManager updateMatches()', TL_CRON);
         }
