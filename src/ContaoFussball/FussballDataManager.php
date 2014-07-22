@@ -23,9 +23,9 @@ namespace ContaoFussball;
  */
 
 class FussballDataManager extends \System {
-    const oneDayInSec      = 86400;
-    const matchLengthInSec = 6300;
-
+    const ONE_DAY_SEC      = 86400;
+    const MATCH_LENGTH_SEC = 6300;
+    const SPIEL_ABGESAGT   = "Abg.";
 
     private $team_id       = 0;
 	private $now           = 0;
@@ -69,7 +69,7 @@ class FussballDataManager extends \System {
     public function updateMatches() {
 
         // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
-        $timestamp = $this->now - (2 * static::oneDayInSec);
+        $timestamp = $this->now - (2 * static::ONE_DAY_SEC);
         $result    = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE lastUpdate < ? ORDER BY lastUpdate ASC')
             ->limit(1)->execute($timestamp);
 
@@ -88,8 +88,8 @@ class FussballDataManager extends \System {
 	public function updateTeamMatches($teamObj) {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
-        $von    = date("d.m.Y", (time() - (182 * static::oneDayInSec)));
-        $bis    = date("d.m.Y", (time() + (182 * static::oneDayInSec)));
+        $von    = date("d.m.Y", (time() - (182 * static::ONE_DAY_SEC)));
+        $bis    = date("d.m.Y", (time() + (182 * static::ONE_DAY_SEC)));
 
         $matches = FussballTools::getMatches($teamObj->action_url, $teamObj->team_id, $von, $bis);
 
@@ -187,7 +187,7 @@ class FussballDataManager extends \System {
             'location'  => $loc,
             'addTime'   => 1,
             'startTime' => $match['anstoss'],
-            'endTime'   => $match['anstoss'] + static::matchLengthInSec,
+            'endTime'   => $match['anstoss'] + static::MATCH_LENGTH_SEC,
             'startDate' => $match['anstoss'],
             'endDate'   => NULL,
             'published' => 1,
@@ -225,9 +225,14 @@ class FussballDataManager extends \System {
 		);
 
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE spielkennung = ?')
-			->execute($dbMatch['spielkennung']);
+            ->execute($dbMatch['spielkennung']);
 
-		if ($result->numRows == 0) {
+        if (static::SPIEL_ABGESAGT === $match['erg']) {
+            // WENN DAS SPIEL ABGESAGT WURDE WIRD ES GELÖSCHT UND NICHT WIEDER EINGEFÜGT
+            $this->Database->prepare('DELETE FROM tl_fussball_matches WHERE spielkennung = ?')
+                ->execute($dbMatch['spielkennung']);
+        }
+		else if ($result->numRows == 0) {
 			// INSERT
             $this->Database->prepare('INSERT INTO tl_fussball_matches %s')->set($dbMatch)->execute();
 		}
