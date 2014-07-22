@@ -86,9 +86,10 @@ class ContentFussballTeam extends \ContentElement {
         $calObj = \CalendarModel::findOneBy('fussball_team_id', $team->id);
         if ($calObj) {
             $team->cal = (object) array(
-                'name'  => $calObj->name,
-                'alias' => $calObj->ical_alias,
-                'color' => unserialize($calObj->fullcal_color)
+                'name'   => $calObj->name,
+                'alias'  => $calObj->ical_alias,
+                'color'  => unserialize($calObj->fullcal_color),
+                'webcal' => str_replace('http', 'webcal', Environment::get('url')).'/'.$calObj->ical_alias.'.ics'
             );
         }
     }
