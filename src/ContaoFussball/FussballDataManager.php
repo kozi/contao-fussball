@@ -67,14 +67,14 @@ class FussballDataManager extends \System {
     public function updateMatches() {
 
         // Manuelles Update mit übergebener id
-        if ($teamObj = \FussballTeamModel::findByPk(\Input::get('id'))) {
+        if ($teamObj = FussballTeamModel::findByPk(\Input::get('id'))) {
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team <strong>%s (%s, %s)</strong>" : "No matches found for Team <strong>%s (%s, %s)</strong>";
             \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
             \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
         }
 
         // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
-        $teamObj   = \FussballTeamModel::findWithArray(array(
+        $teamObj   = FussballTeamModel::findWithArray(array(
                 'column'  => array('tl_fussball_team.lastUpdate < ?'),
                 'value'   => $this->now - (2 * static::ONE_DAY_SEC),
                 'return'  => 'Model',
@@ -284,7 +284,7 @@ class FussballDataManager extends \System {
         $id    = \Input::get('id');
         $up    = \Input::get('sort') === 'up';
         $count = 1;
-        $teams = \FussballTeamModel::findAll(array('order' => 'sorting ASC'));
+        $teams = FussballTeamModel::findAll(array('order' => 'sorting ASC'));
         foreach ($teams as $teamObj) {
             if ($teamObj->id == $id) {
                     $teamObj->sorting = ($up) ? (($count-1) * 16)-1 : (($count+1) * 16)+1;

@@ -12,7 +12,7 @@
  * @license    LGPL
  * @filesource
  */
-namespace Contao;
+namespace ContaoFussball;
 /**
  * Class FussballTeamModel
  *
