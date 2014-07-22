@@ -70,7 +70,7 @@ class FussballDataManager extends \System {
         if ($teamObj = Models\FussballTeamModel::findByPk(\Input::get('id'))) {
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
             \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
-            Controller::redirect(\Environment::get('script').'?do=fussball_teams');
+            \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
         }
 
         // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
