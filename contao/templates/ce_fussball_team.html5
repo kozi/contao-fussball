@@ -1,29 +1,29 @@
 <div class="<?php echo $this->class; ?> ce_fussball_team block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
-<?php if ($this->team): ?>
-    <h1><?php echo $this->team->name; ?></h1>
+    <?php if ($this->team): ?>
+        <h1><?php echo $this->team->name; ?></h1>
 
-    <div class="ce_list">
-        <ul class="team_attributes">
-            <?php foreach($this->team->attributes as $key => $value) : ?>
-                <li><strong><?php echo $key; ?></strong>: <?php echo $value; ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <div class="ce_list">
+            <ul class="team_attributes">
+                <?php foreach($this->team->attributes as $key => $value) : ?>
+                    <li><strong><?php echo $key; ?></strong>: <?php echo $value; ?></li>
+                <?php endforeach; ?>
+            </ul>
 
-    </div>
-<?php endif;?>
+        </div>
+    <?php endif;?>
 
-<?php if ($this->arrTeams): ?>
-    <ul class="team_list">
-    <?php foreach($this->arrTeams as $team):?>
-        <li>
-            <?php echo $team->name;?>
-            <?php if ($team->calendar): ?>
-                (<?php echo $team->calendar->ical_alias; ?>)
-            <?php endif;?>
-        </li>
-    <?php endforeach;?>
-    </ul>
-<?php endif;?>
+    <?php if ($this->arrTeams): ?>
+        <table class="team_list">
+            <?php foreach($this->arrTeams as $team):?>
+                <tr>
+                    <td class="name"><?php echo $team->name;?></td>
+                    <?php if ($team->calendar): ?>
+                        <td class="calendar"><?php echo $team->calendar->ical_alias; ?></td>
+                    <?php endif;?>
+                </tr>
+            <?php endforeach;?>
+        </table>
+    <?php endif;?>
 
 </div>

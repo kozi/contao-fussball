@@ -19,32 +19,41 @@
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_infobox']  = $GLOBALS['TL_DCA']['tl_content']['palettes']['text'];
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget']   = '{title_legend},headline,type;{fussball_legend},fussball_wettbewerbs_id,fussball_mandant,fussball_team_id;{expert_legend:hide},cssID,space';
+$strHL = 'headline;';
+
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] =  str_replace(
+    $strHL,
+    $strHL.'{fussball_matches_legend},fussball_team_id,fussball_typ,fussball_past,fussball_future,fussball_from,fussball_to,fussball_order;',
+    $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] = '{title_legend},headline,type;'
-.'{fussball_matches_legend},fussball_team_id,fussball_typ,fussball_past,fussball_future,fussball_from,fussball_to,fussball_order;{expert_legend:hide},cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget'] = str_replace(
+    $strHL,
+    $strHL.'{fussball_legend},fussball_wettbewerbs_id,fussball_mandant,fussball_team_id;',
+    $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] =
-'{title_legend},headline,type;'
-.'{fussball_legend},fussball_team_id_array;'
-.'{expert_legend:hide},cssID,space';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] = str_replace(
+    $strHL,
+    $strHL.'{fussball_legend},fussball_team_id_array;',
+    $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
+
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_calendar'] = str_replace(
+    $strHL,
+    $strHL.'{fussball_legend},fussball_team_id_array;',
+    $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
+
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] = str_replace(
+    $strHL,
+    $strHL.'{fussball_legend},fussball_goalgetter;',
+    $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
+
+$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_team'] = str_replace(
+    $strHL,
+    $strHL.'{fussball_legend},fussball_team_id;',
+    $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_calendar'] =
-    '{title_legend},headline,type;'
-    .'{fussball_legend},fussball_team_id_array;'
-    .'{expert_legend:hide},cssID,space';
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_goalgetter'] =
-'{title_legend},headline,type;'
-.'{fussball_legend},fussball_goalgetter;'
-.'{expert_legend:hide},cssID,space';
-
-$GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_team'] =
-    '{title_legend},headline,type;'
-    .'{fussball_legend},fussball_team_id;'
-    .'{expert_legend:hide},cssID,space';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_mandant'] = array
 (
