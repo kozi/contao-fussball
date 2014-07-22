@@ -29,4 +29,9 @@ class FussballTeamModel extends \Model {
      */
     protected static $strTable = 'tl_fussball_team';
 
+
+    public static function findWithArray(array $arrOptions) {
+        return self::find($arrOptions);
+    }
+
 }
