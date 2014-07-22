@@ -287,19 +287,13 @@ class FussballDataManager extends \System {
         $teams = FussballTeamModel::findAll(array('order' => 'sorting ASC'));
         foreach ($teams as $teamObj) {
             if ($teamObj->id == $id) {
-                    $teamObj->sorting = ($up) ? (($count-1) * 16)-1 : (($count+1) * 16)+1;
+                    $teamObj->sorting = ($up) ? (($count-1) * 16)-1 : ($count * 16)+1;
             }
             else {
                 $teamObj->sorting = ($count++ * 16);
             }
-
             $teamObj->save();
         }
-        $team   = \FussballTeamModel::findByPk($id);
-
-        $team->sorting;
-
-        \Message::add($id.' '.\Input::get('sort'), 'TL_INFO');
         \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
     }
 

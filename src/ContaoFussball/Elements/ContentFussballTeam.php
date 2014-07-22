@@ -49,7 +49,7 @@ class ContentFussballTeam extends \ContentElement {
         $i           = 0;
         $arrTeams    = array();
         $addCalendar = $this->Database->fieldExists('fullcal_color', 'tl_calendar');
-        $result      = $this->Database->execute('SELECT * FROM tl_fussball_team ORDER BY name');
+        $result      = $this->Database->execute('SELECT * FROM tl_fussball_team ORDER BY sorting');
         while($result->next()) {
             $team           = (Object) $result->row();
             $bgcolorArr     = unserialize($team->bgcolor);
@@ -67,7 +67,7 @@ class ContentFussballTeam extends \ContentElement {
         $result   = $this->Database->prepare("SELECT DISTINCT tl_fussball_matches.team_id AS team_id
             FROM tl_fussball_matches, tl_fussball_team
             WHERE tl_fussball_matches.team_id = tl_fussball_team.id
-            AND tl_fussball_matches.anstoss > ? ORDER BY tl_fussball_team.name")
+            AND tl_fussball_matches.anstoss > ? ORDER BY tl_fussball_team.sorting")
             ->execute(time()) ;
 
 
