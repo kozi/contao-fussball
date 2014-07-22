@@ -18,6 +18,7 @@ $GLOBALS['fussball']['team_attributes'] = array(
     'Trainer', 'Trainer/Betreuer', 'Trainingszeiten',
 );
 
+$GLOBALS['TL_MODELS']['tl_fussball_team']                  = 'ContaoFussball\FussballTeamModel';
 
 $GLOBALS['TL_CRON']['hourly'][]                            = array('ContaoFussball\FussballDataManager', 'updateMatches');
 $GLOBALS['TL_CRON']['daily'][]                             = array('ContaoFussball\FussballDataManager', 'updateCalendar');
