@@ -30,9 +30,9 @@ class FussballDataManager extends \System {
     private $team_id       = 0;
 	private $now           = 0;
 
-
-
 	function __construct() {
+
+        $this->loadLanguageFile('tl_fussball_tournament');
 		$this->now     = time();
 		$this->import('Database');
 		parent::__construct();
@@ -119,8 +119,6 @@ class FussballDataManager extends \System {
 	}
 
     private function updateCalenderEvents($calendar) {
-        $this->loadLanguageFile('tl_fussball_tournament');
-
         // Get all matches from tl_fussball_match for $calendar->fussball_team_id
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE team_id = ?')
             ->execute($calendar->fussball_team_id);

@@ -6,6 +6,7 @@ class FussballTools {
 
     private static $strAbgesagt = 'Abg.';
 
+
     public static function getMatches($action, $id, $from, $till) {
 
         $url = $action."?team-id=".$id."&show-venues=true"
@@ -207,5 +208,7 @@ class FussballTools {
         $tstamp = strtotime("$y-$m-$d $h:$i:00");
         return $tstamp;
     }
+
+
 }
 
