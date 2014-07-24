@@ -68,8 +68,13 @@ class FussballDataManager extends \System {
 
         // Manuelles Update mit übergebener id
         if ($teamObj = FussballTeamModel::findByPk(\Input::get('id'))) {
-            $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team <strong>%s (%s, %s)</strong>" : "No matches found for Team <strong>%s (%s, %s)</strong>";
-            \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
+            if ($teamObj->team_id) {
+                $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team <strong>%s (%s, %s)</strong>" : "No matches found for Team <strong>%s (%s, %s)</strong>";
+                \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
+            }
+            else {
+                \Message::add('Team <strong>'.$teamObj->name.'</strong> has no <em>Team-ID</em>.', 'TL_INFO');
+            }
             \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
         }
 
@@ -83,7 +88,7 @@ class FussballDataManager extends \System {
         ));
 
         // Wenn es ein Team mit "alten Daten" gibt, aktualisiere die Spiele dieses Teams
-        if ($teamObj) {
+        if ($teamObj && $teamObj->team_id) {
             $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
             $message = sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id);
             $this->log($message, 'FussballDataManager updateMatches()', TL_CRON);
@@ -128,7 +133,6 @@ class FussballDataManager extends \System {
         }
 
         // Get all tournaments from tl_fussball_tournament for $calendar->fussball_team_id
-
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_tournament WHERE team_id = ?')
             ->execute($calendar->fussball_team_id);
 
@@ -138,6 +142,7 @@ class FussballDataManager extends \System {
     }
 
     private function calendarEventTournament($calendar, $tournament) {
+
         $title = $tournament['title'].' [TU]';
         $text  =
              '<span class="title">'.$title.'</span>'
