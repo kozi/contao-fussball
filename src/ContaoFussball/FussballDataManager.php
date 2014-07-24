@@ -151,6 +151,11 @@ class FussballDataManager extends \System {
             .'<span class="field_type"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].':</strong> '.$tournament['field_type'].'</span>'
             .'<span class="details">'.$tournament['details'].'</span>';
 
+        $calEventModel = \CalendarEventsModel::findOneBy('fussball_tournament_id', $tournament['id']);
+
+        if(!$calEventModel) {
+            $calEventModel = new \CalendarEventsModel();
+        }
 
         $eventData      = array(
             'fussball_tournament_id' => $tournament['id'],
@@ -168,18 +173,11 @@ class FussballDataManager extends \System {
             'published' => 1,
         );
 
-        $result = $this->Database->prepare('SELECT id FROM tl_calendar_events WHERE fussball_tournament_id = ?')
-            ->limit(1)->executeUncached($tournament['id']);
-
-        if($result->numRows == 1) {
-            // $eventData['id'] = $result->id;
-            $calEventModel = \CalendarEventsModel::findByPk($result->id);
+        foreach($eventData as $key => $value) {
+            $calEventModel->__set($key, $value);
         }
-        else {
-            $calEventModel = new \CalendarEventsModel();
 
-        }
-        $calEventModel->setRow($eventData)->save();
+        $calEventModel->save();
 
     }
 
@@ -193,6 +191,12 @@ class FussballDataManager extends \System {
             $loc,
             (strlen($erg) > 0) ?  'Ergebnis:'.$erg : ''
         ));
+
+        $calEventModel = \CalendarEventsModel::findOneBy('fussball_matches_id', $match['id']);
+
+        if(!$calEventModel) {
+            $calEventModel = new \CalendarEventsModel();
+        }
 
         $eventData      = array(
             'fussball_matches_id' => $match['id'],
@@ -210,20 +214,10 @@ class FussballDataManager extends \System {
             'published' => 1,
         );
 
-        $result = $this->Database->prepare('SELECT id FROM tl_calendar_events WHERE fussball_matches_id = ?')
-            ->limit(1)->executeUncached($match['id']);
-
-        if($result->numRows == 1) {
-            // $eventData['id'] = $result->id;
-            $calEventModel = \CalendarEventsModel::findByPk($result->id);
+        foreach($eventData as $key => $value) {
+            $calEventModel->__set($key, $value);
         }
-        else {
-            $calEventModel = new \CalendarEventsModel();
-
-        }
-        $calEventModel->setRow($eventData)->save();
-
-
+        $calEventModel->save();
     }
 
 	private function matchToDb($match, $team_id) {
