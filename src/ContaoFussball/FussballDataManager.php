@@ -31,14 +31,13 @@ class FussballDataManager extends \System {
 	private $now           = 0;
 
 	function __construct() {
-
-        $this->loadLanguageFile('tl_fussball_tournament');
 		$this->now     = time();
 		$this->import('Database');
 		parent::__construct();
 	}
 
     public function updateCalendar() {
+        $this->loadLanguageFile('tl_fussball_tournament');
 
         // Update calendar color if field is available
         if($this->Database->fieldExists('fullcal_color', 'tl_calendar')) {
