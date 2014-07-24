@@ -208,5 +208,12 @@ class FussballTools {
         return $tstamp;
     }
 
+    public static function getResultFromImage() {
+        /*echo '911';
+        $path = 'files/resultsImage.png';
+        $img  = \Intervention\Image\ImageManagerStatic::make($path);
+        var_dump($img);
+        die();*/
+    }
 }
 

@@ -27,7 +27,8 @@
         "contao/core": ">=3.2,<4",
         "sunra/php-simple-html-dom-parser": "~1.5",
         "contao-community-alliance/composer-plugin": "~2",
-        "menatwork/contao-multicolumnwizard": "~3"
+        "menatwork/contao-multicolumnwizard": "~3",
+        "intervention/image": "*"
     },
     "replace": {
         "contao-legacy/fussball_widget": "*"
