@@ -45,6 +45,7 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
     (
         'tables'     => array('tl_fussball_matches'),
         'icon'       => 'system/modules/fussball/assets/icons/chain.png',
+        'result'     => array('ContaoFussball\FussballDataManager', 'matchResult'),
     ),
     'fussball_tournament' => array
     (

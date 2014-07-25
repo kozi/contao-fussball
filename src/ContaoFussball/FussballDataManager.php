@@ -293,5 +293,25 @@ class FussballDataManager extends \System {
         \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
     }
 
+    public function matchResult() {
+        $matchId  = \Input::get('match');
+        $result   = \Input::get('result');
+        $ergebnis = '';
+        if ($result && $matchId) {
+            $this->Database->prepare("UPDATE tl_fussball_matches SET ergebnis = ? WHERE id = ?")
+                ->execute($result, $matchId);
+
+        }
+
+        $result = $this->Database->prepare("SELECT ergebnis FROM tl_fussball_matches WHERE id = ?")
+            ->execute($matchId);
+        if ($result->numRows === 1) {
+            $ergebnis = $result->ergebnis;
+        }
+
+        header('HTTP/1.0 200 OK');
+        echo $ergebnis;
+        exit;
+    }
 }
 

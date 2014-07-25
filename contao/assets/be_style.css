@@ -41,3 +41,49 @@ td.fussball_opponent input.tl_text {
 td.col_confirmed {
  text-align:center;
 }
+
+
+.fussball_match {
+    position:relative;
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left:25px;
+}
+
+.fussball_match > span {
+    padding:5px 0;
+    display:inline-block;
+}
+.fussball_match .name_short { width:40px;  }
+.fussball_match .anstoss    { width:120px; }
+.fussball_match .ergebnis   {
+    background-color:#FFFFEF;
+    border:1px solid #FFFFCF;
+    text-align:right;
+    position:absolute;
+    margin:2px 0;
+    padding:3px 5px;
+    right:0;
+    width:40px;
+}
+
+.fussball_match .currentValue {
+    font-weight:bold;
+
+}
+
+
+.fussball_match .result .currentValue { display:inherit; }
+.fussball_match .init .editField      { display:inherit; }
+
+.fussball_match .init .currentValue { display:none; }
+.fussball_match .result .editField  { display:none; }
+
+
+.fussball_match .editField input {
+    background-color:#FFFFEF;
+    padding:0;
+    margin:0;
+    border:none;
+    width:40px;
+}
