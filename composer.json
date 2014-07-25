@@ -48,7 +48,6 @@
     },
     "config": {
         "component-dir": "../assets/components"
-    },
-    "bin": ["pscss"]
+    }
 }
 
