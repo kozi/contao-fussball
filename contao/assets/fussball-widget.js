@@ -9,6 +9,7 @@ if (!String.prototype.fulltrim) {
 }
 
 var FussballWidget = function() {
+    var rendered   = false;
     var id         = null;
     var div_id     = null;
     var team       = null;
@@ -34,17 +35,20 @@ var FussballWidget = function() {
 
             if (team.length > 0) {
                 this.team = team.toLowerCase().fulltrim();
-                this.highlight_team();
+                this.postRender();
             }
         },
 
-        highlight_team: function() {
-            window.setTimeout(this.id + '.highlight_team()', 2000);
+        postRender: function() {
+            window.setTimeout(this.id + '.postRender()', 2000);
 
-            if (document.getElementById('highlighted_row') != null) {
+            if (this.rendered) {
                 return false;
             }
 
+            console.log('postRender', this.rendered, this.id);
+
+            /*
             divEl = document.getElementById('fussballdeAPI');
             if (divEl == null) { return false; }
 
@@ -63,6 +67,7 @@ var FussballWidget = function() {
                     }
                 }
             }
+            */
 
         }
 
