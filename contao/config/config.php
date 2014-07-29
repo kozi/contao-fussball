@@ -18,6 +18,9 @@ $GLOBALS['fussball']['team_attributes'] = array(
     'Trainer', 'Trainer/Betreuer', 'Trainingszeiten',
 );
 
+$GLOBALS['fussball']['url'] = "http://ergebnisdienst.fussball.de/ajax.club.matchplan/-/id/%s/mime-type/JSON/show-filter/false/max/%s/datum-von/%s/datum-bis/%s/show-venues/checked/team-id/%s/offset/0";
+
+
 $GLOBALS['TL_MODELS']['tl_fussball_team']                  = 'ContaoFussball\FussballTeamModel';
 
 $GLOBALS['TL_CRON']['hourly'][]                            = array('ContaoFussball\FussballDataManager', 'updateMatches');

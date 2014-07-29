@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 // Palettes
     'palettes' => array
     (
-        'default'                     => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;{team_attr_legend},team_attributes;{spielplan_legend},action_url,team_id'
+        'default'                     => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;{team_attr_legend},team_attributes;{spielplan_legend},club_id,team_id'
     ),
 
 // Fields
@@ -165,9 +165,9 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
             'sql'                     => "blob NULL",
         ),
 
-        'action_url' => array
+        'club_id' => array
         (
-            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['action_url'],
+            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['club_id'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,

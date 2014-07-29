@@ -176,6 +176,13 @@ $GLOBALS['TL_DCA']['tl_fussball_matches'] = array(
         'search'                  => false,
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
+    'platzart' => array
+    (
+        'label'                   => array('PLATZART'),
+        'search'                  => false,
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    ),
+
 
 
 ) //fields

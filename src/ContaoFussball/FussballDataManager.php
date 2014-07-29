@@ -107,10 +107,11 @@ class FussballDataManager extends \System {
 	public function updateTeamMatches(FussballTeamModel $teamObj) {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
-        $von    = date("d.m.Y", (time() - (182 * static::ONE_DAY_SEC)));
-        $bis    = date("d.m.Y", (time() + (182 * static::ONE_DAY_SEC)));
 
-        $matches = FussballTools::getMatches($teamObj->action_url, $teamObj->team_id, $von, $bis);
+        $von     = time() - (182 * static::ONE_DAY_SEC);
+        $bis     = time() + (182 * static::ONE_DAY_SEC);
+
+        $matches = FussballTools::getMatches($teamObj->club_id, $teamObj->team_id, $von, $bis);
 
         if ($matches === false || (is_array($matches) && count($matches) === 0)) {
             return false;
@@ -222,17 +223,17 @@ class FussballDataManager extends \System {
 
 	private function matchToDb($match, $team_id) {
 		$dbMatch = array(
+            'spielkennung'  => $match['kennung'],
 			'tstamp'        => $this->now,
-			'spielkennung'  => $match['kennung'].'-'.str_replace(' ', '-', $match['id']),
 			'team_id'       => $team_id,
-			'anstoss'       => FussballTools::getTimestampFromDateAndTimeString($match['date'], $match['time']),
+			'anstoss'       => $match['tstamp'],
 			'heim'          => $match['manh'],
 			'gast'          => $match['mana'],
 			'typ'           => $match['typ'],
 			'location'      => ($match['loc'] !== null) ? $match['loc'] : '',
-            'ergebnis'      => $match['erg'],
+            'platzart'      => ($match['platzart'] !== null) ? $match['platzart'] : '',
 			'spielklasse'   => $match['klasse'],
-
+            'ergebnis'      => ($match['erg'] !== null) ? $match['erg'] : '',
 		);
 
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE spielkennung = ?')

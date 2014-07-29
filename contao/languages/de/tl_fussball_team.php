@@ -13,7 +13,7 @@ $GLOBALS['TL_LANG']['tl_fussball_team']['bgcolor']              = array('Farbe',
 $GLOBALS['TL_LANG']['tl_fussball_team']['team_attributes']      = array('Attribute', 'Teamattribute');
 $GLOBALS['TL_LANG']['tl_fussball_team']['name_short_external']  = array('Abkürzung für externen Namen', 'Abkürzung für den externen Namen');
 
-$GLOBALS['TL_LANG']['tl_fussball_team']['action_url']           = array('URL', 'Muss aus der Vereinsseite bei fussball.de ausgelesen werden.');
+$GLOBALS['TL_LANG']['tl_fussball_team']['club_id']              = array('Club-ID', 'Muss aus der Vereinsseite bei fussball.de ausgelesen werden.');
 $GLOBALS['TL_LANG']['tl_fussball_team']['team_id']              = array('Team-ID', 'Muss ebenfalls aus der Vereinsseite bei fussball.de ausgelesen werden.');
 
 $GLOBALS['TL_LANG']['tl_fussball_team']['edit']                 = array('Editieren', 'Dieses Mannschaft editieren');

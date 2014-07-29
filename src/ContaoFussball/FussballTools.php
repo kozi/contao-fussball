@@ -4,26 +4,26 @@ namespace ContaoFussball;
 
 class FussballTools {
 
-    private static $strAbgesagt = 'Abg.';
-
-
-    public static function getMatches($action, $id, $from, $till) {
-
-        $url = $action."?team-id=".$id."&show-venues=true"
-            ."&date-from=".$from."&date-to=".$till
-            ."&_=".time();
+    public static function getMatches($clubId, $teamId, $tstampFrom, $tstampTill) {
+        $max = 100;
+        $url = sprintf($GLOBALS['fussball']['url'],
+            $clubId,
+            $max,
+            date("d.m.Y", $tstampFrom),
+            date("d.m.Y", $tstampTill),
+            $teamId
+        );
 
         $mainContent    = file_get_contents($url);
-        $mainContent    = str_replace(array('%0A','var mainContent = "', '<wbr>'), '', $mainContent);
-        $mainContent    = htmlspecialchars_decode($mainContent);
-        $mainContent    = substr($mainContent, 0, strlen($mainContent) - 2);
+        $jsonResult     = json_decode($mainContent);
+        $strHtml        = strip_tags($jsonResult->html, "<table><tr><td><a>");
 
-        $html           = \Sunra\PhpSimple\HtmlDomParser::str_get_html($mainContent);
+        $objHtml        = \Sunra\PhpSimple\HtmlDomParser::str_get_html($strHtml);
         $matches        = array();
         $match_date     = '';
         $match          = null;
 
-        $table = $html->find('table.egmMatchesTable', 0);
+        $table = $objHtml->find('table.table', 0);
         if ($table == null) {
             return $matches;
         }
@@ -32,6 +32,8 @@ class FussballTools {
         if ($rows == null) {
             return $matches;
         }
+
+
 
         foreach($rows as $tr) {
             $tds     = $tr->find('td');
@@ -44,16 +46,19 @@ class FussballTools {
                     // Date
                     $match_date = $content;
                 }
-                else if (strpos($content, '//') !== false) {
+                else if (preg_match ("/(Hartplatz|Kunstrasenplatz|Rasenplatz), /" , $content, $arrResult) !== false) {
+
                     // Location
-
-
-                    $location = preg_replace("/[^a-zA-Z0-9_äöüÄÖÜß\.\- \/]/" , "" , $content);
-                    $location = str_replace(" // ","\n", $location);
+                    $platzart  = $arrResult[1];
+                    $location  = str_replace($arrResult[0], '', $content);
+                    $location  = preg_replace("/[^a-zA-Z0-9_äöüÄÖÜß\.\- \/,\[\]]/" , "" , $location);
+                    $location  = str_replace(", ","\n", $location);
 
                     // Wenn eine Location gefunden wurde gehört diese zum "aktuellen" Spiel
                     if (is_array($match) && !array_key_exists('loc', $match)) {
-                        $match['loc'] = $location;
+                        $match['loc']        = $location;
+                        $match['platzart']   = $platzart;
+
                     }
                 }
 
@@ -62,45 +67,36 @@ class FussballTools {
 
                 if ($match !== null) {
                     $matches[] = $match;
-
                 }
 
-                // Match
-                $match            = array();
-                $match['date']    = $match_date;
-                $match['id']      = trim($tr->find('td', 0)->find('text', 0)->plaintext);
-
-
-                $timeEl          = $tr->find('td', 1)->find('text', 0);
-                $match['time']   = ($timeEl != null) ? trim($timeEl->plaintext) : '';
-
-
-                $a = $tr->find('td', 2)->find('a', 0);
-                $match['manh']   = ($a != null) ? trim($a->find('text', 0)->plaintext) : trim($tr->find('td', 2)->plaintext);
-
-                // Spalte 3 ist der Bindestrich
-
-                $a = $tr->find('td', 4)->find('a', 0);
-                $match['mana']   = ($a != null) ? trim($a->find('text', 0)->plaintext) : trim($tr->find('td', 4)->plaintext);
-
-                // Ergebnis
-                $textEl          = $tr->find('td', 5)->find('text', 0);
-                $ergebnis        = ($textEl != null) ? str_replace('*','', trim($textEl->plaintext)) : '';
-                $match['erg']    = $ergebnis;
-
-                if (self::$strAbgesagt == $ergebnis) {
-                    $match['loc'] = 'Spiel abgesagt.';
+                $cols = array();
+                foreach($tds as $td) {
+                    $value = trim($td->find('text', 0)->plaintext);
+                    if (strlen($value) === 0) {
+                        $a     = $td->find('a', 0);
+                        $value = ($a != null) ? trim($a->find('text', 0)->plaintext) : '';
+                        if (strlen($value) === 0) {
+                            $div = $td->find('div.club-name', 0);
+                            $value = ($div != null) ? trim($div->find('text', 0)->plaintext) : '';
+                        }
+                    }
+                    $cols[] = $value;
                 }
-
-                $match['klasse'] = trim($tr->find('td', 6)->find('text', 0)->plaintext);
-                $match['typ']    = trim(str_replace('&nbsp;', '', $tr->find('td', 7)->find('text', 0)->plaintext));
 
                 // Kennung
+                $a         = $tr->find('td', 7)->find('a', 0);
+                $kennung   = ($a != null) ? preg_replace("#http:\/\/.*\/spiel\/#", "", trim($a->href)) : 'SPIELFREI';
 
-                $a                = $tr->find('td', 7)->find('a', 0);
-                $kennung          = ($a != null) ? preg_replace("#http:\/\/.*\/spiel\/#", "", trim($a->href)) : 'SPIELFREI';
-                $match['kennung'] = $kennung;
-
+                // Match
+                $match     = array(
+                    'kennung'  => $kennung,
+                    'tstamp'   => self::getTimestamp($cols[0], $match_date),
+                    'typ'      => self::getMatchType($cols[1]),
+                    'klasse'   => $cols[2],
+                    'manh'     => $cols[3],
+                    'mana'     => $cols[5],
+                    // 'ergebnis' => $cols[6],
+                );
             }
 
         } //foreach
@@ -109,17 +105,6 @@ class FussballTools {
         if ($match !== null && sizeof($match) > 0) {
             $matches[] = $match;
         }
-
-        foreach ($matches as &$oneMatch) {
-            foreach ($oneMatch as $key => $value) {
-                $oneMatch[$key] = str_replace(
-                    array('&nbsp;', '&#8209;'),
-                    array(' '     ,'-'),
-                    strip_tags($value)
-                );
-            }
-        }
-
         return $matches;
     }
 
@@ -187,26 +172,31 @@ class FussballTools {
     public static function getVerein($strId, $strAction, $strTitle) {
         return new Verein($strId, $strAction, $strTitle);
     }
-
-    public static function getTimestampFromDateAndTimeString($str, $time) {
-
-        $tmparr = explode(",", $str);
-        $tmparr = explode(".", $tmparr['1']);
-
-        $d = trim($tmparr[0]);
-        $m = $tmparr[1];
-        $y = $tmparr[2];
-
-
-        $h = "12"; $i= "00";
-        if (strpos($time, ":") !== false) {
-            $tmparr = explode(":", $time);
-            $h = $tmparr[0];
-            $i = $tmparr[1];
+    private static function getMatchType($strTyp) {
+        $arrTypes = array(
+            'Meisterschaftsspiel' => 'ME',
+            'Freundschaftsspiel'  => 'FS',
+            'Pokalspiel'          => 'PO',
+            'Turnierspiel'        => 'TU',
+        );
+        if (array_key_exists($strTyp, $arrTypes)) {
+            return $arrTypes[$strTyp];
         }
+        return $strTyp;
+    }
+    private static function getTimestamp($strDateTime, $strDate) {
 
-        $tstamp = strtotime("$y-$m-$d $h:$i:00");
-        return $tstamp;
+        if (strlen($strDateTime) === 20) {
+            $arr = explode(',', $strDateTime);
+            array_shift($arr);
+            $objDate = \DateTime::createFromFormat('d.m.y \| H:i', trim(implode('',$arr)));
+        }
+        else {
+            $arr = explode(',', $strDate.' '.$strDateTime);
+            array_shift($arr);
+            $objDate = \DateTime::createFromFormat('d.m.Y H:i', trim(implode('',$arr)));
+        }
+        return ($objDate) ? $objDate->getTimestamp() : 0;
     }
 
 
