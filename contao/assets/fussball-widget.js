@@ -9,13 +9,12 @@ if (!String.prototype.fulltrim) {
 }
 
 var FussballWidget = function() {
-    var id = null;
-    var div_id = null;
-    var team = null;
+    var id         = null;
+    var div_id     = null;
+    var team       = null;
     var wettbewerb = null;
 
     return {
-
         ergebnisse: function() {
             this.wettbewerb.zeigeBegegnungen(this.div_id);
             return false;
@@ -24,7 +23,7 @@ var FussballWidget = function() {
             this.wettbewerb.zeigeTabelle(this.div_id);
             return false;
         },
-        init: function(id, wettbewerbs_id, mandant, team) {
+        init: function(id, wettbewerbs_id, team) {
             // id setzen
             this.id = id;
             this.div_id = 'id' + this.id;
@@ -32,7 +31,6 @@ var FussballWidget = function() {
             this.wettbewerb = new fussballdeAPI();
 
             this.wettbewerb.setzeWettbewerb(wettbewerbs_id);
-            this.wettbewerb.setzeMandant(mandant);
 
             if (team.length > 0) {
                 this.team = team.toLowerCase().fulltrim();

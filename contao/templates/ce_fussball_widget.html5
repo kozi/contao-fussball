@@ -16,10 +16,10 @@
   var <?php echo $id;?> = new FussballWidget();	
   <?php echo $id;?>.init('<?php echo implode("','", array($id, 
   														$this->fussball_wettbewerbs_id,
-  														$this->fussball_mandant,
   														$this->fussball_team)); ?>');
   <?php echo $id;?>.ergebnisse();
 </script>
+
 
 </div>
 

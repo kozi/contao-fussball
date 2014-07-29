@@ -61,7 +61,7 @@ class ContentFussballWidget extends \ContentElement {
 	}
 
 	protected function addJavascriptFiles($api_key) {
-		$fussballAPI = 'http://ergebnisdienst.fussball.de/static/egm//js/egmWidget.js?schluessel='.$api_key;
+		$fussballAPI = 'http://www.fussball.de/export.widget.js/-/schluessel/'.$api_key;
 
 		// Die Dateien müssen natürlich nur einmal eingebunden werden
 		if(!in_array($fussballAPI, $GLOBALS['TL_JAVASCRIPT'])) {
