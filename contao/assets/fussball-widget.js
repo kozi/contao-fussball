@@ -27,6 +27,7 @@ var FussballWidget = function() {
         init: function(id, wettbewerbs_id, team) {
             // id setzen
             this.id = id;
+            this.rendered = false;
             this.div_id = 'id' + this.id;
 
             this.wettbewerb = new fussballdeAPI();
@@ -45,29 +46,36 @@ var FussballWidget = function() {
             if (this.rendered) {
                 return false;
             }
+            var iframe = jQuery('#'+this.div_id+' iframe');
 
-            console.log('postRender', this.rendered, this.id);
+            if (iframe.length == 0) {
+                return false;
+            }
+            iframe.attr('width', '100%');
+            // iframe.attr('height', '600px');
+
+            console.log('postRender', iframe.length, this.rendered, this.id, iframe);
 
             /*
-            divEl = document.getElementById('fussballdeAPI');
-            if (divEl == null) { return false; }
+             divEl = document.getElementById('fussballdeAPI');
+             if (divEl == null) { return false; }
 
-            table = document.getElementById(this.div_id).getElementsByClassName('egmSnippetContent')[0];
-            if (table == null) { return false; }
+             table = document.getElementById(this.div_id).getElementsByClassName('egmSnippetContent')[0];
+             if (table == null) { return false; }
 
-            a_nodes = table.getElementsByTagName('a');
+             a_nodes = table.getElementsByTagName('a');
 
-            for (i = 0;i < a_nodes.length; i++) {
-                node = a_nodes[i].firstChild;
-                if (node.nodeType == 3) {
-                    value = node.nodeValue.toLowerCase().fulltrim();
-                    if (value == this.team) {
-                        row = node.parentNode.parentNode.parentNode;
-                        row.id = "fussball_widget_highlighted_row";
-                    }
-                }
-            }
-            */
+             for (i = 0;i < a_nodes.length; i++) {
+             node = a_nodes[i].firstChild;
+             if (node.nodeType == 3) {
+             value = node.nodeValue.toLowerCase().fulltrim();
+             if (value == this.team) {
+             row = node.parentNode.parentNode.parentNode;
+             row.id = "fussball_widget_highlighted_row";
+             }
+             }
+             }
+             */
 
         }
 
