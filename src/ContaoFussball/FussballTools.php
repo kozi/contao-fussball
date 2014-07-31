@@ -89,9 +89,6 @@ class FussballTools {
                 $link    = ($a != null) ? $a->href : '';
                 $kennung = ($a != null) ? preg_replace("#http:\/\/.*\/spiel\/#", "", trim($a->href)) : 'SPIELFREI';
 
-
-                var_dump($cols);
-
                 // Match
                 $match     = array(
                     'kennung'  => $kennung,
