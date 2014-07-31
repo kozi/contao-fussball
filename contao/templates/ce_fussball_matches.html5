@@ -11,7 +11,8 @@
         <th class="typ">Typ</th>
         <th class="anstoss">Anstoß</th>
         <th class="spiel">Spiel</th>
-        <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</th>
+        <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</abbr></th>
+        <th class="link" colspan="2">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -38,6 +39,11 @@
             </td>
             <td class="ergebnis"><?php echo $match->ergebnis; ?></td>
             <td class="points"><?php if ($match->points != -1) echo $match->points; ?></td>
+            <td class="link">
+                <?php if ($match->link):?>
+                    <a title="Weitere Infos auf fussball.de" href="<?php echo $match->link; ?>" target="_blank"><img src="<?php echo Image::get("system/modules/fussball/assets/fussball.de-logo.png", 0, 16); ?>"></a>
+                <?php endif; ?>
+            </td>
 
         </tr>
     <?php endforeach; ?>

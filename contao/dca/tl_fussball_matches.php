@@ -182,6 +182,12 @@ $GLOBALS['TL_DCA']['tl_fussball_matches'] = array(
         'search'                  => false,
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
+    'link' => array
+    (
+        'label'                   => array('LINK'),
+        'search'                  => false,
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    ),
 
 
 

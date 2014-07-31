@@ -25,7 +25,6 @@ namespace ContaoFussball;
 class FussballDataManager extends \System {
     const ONE_DAY_SEC      = 86400;
     const MATCH_LENGTH_SEC = 6300;
-    const SPIEL_ABGESAGT   = "Abg.";
 
     private $team_id       = 0;
 	private $now           = 0;
@@ -230,6 +229,7 @@ class FussballDataManager extends \System {
 			'heim'          => $match['manh'],
 			'gast'          => $match['mana'],
 			'typ'           => $match['typ'],
+            'link'          => $match['link'],
 			'location'      => ($match['loc'] !== null) ? $match['loc'] : '',
             'platzart'      => ($match['platzart'] !== null) ? $match['platzart'] : '',
 			'spielklasse'   => $match['klasse'],
@@ -239,7 +239,7 @@ class FussballDataManager extends \System {
         $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE spielkennung = ?')
             ->execute($dbMatch['spielkennung']);
 
-        if (static::SPIEL_ABGESAGT === $match['erg']) {
+        if ($match['abgesagt'] === true) {
             // WENN DAS SPIEL ABGESAGT WURDE WIRD ES GELÖSCHT UND NICHT WIEDER EINGEFÜGT
             $this->Database->prepare('DELETE FROM tl_fussball_matches WHERE spielkennung = ?')
                 ->execute($dbMatch['spielkennung']);

@@ -3,6 +3,7 @@
 namespace ContaoFussball;
 
 class FussballTools {
+    const SPIEL_ABGESAGT   = "Abg.";
 
     public static function getMatches($clubId, $teamId, $tstampFrom, $tstampTill) {
         $max = 100;
@@ -84,8 +85,12 @@ class FussballTools {
                 }
 
                 // Kennung
-                $a         = $tr->find('td', 7)->find('a', 0);
-                $kennung   = ($a != null) ? preg_replace("#http:\/\/.*\/spiel\/#", "", trim($a->href)) : 'SPIELFREI';
+                $a       = $tr->find('td', 7)->find('a', 0);
+                $link    = ($a != null) ? $a->href : '';
+                $kennung = ($a != null) ? preg_replace("#http:\/\/.*\/spiel\/#", "", trim($a->href)) : 'SPIELFREI';
+
+
+                var_dump($cols);
 
                 // Match
                 $match     = array(
@@ -95,6 +100,8 @@ class FussballTools {
                     'klasse'   => $cols[2],
                     'manh'     => $cols[3],
                     'mana'     => $cols[5],
+                    'link'     => $link,
+                    'abgesagt' => (static::SPIEL_ABGESAGT === $cols[6])
                     // 'ergebnis' => $cols[6],
                 );
             }
