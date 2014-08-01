@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] =  str_replace(
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget'] = str_replace(
     $strHL,
-    $strHL.'{fussball_legend},fussball_wettbewerbs_id,fussball_team_id;',
+    $strHL.'{fussball_legend},fussball_wettbewerbs_id,fussball_team_id,fussball_widget_typ;',
     $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] = str_replace(
@@ -61,6 +61,17 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_wettbewerbs_id'] = array
 	'eval'                    => array('mandatory'=>true),
     'sql'                     => "varchar(255) NOT NULL default ''",
 );
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_widget_typ'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_widget_typ'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'eval'                    => array('mandatory'=>true),
+    'options'                 => array('tabelle'=> 'Tabelle anzeigen', 'ergebnisse' => 'Ergebnisse anzeigen'),
+    'sql'                     => "varchar(255) NOT NULL default ''",
+);
+
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_team_id'] = array
 (

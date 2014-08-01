@@ -17,7 +17,6 @@
     </thead>
     <tbody>
 
-
     <?php $i=0; foreach($this->matches as $match): $match->cssClass .= ($i++ % 2 ==0) ? ' odd': ' even'; ?>
         <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->spielkennung; ?>">
             <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
