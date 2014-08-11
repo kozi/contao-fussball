@@ -12,7 +12,7 @@
  * @license    LGPL
  * @filesource
  */
-$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{fussball_legend},fussball_api_key';
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] .= ';{fussball_legend}, fussball_api_key';
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['fussball_api_key'] = array(
 	'label'		=>	&$GLOBALS['TL_LANG']['tl_page']['fussball_api_key'],
@@ -20,7 +20,6 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['fussball_api_key'] = array(
 	'inputType'	=>	'text',
     'sql'       =>  "varchar(255) NOT NULL default ''",
 	'eval'		=>	array('mandatory'=>true),
-
 );
 
 

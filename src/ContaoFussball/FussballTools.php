@@ -4,7 +4,7 @@ namespace ContaoFussball;
 
 class FussballTools {
     const SPIEL_ABGESAGT   = "Abg.";
-
+    const SPIELFREI        = "spielfrei";
     public static function getMatches($clubId, $teamId, $tstampFrom, $tstampTill) {
         $max = 100;
         $url = sprintf($GLOBALS['fussball']['url'],
@@ -15,14 +15,12 @@ class FussballTools {
             $teamId
         );
 
+        $matches        = array();
+
         $mainContent    = file_get_contents($url);
         $jsonResult     = json_decode($mainContent);
         $strHtml        = strip_tags($jsonResult->html, "<table><tr><td><a>");
-
         $objHtml        = \Sunra\PhpSimple\HtmlDomParser::str_get_html($strHtml);
-        $matches        = array();
-        $match_date     = '';
-        $match          = null;
 
         $table = $objHtml->find('table.table', 0);
         if ($table == null) {
@@ -34,95 +32,118 @@ class FussballTools {
             return $matches;
         }
 
-
+        $arrRow0 = array();
+        $arrRow1 = array();
+        $arrRow2 = array();
 
         foreach($rows as $tr) {
-            $tds     = $tr->find('td');
-            $count   = count($tds);
-            $content = ($count === 1) ?  trim($tds[0]->plaintext): false;
+            $cols = array();
+            $tds  = $tr->find('td');
 
-            if ($content !== false) {
-                // Date or Location
-                if (self::containsDayname($content)) {
-                    // Date
-                    $match_date = $content;
-                }
-                else if (preg_match ("/(Hartplatz|Kunstrasenplatz|Rasenplatz), /" , $content, $arrResult) !== false) {
-
-                    // Location
-                    $platzart  = $arrResult[1];
-                    $location  = str_replace($arrResult[0], '', $content);
-                    $location  = preg_replace("/[^a-zA-Z0-9_äöüÄÖÜß\.\- \/,\[\]]/" , "" , $location);
-                    $location  = str_replace(", ","\n", $location);
-
-                    // Wenn eine Location gefunden wurde gehört diese zum "aktuellen" Spiel
-                    if (is_array($match) && !array_key_exists('loc', $match)) {
-                        $match['loc']        = $location;
-                        $match['platzart']   = $platzart;
-
-                    }
-                }
-
-            }
-            else if ($count > 4) {
-
-                if ($match !== null) {
-                    $matches[] = $match;
-                }
-
-                $cols = array();
-                foreach($tds as $td) {
-                    $value = trim($td->find('text', 0)->plaintext);
+            foreach($tds as $td) {
+                $value = trim($td->find('text', 0)->plaintext);
+                if (strlen($value) === 0) {
+                    $a     = $td->find('a', 0);
+                    $value = ($a != null) ? trim($a->find('text', 0)->plaintext) : '';
                     if (strlen($value) === 0) {
-                        $a     = $td->find('a', 0);
-                        $value = ($a != null) ? trim($a->find('text', 0)->plaintext) : '';
-                        if (strlen($value) === 0) {
-                            $div = $td->find('div.club-name', 0);
-                            $value = ($div != null) ? trim($div->find('text', 0)->plaintext) : '';
-                        }
+                        $div = $td->find('div.club-name', 0);
+                        $value = ($div != null) ? trim($div->find('text', 0)->plaintext) : '';
                     }
-                    $cols[] = $value;
+                }
+                $cols[] = $value;
+            }
+            $count = count($cols);
+
+            if ($count === 3) {
+                if (strlen($cols[0]) === 0) {
+                    // Ort und Platzart in $col[1]
+                    if (preg_match ("/(Hartplatz|Kunstrasenplatz|Rasenplatz), /" , $cols[1], $arrResult) !== false) {
+                        // Location
+                        $platzart  = $arrResult[1];
+                        $location  = str_replace($arrResult[0], '', $cols[1]);
+                        $location  = preg_replace("/[^a-zA-Z0-9_äöüÄÖÜß\.\- \/,\[\]]/" , "" , $location);
+                        $location  = str_replace(", ","\n", $location);
+                    }
+                    $arrRow0[] = array(
+                        'location'  => $location,
+                        'platzart'  => $platzart
+                    );
+                }
+                else {
+                    // Datum in $cols[0] und Spielklasse in $cols[1]
+                    // Typ in $col[2]
+                    $arrTmp1    = array_map('trim', explode('|', $cols[1]));
+                    $arrTmp2    = array_map('trim', explode('|', $cols[2]));
+                    $arrRow1[] = array(
+                        'tstamp'        => self::getTimestamp($cols[0]),
+                        'klasse'        => (count($arrTmp1) === 2) ?  $arrTmp1[1] : '',
+                        'typ'           => (count($arrTmp2) === 2) ?  $arrTmp2[0] : '',
+                        'kennung_short' => (count($arrTmp2) === 2) ?  $arrTmp2[1] : ''
+
+                    );
+                }
+            }
+            elseif ($count > 4) {
+
+                $a       = $tr->find('td', 5)->find('a', 0);
+                $link    = ($a != null) ? $a->href : false;
+                $kennung = ($link) ? substr($link, strrpos($link, '/') + 1) : false;
+
+                // Wenn abgesagt oder spielfrei gibt es die Zeile mit dem Ort nicht!
+                $spielfrei = ($cols[1] === static::SPIELFREI || $cols[3] === static::SPIELFREI);
+                $abgesagt  = (static::SPIEL_ABGESAGT === $cols[4]);
+                if ($abgesagt || $spielfrei) {
+                    $arrRow0[] = array('EMPTY'=> 'EMPTY');
                 }
 
-                // Kennung
-                $a       = $tr->find('td', 7)->find('a', 0);
-                $link    = ($a != null) ? $a->href : '';
-                $kennung = ($a != null) ? preg_replace("#http:\/\/.*\/spiel\/#", "", trim($a->href)) : 'SPIELFREI';
-
-                // Match
-                $match     = array(
+                $arrRow2[] = array(
                     'kennung'  => $kennung,
-                    'tstamp'   => self::getTimestamp($cols[0], $match_date),
-                    'typ'      => self::getMatchType($cols[1]),
-                    'klasse'   => $cols[2],
-                    'manh'     => $cols[3],
-                    'mana'     => $cols[5],
+                    'manh'     => $cols[1],
+                    'mana'     => $cols[3],
                     'link'     => $link,
-                    'abgesagt' => (static::SPIEL_ABGESAGT === $cols[6])
-                    // 'ergebnis' => $cols[6],
+                    'abgesagt' => $abgesagt
+                    // 'ergebnis' => $cols[6],                    
                 );
+
             }
 
-        } //foreach
+        } //foreach rows
 
-        // Das letzte Spiel muss auch noch mit
-        if ($match !== null && sizeof($match) > 0) {
-            $matches[] = $match;
+        $matchCount = count($arrRow0);
+        if (count($arrRow0) === count($arrRow1) && count($arrRow1) === count($arrRow2)) {
+            for($i=0;$i < $matchCount;$i++) {
+                $match = array_merge($arrRow0[$i], $arrRow1[$i], $arrRow2[$i]);
+                if ($match['kennung'] === false) {
+                    $match['kennung'] = standardize($match['klasse'].'-'.$match['kennung_short']);
+                }
+                $matches[] = $match;
+            }
+
         }
+
+        if (\Input::get('debug') === '1') {
+            echo '<pre>';
+            foreach($matches as $m) {
+                echo " \nDatum: ".\Date::parse('d.m.Y H:i', $m['tstamp'])."\n";
+                var_dump($m);
+            }
+            echo '</pre>';
+        }
+
         return $matches;
     }
 
     public static function url_title($str, $separator = 'dash') {
-        $search		= ($separator == 'dash') ? '_' : '-';
-        $replace	= ($separator == 'dash') ? '-' : '_';
+        $search     = ($separator == 'dash') ? '_' : '-';
+        $replace    = ($separator == 'dash') ? '-' : '_';
 
         $trans      = array(
-            $search								=> $replace,
-            "\s+"								=> $replace,
-            "[^a-z0-9".$replace."]"				=> '',
-            $replace."+"						=> $replace,
-            $replace."$"						=> '',
-            "^".$replace						=> ''
+            $search                             => $replace,
+            "\s+"                               => $replace,
+            "[^a-z0-9".$replace."]"             => '',
+            $replace."+"                        => $replace,
+            $replace."$"                        => '',
+            "^".$replace                        => ''
         );
 
         $str = strip_tags(strtolower($str));
@@ -176,6 +197,7 @@ class FussballTools {
     public static function getVerein($strId, $strAction, $strTitle) {
         return new Verein($strId, $strAction, $strTitle);
     }
+
     private static function getMatchType($strTyp) {
         $arrTypes = array(
             'Meisterschaftsspiel' => 'ME',
@@ -188,17 +210,18 @@ class FussballTools {
         }
         return $strTyp;
     }
-    private static function getTimestamp($strDateTime, $strDate) {
+
+    private static function getTimestamp($strDateTime) {
 
         if (strlen($strDateTime) === 20) {
             $arr = explode(',', $strDateTime);
             array_shift($arr);
             $objDate = \DateTime::createFromFormat('d.m.y \| H:i', trim(implode('',$arr)));
         }
-        else {
-            $arr = explode(',', $strDate.' '.$strDateTime);
+        elseif (strlen($strDateTime) === 14) {
+            $arr = explode(',', $strDateTime);
             array_shift($arr);
-            $objDate = \DateTime::createFromFormat('d.m.Y H:i', trim(implode('',$arr)));
+            $objDate = \DateTime::createFromFormat('d.m.y \| H:i', trim(implode('',$arr)).' 00:00');
         }
         return ($objDate) ? $objDate->getTimestamp() : 0;
     }
