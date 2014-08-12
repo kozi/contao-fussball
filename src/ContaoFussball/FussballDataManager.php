@@ -230,7 +230,7 @@ class FussballDataManager extends \System {
 			'gast'          => $match['mana'],
 			'typ'           => $match['typ'],
             'link'          => $match['link'],
-			'location'      => ($match['loc'] !== null) ? $match['loc'] : '',
+			'location'      => ($match['location'] !== null) ? $match['location'] : '',
             'platzart'      => ($match['platzart'] !== null) ? $match['platzart'] : '',
 			'spielklasse'   => $match['klasse'],
             'ergebnis'      => ($match['erg'] !== null) ? $match['erg'] : '',
