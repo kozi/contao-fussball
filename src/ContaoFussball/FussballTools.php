@@ -6,6 +6,8 @@ class FussballTools {
     const SPIEL_ABGESAGT   = "Abg.";
     const SPIELFREI        = "spielfrei";
     public static function getMatches($clubId, $teamId, $tstampFrom, $tstampTill) {
+        $debugEnabled = (\Input::get('debug') === '1');
+
         $max = 100;
         $url = sprintf($GLOBALS['fussball']['url'],
             $clubId,
@@ -15,6 +17,18 @@ class FussballTools {
             $teamId
         );
 
+        if ($debugEnabled) {
+
+            echo "<code><pre>";
+            echo "clubId: ".$clubId."\n";
+            echo "teamId: ".$teamId."\n";
+            echo "max:    ".$max."\n";
+            echo "from:   ".date("d.m.Y", $tstampFrom)."\n";
+            echo "till:   ".date("d.m.Y", $tstampTill)."\n";
+            echo "url:    ".$url."\n";
+            echo "</pre></code>";
+        }
+
         $matches        = array();
 
         $mainContent    = file_get_contents($url);
@@ -22,7 +36,16 @@ class FussballTools {
         $strHtml        = strip_tags($jsonResult->html, "<table><tr><td><a>");
         $objHtml        = \Sunra\PhpSimple\HtmlDomParser::str_get_html($strHtml);
 
+
+
         $table = $objHtml->find('table.table', 0);
+
+        if ($debugEnabled) {
+            echo "<code><pre>";
+            echo "strlen(\$strHtml): ".strlen($strHtml);            
+            echo "</pre></code>";
+        }
+
         if ($table == null) {
             return $matches;
         }
@@ -30,6 +53,10 @@ class FussballTools {
         $rows = $table->find('tr');
         if ($rows == null) {
             return $matches;
+        }
+
+        if ($debugEnabled) {
+            echo '<code><pre>$table and $rows not NULL</pre></code>';
         }
 
         $arrRow0 = array();
@@ -54,8 +81,12 @@ class FussballTools {
             }
             $count = count($cols);
 
+            if ($debugEnabled) {               
+               echo '<code><pre>count($cols): '.$count.'  '.implode(' ## ', $cols)."</pre></code>";
+            }
+
             if ($count === 3) {
-                if (strlen($cols[0]) === 0) {
+                if (strlen($cols[0]) === 0 && strpos($cols[1], "|") === false) {
                     // Ort und Platzart in $col[1]
                     if (preg_match ("/(Hartplatz|Kunstrasenplatz|Rasenplatz), /" , $cols[1], $arrResult) !== false) {
                         // Location
@@ -79,7 +110,6 @@ class FussballTools {
                         'klasse'        => (count($arrTmp1) === 2) ?  $arrTmp1[1] : '',
                         'typ'           => (count($arrTmp2) === 2) ?  $arrTmp2[0] : '',
                         'kennung_short' => (count($arrTmp2) === 2) ?  $arrTmp2[1] : ''
-
                     );
                 }
             }
@@ -92,8 +122,8 @@ class FussballTools {
                 // Wenn abgesagt oder spielfrei gibt es die Zeile mit dem Ort nicht!
                 $spielfrei = ($cols[1] === static::SPIELFREI || $cols[3] === static::SPIELFREI);
                 $abgesagt  = (static::SPIEL_ABGESAGT === $cols[4]);
-                if ($abgesagt || $spielfrei) {
-                    $arrRow0[] = array('EMPTY'=> 'EMPTY');
+                if ($abgesagt || $spielfrei) {                    
+                    $arrRow0[] = array('EMPTY'=> uniqid());
                 }
 
                 $arrRow2[] = array(
@@ -109,6 +139,26 @@ class FussballTools {
 
         } //foreach rows
 
+        if ($debugEnabled) {
+
+            echo "<code><pre>";
+            echo 'count($arrRow0): '.count($arrRow0)."\n";
+            echo 'count($arrRow1): '.count($arrRow1)."\n";
+            echo 'count($arrRow2): '.count($arrRow2)."\n";            
+            echo "</pre></code>";            
+        }
+
+
+        if ($debugEnabled) {
+            echo "<code><pre>";
+            echo var_dump($arrRow0);
+            echo "</pre></code>";                    }
+
+        if ($debugEnabled) {
+            echo '<style>td { background:#eeeeee; }</style>';
+            echo $strHtml;
+        }
+
         $matchCount = count($arrRow0);
         if (count($arrRow0) === count($arrRow1) && count($arrRow1) === count($arrRow2)) {
             for($i=0;$i < $matchCount;$i++) {
@@ -121,7 +171,7 @@ class FussballTools {
 
         }
 
-        if (\Input::get('debug') === '1') {
+        if ($debugEnabled) {
             echo '<pre>';
             foreach($matches as $m) {
                 echo " \nDatum: ".\Date::parse('d.m.Y H:i', $m['tstamp'])."\n";
