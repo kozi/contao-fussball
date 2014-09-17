@@ -241,6 +241,7 @@ class FussballDataManager extends \System {
 
         if ($match['abgesagt'] === true) {
             // WENN DAS SPIEL ABGESAGT WURDE WIRD ES GELÖSCHT UND NICHT WIEDER EINGEFÜGT
+            // TODO BEI SPIELFREI DAS SPIEL AUCH LÖSCHEN!!!
             $this->Database->prepare('DELETE FROM tl_fussball_matches WHERE spielkennung = ?')
                 ->execute($dbMatch['spielkennung']);
         }

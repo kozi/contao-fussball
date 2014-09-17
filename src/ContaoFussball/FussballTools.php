@@ -36,8 +36,6 @@ class FussballTools {
         $strHtml        = strip_tags($jsonResult->html, "<table><tr><td><a>");
         $objHtml        = \Sunra\PhpSimple\HtmlDomParser::str_get_html($strHtml);
 
-
-
         $table = $objHtml->find('table.table', 0);
 
         if ($debugEnabled) {
