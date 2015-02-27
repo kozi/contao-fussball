@@ -109,21 +109,23 @@ class FussballDataManager extends \System {
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
 
-        $von     = time() - (182 * static::ONE_DAY_SEC);
-        $bis     = time() + (182 * static::ONE_DAY_SEC);
+        $von        = time() - (182 * static::ONE_DAY_SEC);
+        $bis        = time() + (182 * static::ONE_DAY_SEC);
 
-        $matches = FussballTools::getMatches($teamObj->club_id, $teamObj->team_id, $von, $bis);
+        $arrMatches = FussballTools::getMatches($teamObj->club_id, $teamObj->team_id, $von, $bis);
 
         if($debugEnabled) {
+            
+            echo '#matches: '.count($arrMatches);
             echo '<br><hr><br>';
-            var_dump($matches);
+            var_dump($arrMatches);
         }
 
-        if ($matches === false || (is_array($matches) && count($matches) === 0)) {
+        if ($arrMatches === false || (is_array($arrMatches) && count($arrMatches) === 0)) {
             return false;
         }
 
-        foreach ($matches as $match) {
+        foreach ($arrMatches as $match) {
             $this->matchToDb($match, $teamObj->id);
         }
         return true;
