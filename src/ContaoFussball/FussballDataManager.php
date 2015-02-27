@@ -115,10 +115,10 @@ class FussballDataManager extends \System {
         $arrMatches = FussballTools::getMatches($teamObj->club_id, $teamObj->team_id, $von, $bis);
 
         if($debugEnabled) {
-            
             echo '#matches: '.count($arrMatches);
-            echo '<br><hr><br>';
+            echo '<br><hr><br><pre><code>';
             var_dump($arrMatches);
+            echo '</code></pre>';
         }
 
         if ($arrMatches === false || (is_array($arrMatches) && count($arrMatches) === 0)) {

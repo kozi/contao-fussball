@@ -113,6 +113,23 @@ class FussballTools {
             }
             elseif ($count > 4) {
 
+                // Spiel ohne Ortsangabe
+                // Die Definition eines neuen Spiels startet (6 spaltige zeile)
+                // obwohl im ersten Array ($arrRow0) noch keine Orstangabe für das
+                // vorherige Spiel hinterlegt wurde
+                // --> FÜGE EIN LEERES ARRAY EIN.
+                if ((count($arrRow0) + 1) < count($arrRow1)) {
+                    $arrRow0[] = array();
+                }
+
+                if ($debugEnabled) {
+                    echo "<code><pre>";
+                    echo 'count($arrRow0): '.count($arrRow0).", ";
+                    echo 'count($arrRow1): '.count($arrRow1).", ";
+                    echo 'count($arrRow2): '.count($arrRow2).", ";
+                    echo "</pre></code>";
+                }
+
                 $a       = $tr->find('td', 5)->find('a', 0);
                 $link    = ($a != null) ? $a->href : false;
                 $kennung = ($link) ? substr($link, strrpos($link, '/') + 1) : false;
@@ -137,6 +154,8 @@ class FussballTools {
 
         } //foreach rows
 
+        $matchCount = count($arrRow0);
+
         if ($debugEnabled) {
 
             echo "<code><pre>";
@@ -144,20 +163,24 @@ class FussballTools {
             echo 'count($arrRow1): '.count($arrRow1)."\n";
             echo 'count($arrRow2): '.count($arrRow2)."\n";            
             echo "</pre></code>";            
-        }
 
+            for($i=0;$i < $matchCount;$i++) {
+                echo "<code><pre>";
+                echo var_dump($arrRow0[$i]);
+                echo "</pre></code>";
+                echo "<code><pre>";
+                echo var_dump($arrRow1[$i]);
+                echo "</pre></code>";
+                echo "<code><pre>";
+                echo var_dump($arrRow2[$i]);
+                echo "</pre></code>";
+                echo "<br><br>";
+            }
 
-        if ($debugEnabled) {
-            echo "<code><pre>";
-            echo var_dump($arrRow0);
-            echo "</pre></code>";                    }
-
-        if ($debugEnabled) {
             echo '<style>td { background:#eeeeee; }</style>';
             echo $strHtml;
         }
 
-        $matchCount = count($arrRow0);
         if (count($arrRow0) === count($arrRow1) && count($arrRow1) === count($arrRow2)) {
             for($i=0;$i < $matchCount;$i++) {
                 $match = array_merge($arrRow0[$i], $arrRow1[$i], $arrRow2[$i]);
