@@ -104,6 +104,8 @@ class FussballDataManager extends \System {
     }
 
 	public function updateTeamMatches(FussballTeamModel $teamObj) {
+        $debugEnabled = (\Input::get('debug') === '1');
+
         $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
 
 
@@ -111,6 +113,11 @@ class FussballDataManager extends \System {
         $bis     = time() + (182 * static::ONE_DAY_SEC);
 
         $matches = FussballTools::getMatches($teamObj->club_id, $teamObj->team_id, $von, $bis);
+
+        if($debugEnabled) {
+            echo '<br><hr><br>';
+            var_dump($matches);
+        }
 
         if ($matches === false || (is_array($matches) && count($matches) === 0)) {
             return false;
