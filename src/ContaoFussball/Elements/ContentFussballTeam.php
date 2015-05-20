@@ -6,7 +6,7 @@
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  * @license    LGPL
@@ -16,7 +16,7 @@ namespace ContaoFussball\Elements;
 /**
  * Class ContentFussballTeam
  *
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  */
@@ -99,7 +99,32 @@ class ContentFussballTeam extends \ContentElement {
         unset($team->team_attributes);
         $team->attributes = array();
         foreach($attributes as $a) {
-            $team->attributes[$a['fussball_ta_key']] = $this->replaceInsertTags($a['fussball_ta_value']);
+
+            $key    = $a['fussball_ta_key'];
+            $raw    = $a['fussball_ta_value'];
+            $isLink = false;
+
+            if (substr($raw, 0, 7) === 'http://' || substr($raw, 0, 8) === 'https://') {
+                $isLink = true;
+                $label = str_replace(
+                    array('http://www.', 'https://www.', 'http://', 'https:'),
+                    array('', '', '', ''),
+                    $raw
+                );
+                $labelShort48 = \String::substr($label, 48, '…');
+                $labelShort32 = \String::substr($label, 32, '…');
+            }
+
+            $team->attributes[] = (object) array(
+                'key'      => $key,
+                'raw'      => $raw,
+                'value'    => $this->replaceInsertTags($raw),
+                'isLink'   => $isLink,
+                'label'    => $label,
+                'label48'  => $labelShort48,
+                'label32'  => $labelShort32
+            );
         }
     }
 }
+

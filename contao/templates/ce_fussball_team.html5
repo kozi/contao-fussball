@@ -5,11 +5,15 @@
 
         <div class="ce_list">
             <ul class="team_attributes">
-                <?php foreach($this->team->attributes as $key => $value) : ?>
-                    <li><strong><?php echo $key; ?></strong>: <?php echo $value; ?></li>
+                <?php foreach($this->team->attributes as $objAttr) : ?>
+                    <?php if ($objAttr->isLink): ?>
+                        <li><strong><?php echo $objAttr->key; ?></strong>:
+                            <a href="<?php echo $objAttr->raw; ?>" target="_blank"><?php echo $objAttr->label48; ?></a></li>
+                    <?php else: ?>
+                        <li><strong><?php echo $objAttr->key; ?></strong>: <?php echo $objAttr->value; ?></li>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
-
         </div>
     <?php endif;?>
 
