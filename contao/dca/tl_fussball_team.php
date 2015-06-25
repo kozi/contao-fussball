@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    fussball
  * @license    LGPL
@@ -15,12 +15,13 @@
 
 $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 
-// Config
+    // Config
     'config' => array
     (
         'dataContainer'               => 'Table',
-        'closed'                      => false,
-        'notEditable'                 => false,
+        'switchToEdit'                => true,
+        'enableVersioning'            => true,
+        'ctable'                      => array('tl_fussball_match', 'tl_fussball_tournament'),
         'sql' => array(
             'keys' => array('id' => 'primary')
         )
@@ -39,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
         ),
         'label' => array
         (
-            'fields'                  => array('bgcolor', 'name', 'team_attributes', 'lastUpdate'),
+            'fields'                  => array('bgcolor', 'name', 'team_attributes'),
             'showColumns'             => true,
             'label_callback'          => array('tl_fussball_team', 'labelCallback')
         ),
@@ -54,11 +55,18 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
                 'icon'                => 'edit.gif',
                 'attributes'          => 'class="contextmenu"'
             ),
-            'updateMatches' => array
+            'match' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['updateMatches'],
-                'href'                => 'key=update',
-                'icon'                => 'reload.gif',
+                'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['match'],
+                'href'                => 'table=tl_fussball_match',
+                'icon'                => 'system/modules/fussball/assets/icons/soccer.png',
+                'attributes'          => 'class="contextmenu"'
+            ),
+            'tournament' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_fussball_team']['tournament'],
+                'href'                => 'table=tl_fussball_tournament',
+                'icon'                => 'system/modules/fussball/assets/icons/tournament.png',
                 'attributes'          => 'class="contextmenu"'
             ),
             'delete' => array
@@ -72,14 +80,13 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
 
     ),
 
-
-// Palettes
+    // Palettes
     'palettes' => array
     (
-        'default'                     => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;{team_attr_legend},team_attributes;{spielplan_legend},club_id,team_id'
+        'default'                     => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;{team_attr_legend},team_attributes'
     ),
 
-// Fields
+    // Fields
     'fields' => array
     (
         'id' => array
@@ -164,30 +171,6 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
             'eval'			          => array('mandatory'=>false, 'allowHtml' => true, 'columnsCallback'=>array('tl_fussball_team', 'teamAttributes')),
             'sql'                     => "blob NULL",
         ),
-
-        'club_id' => array
-        (
-            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['club_id'],
-            'exclude'                 => true,
-            'search'                  => true,
-            'sorting'                 => true,
-            'flag'                    => 1,
-            'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>false, 'maxlength'=>255, 'tl_class' => 'long'),
-            'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'team_id' => array
-        (
-            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['team_id'],
-            'exclude'                 => true,
-            'search'                  => true,
-            'sorting'                 => true,
-            'flag'                    => 1,
-            'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>false, 'maxlength'=>255, 'tl_class' => 'long'),
-            'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-
         'lastUpdate' => array
         (
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['lastUpdate'],
@@ -230,11 +213,8 @@ class tl_fussball_team extends Backend {
                 $args[2] .= sprintf($this->tmplTeamAttribute, $attribute['fussball_ta_key'], $attribute['fussball_ta_value']);
             }
         }
-
-        $args[3] = str_replace(' ', '&nbsp;', $args[3]);
-
         $url = \Environment::get('script').'?do=fussball_teams&id=%s&key=sorting&sort=%s';
-        $args[4] = sprintf('<div style="inline-block;width:26px;"><a class="down" href="'.$url.'"><img src="system/themes/default/images/down.gif"></a><a class="up" href="'.$url.'"><img src="system/themes/default/images/up.gif"></a></div>',
+        $args[3] = sprintf('<div style="inline-block;width:26px;"><a class="down" href="'.$url.'"><img src="system/themes/default/images/down.gif"></a><a class="up" href="'.$url.'"><img src="system/themes/default/images/up.gif"></a></div>',
             $row['id'], 'down',
             $row['id'], 'up'
         );

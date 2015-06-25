@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  * @license    LGPL
@@ -17,7 +17,7 @@ namespace ContaoFussball\Elements;
 /**
  * Class ContentFussballTournament
  *
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    Controller
  */
@@ -68,8 +68,8 @@ class ContentFussballTournament extends \ContentElement {
 
         $result   = $this->Database->prepare('SELECT tl_fussball_tournament.*, tl_fussball_team.name AS team_name, tl_fussball_team.name_short AS team_name_short'
             .' FROM tl_fussball_tournament, tl_fussball_team'
-            .' WHERE tl_fussball_tournament.team_id IN ('.implode(',', $this->team_ids).')'
-            .' AND tl_fussball_tournament.team_id = tl_fussball_team.id'
+            .' WHERE tl_fussball_tournament.pid IN ('.implode(',', $this->team_ids).')'
+            .' AND tl_fussball_tournament.pid = tl_fussball_team.id'
             .' AND tl_fussball_tournament.startDate > '.($this->now - $this->oneDayInSeconds)
             .' ORDER BY tl_fussball_tournament.startDate ASC, tl_fussball_tournament.startTime ASC')
             ->limit($db_limit)->execute($this->fussball_team_id);

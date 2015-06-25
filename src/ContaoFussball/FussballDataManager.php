@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  * @license    LGPL 
@@ -17,7 +17,7 @@ namespace ContaoFussball;
 /**
  * Class FussballDataManager
  *
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    Controller
  */
@@ -25,8 +25,6 @@ namespace ContaoFussball;
 class FussballDataManager extends \System {
     const ONE_DAY_SEC      = 86400;
     const MATCH_LENGTH_SEC = 6300;
-
-    private $team_id       = 0;
 	private $now           = 0;
 
 	function __construct() {
@@ -44,10 +42,10 @@ class FussballDataManager extends \System {
         }
 
         // Delete all calendar events inserted by fussball extension
-        // without matching entry in tl_fussball_matches or tl_fussball_tournament
+        // without matching entry in tl_fussball_match or tl_fussball_tournament
         $this->Database->execute("DELETE FROM tl_calendar_events
             WHERE fussball_matches_id != 0
-            AND fussball_matches_id NOT IN (SELECT id FROM tl_fussball_matches)");
+            AND fussball_matches_id NOT IN (SELECT id FROM tl_fussball_match)");
 
         $this->Database->execute("DELETE FROM tl_calendar_events
             WHERE fussball_tournament_id != 0
@@ -61,79 +59,9 @@ class FussballDataManager extends \System {
         }
     }
 
-
-    public function updateMatches() {
-
-        // Manuelles Update mit übergebener id
-        if ($teamObj = FussballTeamModel::findByPk(\Input::get('id'))) {
-            if ($teamObj->team_id) {
-                $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team <strong>%s (%s, %s)</strong>" : "No matches found for Team <strong>%s (%s, %s)</strong>";
-                \Message::add(sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id), 'TL_INFO');
-            }
-            else {
-                \Message::add('Team <strong>'.$teamObj->name.'</strong> has no <em>Team-ID</em>.', 'TL_INFO');
-            }
-            \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
-        }
-
-        // Suche das Team mit dem ältesten Update-Datum das mindestens 2 Tage alt ist
-        $teamObj   = FussballTeamModel::findWithArray(array(
-                'column'  => array('tl_fussball_team.lastUpdate < ?'),
-                'value'   => $this->now - (2 * static::ONE_DAY_SEC),
-                'return'  => 'Model',
-                'limit'   =>   1,
-                'order'   => 'lastUpdate ASC'
-        ));
-
-        // Wenn es ein Team mit "alten Daten" gibt, aktualisiere die Spiele dieses Teams
-        if ($teamObj && $teamObj->team_id) {
-            $log     = $this->updateTeamMatches($teamObj) ? "Updated matches for Team %s (%s, %s)" : "No matches found for Team %s (%s, %s)";
-            $message = sprintf($log, $teamObj->name, $teamObj->name_external, $teamObj->team_id);
-            $this->log($message, 'FussballDataManager updateMatches()', TL_CRON);
-
-            if (\Input::get('key') === 'update') {
-                \Message::add($message, 'TL_INFO');
-                \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
-            }
-        }
-        else if (\Input::get('key') === 'update') {
-            \Message::add('Nothing to do!', 'TL_INFO');
-            \Controller::redirect(\Environment::get('script').'?do=fussball_teams');
-        }
-
-    }
-
-	public function updateTeamMatches(FussballTeamModel $teamObj) {
-        $debugEnabled = (\Input::get('debug') === '1');
-
-        $this->Database->prepare('UPDATE tl_fussball_team SET lastUpdate = ? WHERE id = ?')->execute($this->now, $teamObj->id);
-
-
-        $von        = time() - (182 * static::ONE_DAY_SEC);
-        $bis        = time() + (182 * static::ONE_DAY_SEC);
-
-        $arrMatches = FussballTools::getMatches($teamObj->club_id, $teamObj->team_id, $von, $bis);
-
-        if($debugEnabled) {
-            echo '#matches: '.count($arrMatches);
-            echo '<br><hr><br><pre><code>';
-            var_dump($arrMatches);
-            echo '</code></pre>';
-        }
-
-        if ($arrMatches === false || (is_array($arrMatches) && count($arrMatches) === 0)) {
-            return false;
-        }
-
-        foreach ($arrMatches as $match) {
-            $this->matchToDb($match, $teamObj->id);
-        }
-        return true;
-	}
-
     private function updateCalenderEvents($calendar) {
         // Get all matches from tl_fussball_match for $calendar->fussball_team_id
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE team_id = ?')
+        $result = $this->Database->prepare('SELECT * FROM tl_fussball_match WHERE pid = ?')
             ->execute($calendar->fussball_team_id);
 
         while ($result->next()) {
@@ -141,7 +69,7 @@ class FussballDataManager extends \System {
         }
 
         // Get all tournaments from tl_fussball_tournament for $calendar->fussball_team_id
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_tournament WHERE team_id = ?')
+        $result = $this->Database->prepare('SELECT * FROM tl_fussball_tournament WHERE pid = ?')
             ->execute($calendar->fussball_team_id);
 
         while ($result->next()) {
@@ -229,51 +157,6 @@ class FussballDataManager extends \System {
         $calEventModel->save();
     }
 
-	private function matchToDb($match, $team_id) {
-		$dbMatch = array(
-            'spielkennung'  => $match['kennung'],
-			'tstamp'        => $this->now,
-			'team_id'       => $team_id,
-			'anstoss'       => $match['tstamp'],
-			'heim'          => $match['manh'],
-			'gast'          => $match['mana'],
-			'typ'           => $match['typ'],
-            'link'          => $match['link'],
-			'location'      => ($match['location'] !== null) ? $match['location'] : '',
-            'platzart'      => ($match['platzart'] !== null) ? $match['platzart'] : '',
-			'spielklasse'   => $match['klasse'],
-            'ergebnis'      => ($match['erg'] !== null) ? $match['erg'] : '',
-		);
-
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_matches WHERE spielkennung = ?')
-            ->execute($dbMatch['spielkennung']);
-
-        if ($match['abgesagt'] === true) {
-            // WENN DAS SPIEL ABGESAGT WURDE WIRD ES GELÖSCHT UND NICHT WIEDER EINGEFÜGT
-            // TODO BEI SPIELFREI DAS SPIEL AUCH LÖSCHEN!!!
-            $this->Database->prepare('DELETE FROM tl_fussball_matches WHERE spielkennung = ?')
-                ->execute($dbMatch['spielkennung']);
-        }
-		else if ($result->numRows == 0) {
-			// INSERT
-            $this->Database->prepare('INSERT INTO tl_fussball_matches %s')->set($dbMatch)->execute();
-		}
-		else {
-			// UPDATE
-            $currentRow   = $result->row();
-            $spielkennung = $dbMatch['spielkennung'];
-            unset($dbMatch['spielkennung']);
-
-            if (strlen($currentRow['ergebnis']) > 0) {
-                // Es ist schon ein Ergebnis eingetragen.
-                unset($dbMatch['ergebnis']);
-            }
-
-            $this->Database->prepare('UPDATE tl_fussball_matches %s WHERE spielkennung = ?')
-                ->set($dbMatch)->execute($spielkennung);
-		}
-	}
-
     private static function updateCalendarColors() {
         $calObj = \CalendarModel::findAll();
         foreach($calObj as $calendar) {
@@ -283,7 +166,6 @@ class FussballDataManager extends \System {
                 $calendar->fullcal_color = $teamObj->bgcolor;
                 $calendar->save();
             }
-
         }
     }
 
@@ -309,12 +191,11 @@ class FussballDataManager extends \System {
         $result   = \Input::get('result');
         $ergebnis = '';
         if ($result && $matchId) {
-            $this->Database->prepare("UPDATE tl_fussball_matches SET ergebnis = ? WHERE id = ?")
+            $this->Database->prepare("UPDATE tl_fussball_match SET ergebnis = ? WHERE id = ?")
                 ->execute($result, $matchId);
-
         }
 
-        $result = $this->Database->prepare("SELECT ergebnis FROM tl_fussball_matches WHERE id = ?")
+        $result = $this->Database->prepare("SELECT ergebnis FROM tl_fussball_match WHERE id = ?")
             ->execute($matchId);
         if ($result->numRows === 1) {
             $ergebnis = $result->ergebnis;
@@ -325,4 +206,3 @@ class FussballDataManager extends \System {
         exit;
     }
 }
-

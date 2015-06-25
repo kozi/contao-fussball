@@ -2,7 +2,7 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
@@ -64,17 +64,11 @@ class ContentFussballTeam extends \ContentElement {
             $arrTeams[$team->id] = $team;
         }
 
-        $result   = $this->Database->prepare("SELECT DISTINCT tl_fussball_matches.team_id AS team_id
-            FROM tl_fussball_matches, tl_fussball_team
-            WHERE tl_fussball_matches.team_id = tl_fussball_team.id
-            AND tl_fussball_matches.anstoss > ? ORDER BY tl_fussball_team.sorting")
+        $result   = $this->Database->prepare("SELECT DISTINCT tl_fussball_match.pid AS team_id
+            FROM tl_fussball_match, tl_fussball_team
+            WHERE tl_fussball_match.pid = tl_fussball_team.id
+            AND tl_fussball_match.anstoss > ? ORDER BY tl_fussball_team.sorting")
             ->execute(time()) ;
-
-
-        while ($result->next()) {
-            $arrTeams[$result->team_id]->isActive = true;
-        }
-
 
         while ($result->next()) {
             $arrTeams[$result->team_id]->isActive = true;

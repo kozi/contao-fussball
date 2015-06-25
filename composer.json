@@ -23,9 +23,8 @@
         "source": "https://github.com/kozi/contao-fussball"
     },
     "require": {
-        "php": ">=5.3",
-        "contao/core": ">=3.2,<4",
-        "sunra/php-simple-html-dom-parser": "~1.5",
+        "php": ">=5.5",
+        "contao/core": ">=3.4,<4",
         "contao-community-alliance/composer-plugin": "~2",
         "menatwork/contao-multicolumnwizard": "~3"
     },
@@ -45,9 +44,6 @@
                 "contao": "system/modules/fussball"
             }
         }
-    },
-    "config": {
-        "component-dir": "../assets/components"
     }
 }
 

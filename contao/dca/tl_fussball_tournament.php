@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    fussball
  * @license    LGPL
@@ -18,7 +18,7 @@ if (!class_exists('tl_calendar_events')) {
 }
 
 $this->loadLanguageFile('tl_calendar_events');
-$this->loadLanguageFile('tl_fussball_matches');
+$this->loadLanguageFile('tl_fussball_match');
 
 $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
 
@@ -26,10 +26,13 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
 'config' => array
 (
 	'dataContainer'               => 'Table',
-    'closed'                      => false,
-    'notEditable'                 => false,
+    'ptable'                      => 'tl_fussball_team',
+    'enableVersioning'            => true,
     'sql' => array(
-        'keys' => array('id' => 'primary')
+        'keys' => array(
+            'id'  => 'primary',
+            'pid' => 'index'
+        )
     ),
     'onsubmit_callback' => array
     (
@@ -42,18 +45,14 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
 (
 	'sorting' => array
 	(
-		'mode'                    => 2,
-		'fields'                  => array('startDate DESC'),
-		'flag'                    => 1,
-		'panelLayout'             => 'sort, filter, limit'
+        'mode'                    => 4,
+        'fields'                  => array('startDate DESC', 'title'),
+        'headerFields'            => array('name', 'name_external'),
+        'disableGrouping'         => true,
+        'panelLayout'             => 'limit',
+        'child_record_callback'   => array('tl_fussball_tournament', 'listTournament'),
+        'child_record_class'      => 'tl_fussball tl_fussball_tournament'
 	),
-	'label' => array
-	(
-		'fields'                  => array('team_id', 'title', 'host', 'startDate', 'endDate', 'confirmed'),
-		'showColumns'             => true,
-		'label_callback'          => array('tl_fussball_tournament', 'labelCallback')
-	),
-
     'operations' => array
     (
         'edit' => array
@@ -98,6 +97,12 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'search'                  => false,
         'sql'                     => "int(10) unsigned NOT NULL auto_increment"
     ),
+    'pid' => array
+    (
+        'foreignKey'              => 'tl_fussball_team.name',
+        'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
+    ),
     'tstamp' => array
     (
         'label'                   => array('TSTAMP'),
@@ -105,24 +110,6 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'sql'                     => "int(10) unsigned NOT NULL default '0'",
     ),
 
-    'title' => array(
-        'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_tournament']['title'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class' => 'w50'),
-        'sql'                     => "varchar(255) NOT NULL default ''",
-    ),
-    'team_id' => array(
-        'label'                   => $GLOBALS['TL_LANG']['tl_fussball_tournament']['team_id'],
-        'exclude'                 => true,
-        'filter'                  => true,
-        'search'                  => false,
-        'sorting'                 => true,
-        'inputType'               => 'select',
-        'foreignKey'              => 'tl_fussball_team.name',
-        'eval'                    => array('tl_class' => 'w50'),
-        'sql'                     => "int(10) unsigned NOT NULL default '0'",
-    ),
     'host' => array(
         'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_tournament']['host'],
         'exclude'                 => true,
@@ -147,7 +134,13 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'eval'                    => array('tl_class'=>'w50', 'decodeEntities' => true),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
-
+    'title' => array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_tournament']['title'],
+        'exclude'                 => true,
+        'inputType'               => 'text',
+        'eval'                    => array('tl_class' => 'w50'),
+        'sql'                     => "varchar(255) NOT NULL default ''",
+    ),
     'confirmed' => array(
         'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'],
         'exclude'                 => true,
@@ -276,31 +269,43 @@ class tl_fussball_tournament extends Backend {
         $this->Database->prepare("UPDATE tl_fussball_tournament %s WHERE id=?")->set($arrSet)->execute($dc->id);
     }
 
-    public function changeTeamIdField() {
-
-    }
-
-    public function labelCallback($row, $label, DataContainer $dc, $args = null) {
-        if ($args === null) {
-            return $label;
-        }
-
-        $team_id = $row['team_id'];
-        $team    = $this->teams[$team_id];
-        $args[0] = $team->name_short;
-
-        $args[3] = Date::parse('d.m.Y', $row['startDate']).'&nbsp;';
-
-        $args[4] = ($row['endDate'] != null) ? Date::parse('d.m.Y', $row['endDate']).'&nbsp;' : '';
+    /**
+     * List a tournament
+     * @param array
+     * @return string
+     */
+    public function listTournament($row)
+    {
+        $team      = $this->teams[$row['pid']];
+        $strStart  = Date::parse('d.m.Y', $row['startDate']);
+        $strEnd    = ($row['endDate'] != null) ? Date::parse('d.m.Y', $row['endDate']) : '';
 
         if ($row['addTime']) {
-            $args[3] .= Date::parse('H:i', $row['startTime']);
-            $args[4] .= Date::parse('H:i', $row['endTime']);
+            $strStart .= '&nbsp;'.Date::parse('H:i', $row['startTime']);
+            $strEnd   .= '&nbsp;'.Date::parse('H:i', $row['endTime']);
+
         }
 
-        $imgSRC  = \Image::get('system/modules/fussball/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
-        $args[5] = \Image::getHtml($imgSRC);
+        $confirmedImg = \Image::get('system/modules/fussball/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
+        $typeImg      = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['field_type']).'.png', 16, 16);
 
-        return $args;
+        $arrRow = [
+            'team'       => $team->name_short,
+            'title'      => String::substr($row['title'], 52),
+            'start'      => '&nbsp;'.$strStart,
+            'end'        => '&nbsp;'.$strEnd,
+            'field_type' => \Image::getHtml($typeImg),
+            'confirmed'  => \Image::getHtml($confirmedImg)
+
+        ];
+
+
+        $strRow  = '';
+        $strTmpl = '<div class="tl_fussball_cell %s">%s</div>';
+        foreach($arrRow as $k => $v) {
+            $strRow .= sprintf($strTmpl, $k, $v);
+        }
+
+        return $strRow;
     }
 }

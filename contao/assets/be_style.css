@@ -72,7 +72,6 @@ td.col_confirmed {
 
 }
 
-
 .fussball_match .result .currentValue { display:inherit; }
 .fussball_match .init .editField      { display:inherit; }
 
@@ -86,4 +85,45 @@ td.col_confirmed {
     margin:0;
     border:none;
     width:40px;
+}
+
+
+/*
+----*/
+.tl_fussball_tournament {
+
+}
+
+.tl_fussball_cell {
+    display:block;
+    padding-left:0.1rem;
+    float:left;
+}
+
+.tl_fussball_cell.type,
+.tl_fussball_cell.team {
+    width:2rem;
+}
+.tl_fussball_cell.title {
+    width:19rem;
+}
+
+.tl_fussball_match .tl_fussball_cell.title {
+    width:24rem;
+}
+
+.tl_fussball_cell.start,
+.tl_fussball_cell.end {
+    width:7rem;
+    text-align:right;
+}
+
+.tl_fussball_cell.confirmed,
+.tl_fussball_cell.field_type {
+    width:2rem;
+    text-align:center;
+}
+
+.tl_fussball_cell.anstoss {
+    width:7rem;
 }

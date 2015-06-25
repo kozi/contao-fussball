@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de/>
  * @package    fussball
  * @license    LGPL
@@ -27,9 +27,11 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_matches'] =  str_replace(
     $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
 
+
+
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_widget'] = str_replace(
     $strHL,
-    $strHL.'{fussball_legend},fussball_wettbewerbs_id,fussball_team_id,fussball_widget_typ;',
+    $strHL.'{fussball_legend},fussball_website_key,fussball_team_id',
     $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_tournament'] = str_replace(
@@ -53,25 +55,14 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['fussball_team'] = str_replace(
     $GLOBALS['TL_DCA']['tl_content']['palettes']['headline']);
 
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_wettbewerbs_id'] = array
+$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_website_key'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_wettbewerbs_id'],
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_website_key'],
 	'exclude'                 => true,
 	'inputType'               => 'text',
 	'eval'                    => array('mandatory'=>true),
     'sql'                     => "varchar(255) NOT NULL default ''",
 );
-
-$GLOBALS['TL_DCA']['tl_content']['fields']['fussball_widget_typ'] = array
-(
-    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_widget_typ'],
-    'exclude'                 => true,
-    'inputType'               => 'select',
-    'eval'                    => array('mandatory'=>true),
-    'options'                 => array('tabelle'=> 'Tabelle anzeigen', 'ergebnisse' => 'Ergebnisse anzeigen'),
-    'sql'                     => "varchar(255) NOT NULL default ''",
-);
-
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_team_id'] = array
 (
@@ -189,7 +180,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_goalgetter'] = array
 			)			
 	)
 ); // fussball_goalgetter ENDE
-
 
 class tl_content_fussball extends Backend {
 

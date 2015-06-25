@@ -48,7 +48,7 @@
 .tournament_list .confirm span.confirmed1 { background-image:url('icons/confirmed1.png');}
 
 .tournament_list .type span.asche { background-image:url('icons/type-asche.png'); }
-.tournament_list .type span.kunstrasen-halle { background-image:url('icons/type-kunstrasenhalle.png'); }
+.tournament_list .type span.kunstrasen-halle { background-image:url('icons/type-kunstrasen-halle.png'); }
 .tournament_list .type span.kunstrasen { background-image:url('icons/type-kunstrasen.png'); }
 .tournament_list .type span.rasen { background-image:url('icons/type-rasen.png'); }
 .tournament_list .type span.halle { background-image:url('icons/type-halle.png'); }

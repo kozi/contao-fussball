@@ -2,11 +2,11 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2015 Leo Feyer
  *
  *
  * PHP version 5
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  * @license    LGPL
@@ -17,7 +17,7 @@ namespace ContaoFussball\Elements;
 /**
  * Class ContentFussballMatches
  *
- * @copyright  Martin Kozianka 2011-2014 <http://kozianka.de/>
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    Controller
  */
@@ -74,8 +74,8 @@ class ContentFussballMatches extends \ContentElement {
         // Zukünftige Spiele
         if ($this->fussball_future != '0') {
             $db_limit = intval($this->fussball_future);
-            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
-            .' WHERE team_id = ?'.$db_typ.'AND anstoss > '.$this->now.' ORDER BY anstoss ASC')
+            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_match'
+            .' WHERE pid = ?'.$db_typ.'AND anstoss > '.$this->now.' ORDER BY anstoss ASC')
                 ->limit($db_limit)->execute($this->fussball_team_id);
 
             while($result->next()) {
@@ -86,8 +86,8 @@ class ContentFussballMatches extends \ContentElement {
         // Vergangene Spiele
         if ($this->fussball_past != '0') {
             $db_limit = intval($this->fussball_past);
-            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_matches'
-            .' WHERE team_id = ?'.$db_typ.'AND anstoss <= '.$this->now.' ORDER BY anstoss DESC')
+            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_match'
+            .' WHERE pid = ?'.$db_typ.'AND anstoss <= '.$this->now.' ORDER BY anstoss DESC')
                 ->limit($db_limit)->execute($this->fussball_team_id);
 
 

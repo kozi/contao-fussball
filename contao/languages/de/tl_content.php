@@ -1,10 +1,12 @@
 <?php
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_matches_legend']         = 'Spiele';
-$GLOBALS['TL_LANG']['tl_content']['fussball_legend']          = 'Fussball';
+$GLOBALS['TL_LANG']['tl_content']['fussball_legend']                 = 'Fussball';
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_mandant']                = array('Mandant', 'Mandant');
-$GLOBALS['TL_LANG']['tl_content']['fussball_wettbewerbs_id']         = array('ID des Wettbewerbs', 'Die ID kann man auf fussball.de nachgucken. Eine Anleitung gibt es hier: <a onclick="window.open(this.href); return false;" style="text-decoration:underline;" href="http://www.fussball.de/ergebnis-widget-fussball-de-fuer-deine-vereins-webseite-/id_17772204/index">fussball.de Widget einbauen</a>');
+
+$GLOBALS['TL_LANG']['tl_content']['fussball_website_key']            = array('Website-Schlüssel', 'Website-Schlüssel der für das erstellte Widget auf der fussball.de Seite angezeigt wird.');
+
 $GLOBALS['TL_LANG']['tl_content']['fussball_team']                   = array('Name des Teams', 'Name des Teams. Wird im Widget hervorgehoben.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_filter_team']            = array('Mannschaft', 'Nur Turniere dieser Mannschaft zeigen.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_goalgetter']             = array('Torschützen', 'Torschützen und Toranzahl eintragen. Nur ein Name pro Zeile. Die Sortierung erfolgt automatisch.');

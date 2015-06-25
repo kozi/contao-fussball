@@ -1,9 +1,9 @@
 <?php
 
 $GLOBALS['TL_LANG']['MOD']['fussball']                 = array("Fussball", "Fussball");
-$GLOBALS['TL_LANG']['MOD']['fussball_tournament']      = array("Turniere", "Turniere");
-$GLOBALS['TL_LANG']['MOD']['fussball_matches']         = array("Spiele", "Spiele");
 $GLOBALS['TL_LANG']['MOD']['fussball_teams']           = array("Mannschaften", "Mannschaften");
+$GLOBALS['TL_LANG']['MOD']['fussball_matches']         = array("Ergebnisse eintragen", "Ergebnisse eintragen");
+$GLOBALS['TL_LANG']['MOD']['fussball_tournament']      = array("Alle Turniere", "Alle Turniere");
 
 $GLOBALS['TL_LANG']['CTE']['fussball']                 = 'Fussball';
 $GLOBALS['TL_LANG']['CTE']['fussball_goalgetter']      = array('Fussball - Torschützenliste', 'Torschützenliste');
