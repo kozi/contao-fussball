@@ -12,7 +12,8 @@
  * @license    LGPL
  * @filesource
  */
-namespace ContaoFussball;
+namespace ContaoFussball\Models;
+
 /**
  * Class FussballTeamModel
  *
@@ -20,7 +21,6 @@ namespace ContaoFussball;
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  */
-
 class FussballTeamModel extends \Model {
 
     /**

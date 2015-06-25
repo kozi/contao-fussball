@@ -14,6 +14,13 @@
  */
 namespace ContaoFussball\Models;
 
+/**
+ * Class FussballMatchModel
+ *
+ * @copyright  Martin Kozianka 2011-2015 <http://kozianka.de/>
+ * @author     Martin Kozianka <http://kozianka.de>
+ * @package    fussball
+ */
 
 class FussballMatchModel extends \Model {
 
