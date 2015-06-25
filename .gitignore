@@ -5,6 +5,7 @@ Thumbs.db
 # IDEs
 .buildpath
 .project
+.bower
 .settings/
 .build/
 .idea/

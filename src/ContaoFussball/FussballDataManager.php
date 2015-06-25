@@ -23,6 +23,20 @@ namespace ContaoFussball;
  */
 
 class FussballDataManager extends \System {
+
+    public static $FIELD_TYPES = [
+        "Asche",
+        "Kunstrasen",
+        "Halle",
+        "Kunstrasen (Halle)",
+        "Rasen",
+    ];
+
+    public static $MATCH_TYPES = [
+        'me' => 'Meisterschaft',
+        'fs' => 'Freundschaft',
+        'po' => 'Pokal',
+    ];
     const ONE_DAY_SEC      = 86400;
     const MATCH_LENGTH_SEC = 6300;
 	private $now           = 0;

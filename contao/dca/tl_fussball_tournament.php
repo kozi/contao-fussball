@@ -130,7 +130,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'select',
-        'options'                 => array("Asche", "Kunstrasen", "Halle", "Kunstrasen (Halle)", "Rasen"),
+        'options'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES,
         'eval'                    => array('tl_class'=>'w50', 'decodeEntities' => true),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),

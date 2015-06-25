@@ -30,4 +30,15 @@ class FussballMatchModel extends \Model {
      */
     protected static $strTable = 'tl_fussball_match';
 
+    public function getTitle() {
+        $objTeam  = FussballTeamModel::findByPk($this->pid);
+        if ($this->heimspiel == '1') {
+            $title    = $objTeam->external.' - '.$this->gegner;
+        }
+        else {
+            $title    = $this->gegner.' - '.$objTeam->external;
+        }
+
+        return $title;
+    }
 }

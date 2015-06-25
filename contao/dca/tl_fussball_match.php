@@ -13,6 +13,7 @@
  * @filesource
  */
 
+
 $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
 
 // Config
@@ -66,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
 // Palettes
 'palettes' => array
 (
-    'default'                     => '{title_legend}, pid, anstoss, typ, heimspiel, gegner, title, ergebnis, platzart, location;',
+    'default'                     => '{title_legend}, pid, heimspiel, gegner, title, anstoss, typ,  ergebnis, platzart, location;',
 ),
 // Fields
 'fields' => array
@@ -108,10 +109,10 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => false,
-            'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''",
-	),
+            'inputType'               => 'checkbox',
+            'eval'                    => array('tl_class'=>'w50 m12'),
+            'sql'                     => "char(1) NOT NULL default ''",
+    ),
     'gegner' => array(
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_match']['gegner'],
         'exclude'                 => true,
@@ -135,6 +136,8 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'search'                  => true,
             'filter'                  => true,
             'sorting'                 => true,
+            'options'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES,
+            'default'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES[0],
             'inputType'               => 'select',
             'eval'                    => array('tl_class' => 'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
@@ -160,7 +163,9 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
     (
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_match']['platzart'],
         'search'                  => false,
-        'inputType'               => 'text',
+        'inputType'               => 'select',
+        'options'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES,
+        'default'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES[0],
         'eval'                    => array('tl_class' => 'w50'),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
@@ -177,6 +182,8 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
 
 );
 
+use ContaoFussball\Models\FussballMatchModel;
+use ContaoFussball\Models\FussballTeamModel;
 
 class tl_fussball_match extends Backend {
     private $teams = array();
@@ -191,9 +198,6 @@ class tl_fussball_match extends Backend {
             $this->teams[$team->id] = $team;
         }
 	}
-
-
-
 
 	public function labelCallback($row, $label, DataContainer $dc, $args = null) {
 
@@ -230,20 +234,13 @@ class tl_fussball_match extends Backend {
 	}
 
     public function inputFieldCallback(DataContainer $dc) {
-
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_match WHERE id = ?')->execute($dc->id);
-
-        $objMatch = \FussballMatchModel::findByPk($dc->id);
-        var_dump($objMatch);
-        if ($result->numRows == 1) {
-            $match = (Object) $result->row();
-
-            $str  = $match->heim.' - '.$match->gast.'</h2>';
-            $str  = '<h2>[<small>'.Date::parse('D, d.m.y H:i', $match->anstoss).'</small>]</h2>';
-
-            return $str;
+        $strTeam  = '';
+        $objMatch = FussballMatchModel::findByPk($dc->id);
+        if ($objMatch != null) {
+            $objTeam  = FussballTeamModel::findByPk($objMatch->pid);
+            $strTeam  = '<h2>'.$objTeam->name.'</h2>';
         }
-
+        return $strTeam;
     }
 
     /**
