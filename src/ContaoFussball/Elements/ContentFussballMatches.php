@@ -54,11 +54,6 @@ class ContentFussballMatches extends \ContentElement {
 	}
 
 	protected function compile() {
-        global $objPage;
-
-        if ($objPage->isMobile) {
-            $this->Template = new \FrontendTemplate('ce_fussball_matches_mobile');
-        }
 
         $this->now      = time();
         $matches_future = array();
