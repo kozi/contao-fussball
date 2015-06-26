@@ -14,6 +14,10 @@
  */
 namespace ContaoFussball;
 
+use ContaoFussball\Models\FussballMatchModel;
+use ContaoFussball\Models\FussballTeamModel;
+use ContaoFussball\Models\FussballTournamentModel;
+
 /**
  * Class FussballDataManager
  *
@@ -33,6 +37,7 @@ class FussballDataManager extends \System {
     ];
 
     public static $MATCH_TYPES = ['me', 'fs', 'po'];
+
     const ONE_DAY_SEC          = 86400;
     const MATCH_LENGTH_SEC     = 6300;
 	private $now               = 0;
@@ -71,52 +76,54 @@ class FussballDataManager extends \System {
 
     private function updateCalenderEvents($calendar) {
         // Get all matches from tl_fussball_match for $calendar->fussball_team_id
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_match WHERE pid = ?')
-            ->execute($calendar->fussball_team_id);
+        $matchCollection = FussballMatchModel::findBy('pid', $calendar->fussball_team_id);
 
-        while ($result->next()) {
-            $this->calendarEventMatch($calendar, $result->row());
+        if ($matchCollection != null) {
+            foreach($matchCollection as $match) {
+                $this->calendarEventMatch($calendar, $match);
+            }
         }
 
         // Get all tournaments from tl_fussball_tournament for $calendar->fussball_team_id
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_tournament WHERE pid = ?')
-            ->execute($calendar->fussball_team_id);
+        $tournamentCollection = FussballTournamentModel::findBy('pid', $calendar->fussball_team_id);
 
-        while ($result->next()) {
-            $this->calendarEventTournament($calendar, $result->row());
+        if ($tournamentCollection != null) {
+            foreach($tournamentCollection as $tournament) {
+                $this->calendarEventTournament($calendar, $tournament);
+            }
         }
     }
 
-    private function calendarEventTournament($calendar, $tournament) {
+    private function calendarEventTournament($calendar, $objTourn) {
 
-        $title = $tournament['title'].' [TU]';
+        $title = $objTourn->title.' [TU]';
         $text  =
              '<span class="title">'.$title.'</span>'
-            .'<span class="host"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['host'][0].':</strong> '. $tournament['host'].'</span>'
-            .'<span class="confirmed"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'][0].':</strong> '.($tournament['confirmed'] == '1' ? 'Ja': 'Nein').'</span>'
-            .'<span class="location"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['location'][0].':</strong> '.$tournament['location'].'</span>'
-            .'<span class="field_type"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].':</strong> '.$tournament['field_type'].'</span>'
-            .'<span class="details">'.$tournament['details'].'</span>';
+            .'<span class="host"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['host'][0].':</strong> '. $objTourn->host.'</span>'
+            .'<span class="confirmed"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'][0].':</strong> '.($objTourn->confirmed == '1' ? 'Ja': 'Nein').'</span>'
+            .'<span class="location"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['location'][0].':</strong> '.$objTourn->location.'</span>'
+            .'<span class="field_type"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].':</strong> '.$objTourn->field_type.'</span>'
+            .'<span class="details">'.$objTourn->details.'</span>';
 
-        $calEventModel = \CalendarEventsModel::findOneBy('fussball_tournament_id', $tournament['id']);
+        $calEventModel = \CalendarEventsModel::findOneBy('fussball_tournament_id', $objTourn->id);
 
         if(!$calEventModel) {
             $calEventModel = new \CalendarEventsModel();
         }
 
         $eventData      = array(
-            'fussball_tournament_id' => $tournament['id'],
+            'fussball_tournament_id' => $objTourn->id,
             'tstamp'    => $this->now,
             'pid'       => $calendar->id,
             'title'     => $title,
-            'alias'     => standardize($title.' '.date("d-m-Y", $tournament['startDate'])),
+            'alias'     => standardize($title.' '.date("d-m-Y", $objTourn->startDate)),
             'teaser'    => $text,
-            'location'  => $tournament['location'],
-            'addTime'   => $tournament['addTime'],
-            'startTime' => $tournament['startTime'],
-            'endTime'   => $tournament['endTime'],
-            'startDate' => $tournament['startDate'],
-            'endDate'   => $tournament['endDate'],
+            'location'  => $objTourn->location,
+            'addTime'   => $objTourn->addTime,
+            'startTime' => $objTourn->startTime,
+            'endTime'   => $objTourn->endTime,
+            'startDate' => $objTourn->startDate,
+            'endDate'   => $objTourn->endDate,
             'published' => 1,
         );
 
@@ -128,35 +135,36 @@ class FussballDataManager extends \System {
 
     }
 
-    private function calendarEventMatch($calendar, $match) {
-        $erg   = (strlen($match['ergebnis']) > 0) ? ' '.$match['ergebnis'] : '';
-        $loc   = str_replace("\n", ' <br>', $match['location']);
-        $title = $match['heim'].' - '.$match['gast'].' ['.$match['typ'].']'.$erg;
+    private function calendarEventMatch($calendar, $objMatch) {
+        $title = $objMatch->getTitle();
+        $erg   = (strlen($objMatch->ergebnis) > 0) ? ' '.$objMatch->ergebnis : '';
+        $loc   = str_replace("\n", ' <br>', $objMatch->location);
+
         $text  = implode(" <br>", array(
             $title,
-            date('d.m.Y H:i', $match['anstoss']),
+            date('d.m.Y H:i', $objMatch->anstoss),
             $loc,
             (strlen($erg) > 0) ?  'Ergebnis:'.$erg : ''
         ));
 
-        $calEventModel = \CalendarEventsModel::findOneBy('fussball_matches_id', $match['id']);
+        $calEventModel = \CalendarEventsModel::findOneBy('fussball_matches_id', $objMatch->id);
 
         if(!$calEventModel) {
             $calEventModel = new \CalendarEventsModel();
         }
 
         $eventData      = array(
-            'fussball_matches_id' => $match['id'],
+            'fussball_matches_id' => $objMatch->id,
             'tstamp'    => $this->now,
             'pid'       => $calendar->id,
             'title'     => $title,
-            'alias'     => standardize($title.' '.date("d-m-Y", $match['anstoss'])),
+            'alias'     => standardize($title.' '.date("d-m-Y", $objMatch->anstoss)),
             'teaser'    => $text,
             'location'  => $loc,
             'addTime'   => 1,
-            'startTime' => $match['anstoss'],
-            'endTime'   => $match['anstoss'] + static::MATCH_LENGTH_SEC,
-            'startDate' => $match['anstoss'],
+            'startTime' => $objMatch->anstoss,
+            'endTime'   => $objMatch->anstoss + static::MATCH_LENGTH_SEC,
+            'startDate' => $objMatch->anstoss,
             'endDate'   => NULL,
             'published' => 1,
         );
