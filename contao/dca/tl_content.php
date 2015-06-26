@@ -100,7 +100,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['fussball_typ'] = array
     'label'                   => &$GLOBALS['TL_LANG']['tl_content']['fussball_typ'],
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options'                 => &$GLOBALS['TL_LANG']['tl_content']['fussball_typ']['options'],
+    'options'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES,
+    'reference'               => &$GLOBALS['TL_LANG']['contao_fussball']['match_types'],
     'eval'                    => array('includeBlankOption' => true, 'tl_class' => 'w50'),
     'sql'                     => "varchar(8) NOT NULL default ''",
 );

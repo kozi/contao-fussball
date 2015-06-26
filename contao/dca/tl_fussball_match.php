@@ -137,6 +137,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'filter'                  => true,
             'sorting'                 => true,
             'options'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES,
+            'reference'               => &$GLOBALS['TL_LANG']['contao_fussball']['match_types'],
             'default'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES[0],
             'inputType'               => 'select',
             'eval'                    => array('tl_class' => 'w50'),
@@ -262,11 +263,14 @@ class tl_fussball_match extends Backend {
     public function listMatch($row)
     {
         $team   = $this->teams[$row['pid']];
+        $imgSRC = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 12, 12));
+
+        $title = ($row['heimspiel'] == '1') ? ($team->name_external.' - '.$row['gegner']): ($row['gegner'].' - '.$team->name_external);
         $arrRow = [
-            'type'      => 'FS',
+            'type'      => $imgSRC,
             'team'      => $team->name_short,
             'anstoss'   => \Date::parse('d.m.Y H:i', $row['anstoss']),
-            'title'     => $row['heim'].' - '.$row['gast'],
+            'title'     => $title,
             'ergebnis'  => (strlen($row['ergebnis']) > 0) ? $row['ergebnis'] : '&nbsp;'
         ];
 

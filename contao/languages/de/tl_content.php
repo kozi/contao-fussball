@@ -24,7 +24,6 @@ $GLOBALS['TL_LANG']['tl_content']['fussball_order']                  = array('So
 $GLOBALS['TL_LANG']['tl_content']['fussball_template']               = array('Team-Template', 'Verwende folgendes Template zur Anzeige.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_order']['options']       = array('asc' => 'Aufsteigend', 'desc' => 'Absteigend');
 $GLOBALS['TL_LANG']['tl_content']['fussball_typ']                    = array('Spieltyp', 'Typ des Spiel (z.B. Freundschaftsspiel)');
-$GLOBALS['TL_LANG']['tl_content']['fussball_typ']['options']         = array('me' => 'Meisterschaftsspiel', 'fr' => 'Freundschaftsspiel');
 
 $GLOBALS['TL_LANG']['tl_content']['fussball_future']                 = array('Zukünftige Spiele', 'Anzahl der kommenden Spiele.');
 $GLOBALS['TL_LANG']['tl_content']['fussball_past']                   = array('Vergangene Spiele', 'Anzahl der vergangenen Spiele.');

@@ -22,14 +22,14 @@
             <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
             <td class="anstoss"><?php echo $match->datum; ?></td>
             <td class="spiel">
-                <?php if ($this->team->name_external == $match->heim): ?>
+                <?php if ($match->isHeimspiel): ?>
                     <span class="name"><?php echo $match->heim; ?></span>
                     <span class="name_short"><?php echo $this->team->name_short_external; ?></span>
                 <?php else: ?>
                     <?php echo $match->heim; ?>
                 <?php endif; ?>
                  -
-                <?php if ($this->team->name_external == $match->gast): ?>
+                <?php if (!$match->isHeimspiel): ?>
                     <span class="name"><?php echo $match->gast; ?></span>
                     <span class="name_short"><?php echo $this->team->name_short_external; ?></span>
                 <?php else: ?>

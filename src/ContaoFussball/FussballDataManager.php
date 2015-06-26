@@ -32,14 +32,10 @@ class FussballDataManager extends \System {
         "Rasen",
     ];
 
-    public static $MATCH_TYPES = [
-        'me' => 'Meisterschaft',
-        'fs' => 'Freundschaft',
-        'po' => 'Pokal',
-    ];
-    const ONE_DAY_SEC      = 86400;
-    const MATCH_LENGTH_SEC = 6300;
-	private $now           = 0;
+    public static $MATCH_TYPES = ['me', 'fs', 'po'];
+    const ONE_DAY_SEC          = 86400;
+    const MATCH_LENGTH_SEC     = 6300;
+	private $now               = 0;
 
 	function __construct() {
 		$this->now     = time();

@@ -14,6 +14,8 @@
  */
 namespace ContaoFussball\Elements;
 
+use ContaoFussball\Models\FussballTeamModel;
+
 /**
  * Class ContentFussballMatches
  *
@@ -31,11 +33,10 @@ class ContentFussballMatches extends \ContentElement {
 
 	public function generate() {
 
-        $result = $this->Database->prepare('SELECT * FROM tl_fussball_team WHERE id = ?')
-            ->execute($this->fussball_team_id);
 
-        if ($result->numRows == 1) {
-            $this->team = (Object) $result->row();
+        $objTeam = FussballTeamModel::findByPk($this->fussball_team_id);
+        if ($objTeam != null) {
+            $this->team = (Object) $objTeam->row();
         }
 
 		if (TL_MODE == 'BE') {
@@ -63,7 +64,6 @@ class ContentFussballMatches extends \ContentElement {
         $matches_future = array();
         $matches_past   = array();
 
-        $count          = 0;
         $matches_order  = ($this->fussball_order == 'desc') ? 'DESC': 'ASC';
         $db_typ         = '';
 
@@ -79,7 +79,7 @@ class ContentFussballMatches extends \ContentElement {
                 ->limit($db_limit)->execute($this->fussball_team_id);
 
             while($result->next()) {
-                $matches_future[] =$this->getMatch($result->row(), $count++);
+                $matches_future[] =$this->getMatch($result->row());
             }
         }
 
@@ -92,7 +92,7 @@ class ContentFussballMatches extends \ContentElement {
 
 
             while($result->next()) {
-                $matches_past[] = $this->getMatch($result->row(), $count++);
+                $matches_past[] = $this->getMatch($result->row());
             }
         }
 
@@ -113,8 +113,14 @@ class ContentFussballMatches extends \ContentElement {
 
 	}
 
-    private function getMatch($row, $count) {
-        $match     = (Object) $row;
+    private function getMatch($row) {
+        $match        = (Object) $row;
+        $isHeimspiel  = ($match->heimspiel == '1');
+
+        $match->isHeimspiel = $isHeimspiel;
+        $match->heim  = ($isHeimspiel) ? $this->team->name_external : $match->gegner;
+        $match->gast  = ($isHeimspiel) ? $match->gegner : $this->team->name_external;
+        $match->title = $match->heim.' - '.$match->gast;
 
         // In der Vergangenheit?
         $match->inPast = ($match->anstoss < $this->now);
@@ -138,7 +144,7 @@ class ContentFussballMatches extends \ContentElement {
             return -1;
         }
 
-        $isHome = ($match->heim == $this->team->name_external);
+        $isHome = ($match->heimspiel == '1');
         $arr    = explode(':', $match->ergebnis);
 
         if (count($arr) !== 2) {
