@@ -67,7 +67,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
 // Palettes
 'palettes' => array
 (
-    'default'                     => '{title_legend}, pid, heimspiel, gegner, title, anstoss, typ,  ergebnis, platzart, location;',
+    'default'                     => '{title_legend}, pid, heimspiel, gegner, title, anstoss, typ,  ergebnis, platzart, location',
 ),
 // Fields
 'fields' => array
@@ -156,7 +156,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_match']['location'],
         'search'                  => false,
         'inputType'               => 'textarea',
-        'eval'                    => array('tl_class' => 'w50'),
+        'eval'                    => array('tl_class' => 'long'),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
     'platzart' => array
@@ -238,7 +238,18 @@ class tl_fussball_match extends Backend {
         $objMatch = FussballMatchModel::findByPk($dc->id);
         if ($objMatch != null) {
             $objTeam  = FussballTeamModel::findByPk($objMatch->pid);
-            $strTeam  = '<h2>'.$objTeam->name.'</h2>';
+            $strTeam .= '<h2>'.$objTeam->name.'</h2>';
+            $strTeam .= '<input type="hidden" name="name_external" value="'.$objTeam->name_external.'">';
+
+            // Gegnerliste generieren [#gegner_list]
+            $arrGegner       = [];
+            $matchCollection = FussballMatchModel::findBy('pid', $objMatch->pid);
+            foreach($matchCollection as $m) {
+                if (!in_array($m->gegner, $arrGegner)) {
+                    $arrGegner[] = $m->gegner;
+                }
+            }
+            $strTeam .= '<ul id="gegner_list"><li>'.implode('</li><li>', $arrGegner).'</li></ul>';
         }
         return $strTeam;
     }

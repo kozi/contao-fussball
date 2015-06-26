@@ -1,9 +1,14 @@
 /*
- * fussball_widget
+ * contao-fussball
  * http://kozianka.de/
- * Copyright (c) 2011-2013 Martin Kozianka
+ * Copyright (c) 2011-2015 Martin Kozianka
  *
  */
+
+
+#gegner_list {
+    display:none;
+}
 
 span.fussball_team {
 	display:inline-block;
