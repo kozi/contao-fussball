@@ -32,7 +32,7 @@ class FussballMatchModel extends \Model {
 
     public function getTitle() {
         $objTeam  = FussballTeamModel::findByPk($this->pid);
-        if ($this->heimspiel == '1') {
+        if ($this->isHeimspiel()) {
             $title    = $objTeam->name_external.' - '.$this->gegner;
         }
         else {
@@ -40,5 +40,9 @@ class FussballMatchModel extends \Model {
         }
 
         return $title;
+    }
+
+    public function isHeimspiel() {
+        return ($this->heimspiel === '1');
     }
 }

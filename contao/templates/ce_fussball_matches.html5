@@ -18,22 +18,22 @@
     <tbody>
 
     <?php $i=0; foreach($this->matches as $match): $match->cssClass .= ($i++ % 2 ==0) ? ' odd': ' even'; ?>
-        <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->spielkennung; ?>">
+        <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->id; ?>">
             <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
             <td class="anstoss"><?php echo $match->datum; ?></td>
             <td class="spiel">
-                <?php if ($match->isHeimspiel): ?>
-                    <span class="name"><?php echo $match->heim; ?></span>
-                    <span class="name_short"><?php echo $this->team->name_short_external; ?></span>
+                <?php if ($match->isHeimspiel()): ?>
+                    <span class="name"><?php echo $match->team->name_external; ?></span>
+                    <span class="name_short"><?php echo $match->team->name_short_external; ?></span>
                 <?php else: ?>
-                    <?php echo $match->heim; ?>
+                    <?php echo $match->gegner; ?>
                 <?php endif; ?>
                  -
-                <?php if (!$match->isHeimspiel): ?>
-                    <span class="name"><?php echo $match->gast; ?></span>
-                    <span class="name_short"><?php echo $this->team->name_short_external; ?></span>
+                <?php if (!$match->isHeimspiel()): ?>
+                    <span class="name"><?php echo $match->team->name_external; ?></span>
+                    <span class="name_short"><?php echo $match->team->name_short_external; ?></span>
                 <?php else: ?>
-                    <?php echo $match->gast; ?>
+                    <?php echo $match->gegner; ?>
                 <?php endif; ?>
             </td>
             <td class="ergebnis"><?php echo $match->ergebnis; ?></td>

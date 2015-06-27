@@ -48,60 +48,9 @@ td.col_confirmed {
 }
 
 
-.fussball_match {
-    position:relative;
-    background-position: left center;
-    background-repeat: no-repeat;
-    padding-left:25px;
-}
-
-.fussball_match > span {
-    padding:5px 0;
-    display:inline-block;
-}
-.fussball_match .name_short { width:40px;  }
-.fussball_match .anstoss    { width:120px; }
-.fussball_match .ergebnis   {
-    background-color:#FFFFEF;
-    border:1px solid #FFFFCF;
-    text-align:right;
-    position:absolute;
-    margin:2px 0;
-    padding:3px 5px;
-    right:0;
-    width:40px;
-}
-
-.fussball_match .currentValue {
-    font-weight:bold;
-
-}
-
-.fussball_match .result .currentValue { display:inherit; }
-.fussball_match .init .editField      { display:inherit; }
-
-.fussball_match .init .currentValue { display:none; }
-.fussball_match .result .editField  { display:none; }
-
-
-.fussball_match .editField input {
-    background-color:#FFFFEF;
-    padding:0;
-    margin:0;
-    border:none;
-    width:40px;
-}
-
-
-/*
-----*/
-.tl_fussball_tournament {
-
-}
-
 .tl_fussball_cell {
     display:block;
-    padding-left:0.1rem;
+    padding:0.3rem 0 0.1rem 0.1rem;
     float:left;
 }
 
@@ -110,11 +59,11 @@ td.col_confirmed {
     width:2rem;
 }
 .tl_fussball_cell.title {
-    width:19rem;
+    width:22rem;
 }
 
 .tl_fussball_match .tl_fussball_cell.title {
-    width:24rem;
+    width:25rem;
 }
 
 .tl_fussball_cell.start,
@@ -131,4 +80,26 @@ td.col_confirmed {
 
 .tl_fussball_cell.anstoss {
     width:7rem;
+}
+
+.tl_fussball_cell.ergebnis {
+    text-align:right;
+    font-size:1.1rem;
+    width:3rem;
+    padding:0;
+}
+.tl_fussball_cell.ergebnis .result .currentValue { display:inherit; }
+.tl_fussball_cell.ergebnis .init .editField      { display:inherit; }
+
+.tl_fussball_cell.ergebnis .init .currentValue { display:none; }
+.tl_fussball_cell.ergebnis .result .editField  { display:none; }
+
+
+.tl_fussball_cell.ergebnis .editField input {
+    background-color:#dddddd;
+    font-size:1.2rem;
+    padding:0;
+    margin:0;
+    border:1px solid #aaaaaa;
+    width:40px;
 }

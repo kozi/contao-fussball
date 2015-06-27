@@ -135,7 +135,6 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'exclude'                 => true,
             'search'                  => true,
             'filter'                  => true,
-            'sorting'                 => true,
             'options'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES,
             'reference'               => &$GLOBALS['TL_LANG']['contao_fussball']['match_types'],
             'default'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES[0],
@@ -147,7 +146,6 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_match']['ergebnis'],
             'exclude'                 => true,
             'search'                  => true,
-            'sorting'                 => true,
             'inputType'               => 'text',
             'eval'                    => array('tl_class' => 'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
@@ -200,40 +198,6 @@ class tl_fussball_match extends Backend {
         }
 	}
 
-	public function labelCallback($row, $label, DataContainer $dc, $args = null) {
-
-        $team_id = $row['team_id'];
-        $team    = $this->teams[$team_id];
-        $imgSRC  = \Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 12, 12);
-
-        $label   = sprintf(
-            '<div class="fussball_match team%s" style="background-image:url(%s);">
-                <span class="name_short">%s</span>
-                <span class="anstoss">%s</span>
-                <span class="title">%s - %s</span>
-                <span id="match%s" onclick="editResult(%s)" class="ergebnis %s">
-                    <span id="value%s" class="currentValue">%s</span>
-                    <span id="field%s" class="editField"><input id="input%s" name="newValue" type="text" value="%s" onblur="saveResult(%s)"></span>
-                </span>
-
-            </div>',
-            $team_id,
-            $imgSRC,
-            $team->name_short,
-            \Date::parse('d.m.Y H:i', $row['anstoss']),
-            $row['heim'],
-            $row['gast'],
-            $row['id'], $row['id'],
-            (strlen($row['ergebnis']) > 0) ? 'result' : 'init',
-            $row['id'], (strlen($row['ergebnis']) > 0) ? $row['ergebnis'] : '&nbsp;',
-            $row['id'], $row['id'],
-            (strlen($row['ergebnis']) > 0) ? $row['ergebnis'] : '',
-            $row['id']
-        );
-
-		return $label;
-	}
-
     public function inputFieldCallback(DataContainer $dc) {
         $strTeam  = '';
         $objMatch = FussballMatchModel::findByPk($dc->id);
@@ -265,13 +229,12 @@ class tl_fussball_match extends Backend {
         $team   = $this->teams[$row['pid']];
         $imgSRC = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 12, 12));
 
-        $title = ($row['heimspiel'] == '1') ? ($team->name_external.' - '.$row['gegner']): ($row['gegner'].' - '.$team->name_external);
+        $title = ($row['heimspiel'] === '1') ? ($team->name_external.' - '.$row['gegner']): ($row['gegner'].' - '.$team->name_external);
         $arrRow = [
             'type'      => $imgSRC,
             'team'      => $team->name_short,
             'anstoss'   => \Date::parse('d.m.Y H:i', $row['anstoss']),
-            'title'     => $title,
-            'ergebnis'  => (strlen($row['ergebnis']) > 0) ? $row['ergebnis'] : '&nbsp;'
+            'title'     => $title
         ];
 
         $strRow  = '';
@@ -279,6 +242,26 @@ class tl_fussball_match extends Backend {
         foreach($arrRow as $k => $v) {
             $strRow .= sprintf($strTmpl, $k, $v);
         }
+
+        // Add ergebnis
+        $strTmpl = '<div class="tl_fussball_cell ergebnis">
+                    <span id="match%s" onclick="editResult(%s)" class="ergebnis %s">
+                        <span id="value%s" class="currentValue">%s</span>
+                        <span id="field%s" class="editField"><input id="input%s" name="newValue" type="text" value="%s" onblur="saveResult(%s)"></span>
+                    </span>
+                </div>';
+        $strRow .= sprintf($strTmpl,
+            $row['id'],
+            $row['id'],
+            (strlen($row['ergebnis']) > 0) ? 'result' : 'init',
+            $row['id'],
+            (strlen($row['ergebnis']) > 0) ? $row['ergebnis'] : '&nbsp;',
+            $row['id'],
+            $row['id'],
+            (strlen($row['ergebnis']) > 0) ? $row['ergebnis'] : '',
+            $row['id']
+        );
+
         return $strRow;
     }
 
@@ -301,8 +284,7 @@ if (Input::get('do') == 'fussball_matches')
     unset($a['list']['sorting']['child_record_class']);
 
     $a['list']['label'] = array(
-        'fields'                  => array('pid', 'anstoss', 'heim', 'gast', 'ergebnis', 'typ'),
-        // 'showColumns'             => false,
+        'fields'                  => array('typ', 'pid', 'anstoss', 'title', 'ergebnis'),
         'label_callback'          => array('tl_fussball_match', 'listMatch')
     );
 

@@ -14,6 +14,7 @@
  */
 namespace ContaoFussball\Elements;
 
+use ContaoFussball\Models\FussballMatchModel;
 use ContaoFussball\Models\FussballTeamModel;
 
 /**
@@ -56,50 +57,57 @@ class ContentFussballMatches extends \ContentElement {
 	protected function compile() {
 
         $this->now      = time();
-        $matches_future = array();
-        $matches_past   = array();
+        $matches_future = [];
+        $matches_past   = [];
 
-        $matches_order  = ($this->fussball_order == 'desc') ? 'DESC': 'ASC';
-        $db_typ         = '';
+        $arrWhere  = [
+            'pid'     => 'pid = ?',
+            'anstoss' => 'anstoss > ?'
+        ];
+        $arrValues = [
+            'pid'     => $this->fussball_team_id,
+            'anstoss' => $this->now
+        ];
 
         if (strlen($this->fussball_typ) > 0) {
-            $db_typ = " AND typ = '".$this->fussball_typ."'";
+            $arrWhere['typ']  = 'typ = ?';
+            $arrValues['typ'] = $this->fussball_typ;
         }
 
         // Zukünftige Spiele
         if ($this->fussball_future != '0') {
-            $db_limit = intval($this->fussball_future);
-            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_match'
-            .' WHERE pid = ?'.$db_typ.'AND anstoss > '.$this->now.' ORDER BY anstoss ASC')
-                ->limit($db_limit)->execute($this->fussball_team_id);
+            $options = ['limit' => intval($this->fussball_future), 'order' => 'anstoss ASC'];
+            $arrWhere['anstoss']  = 'anstoss > ?';
 
-            while($result->next()) {
-                $matches_future[] =$this->getMatch($result->row());
+            $matchesCollection = FussballMatchModel::findBy($arrWhere, $arrValues, $options);
+            if ($matchesCollection != null) {
+                foreach($matchesCollection as $objMatch) {
+                    $matches_future[] =$this->getMatch($objMatch);
+                }
             }
         }
 
         // Vergangene Spiele
         if ($this->fussball_past != '0') {
-            $db_limit = intval($this->fussball_past);
-            $result   = $this->Database->prepare('SELECT * FROM tl_fussball_match'
-            .' WHERE pid = ?'.$db_typ.'AND anstoss <= '.$this->now.' ORDER BY anstoss DESC')
-                ->limit($db_limit)->execute($this->fussball_team_id);
+            $options     = ['limit' => intval($this->fussball_future), 'order' => 'anstoss DESC'];
+            $arrWhere['anstoss']  = 'anstoss <= ?';
 
-
-            while($result->next()) {
-                $matches_past[] = $this->getMatch($result->row());
+            $matchesCollection = FussballMatchModel::findBy($arrWhere, $arrValues, $options);
+            if ($matchesCollection != null) {
+                foreach($matchesCollection as $objMatch) {
+                    $matches_past[] =$this->getMatch($objMatch);
+                }
             }
         }
 
         $matches = array_merge($matches_future, $matches_past);
-        if ($matches_order == 'DESC') {
+
+        // Sort by matches_order
+        if ($this->fussball_order == 'desc') {
             usort($matches, function($a, $b) { return ($b->anstoss - $a->anstoss); });
         } else {
             usort($matches, function($a, $b) { return ($a->anstoss - $b->anstoss); });
         }
-
-        // Sort by matches_order
-        // $matches = array_merge($matches_past, $matches_future);
 
 		$this->Template->sum_points = $this->sum_points;
 		$this->Template->sum_goals  = $this->sum_goals;
@@ -108,14 +116,10 @@ class ContentFussballMatches extends \ContentElement {
 
 	}
 
-    private function getMatch($row) {
-        $match        = (Object) $row;
-        $isHeimspiel  = ($match->heimspiel == '1');
+    private function getMatch($match) {
 
-        $match->isHeimspiel = $isHeimspiel;
-        $match->heim  = ($isHeimspiel) ? $this->team->name_external : $match->gegner;
-        $match->gast  = ($isHeimspiel) ? $match->gegner : $this->team->name_external;
-        $match->title = $match->heim.' - '.$match->gast;
+        $match->team        = $match->getRelated('pid');
+        $match->title       = $match->getTitle();
 
         // In der Vergangenheit?
         $match->inPast = ($match->anstoss < $this->now);
@@ -139,7 +143,7 @@ class ContentFussballMatches extends \ContentElement {
             return -1;
         }
 
-        $isHome = ($match->heimspiel == '1');
+        $isHome = ($match->isHeimspiel() == '1');
         $arr    = explode(':', $match->ergebnis);
 
         if (count($arr) !== 2) {

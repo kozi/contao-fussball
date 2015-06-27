@@ -207,6 +207,9 @@ class FussballDataManager extends \System {
     public function matchResult() {
         $matchId  = \Input::get('match');
         $result   = \Input::get('result');
+
+        // TODO Check for correct value!
+
         $ergebnis = '';
         if ($result && $matchId) {
             $this->Database->prepare("UPDATE tl_fussball_match SET ergebnis = ? WHERE id = ?")
