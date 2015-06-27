@@ -83,7 +83,9 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
     // Palettes
     'palettes' => array
     (
-        'default'                     => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;{team_attr_legend},team_attributes'
+        'default' => '{title_legend},name,name_short,name_external,name_short_external,bgcolor;
+                        {team_attr_legend},team_attributes;
+                        {team_default_legend},default_time, default_platzart'
     ),
 
     // Fields
@@ -177,7 +179,25 @@ $GLOBALS['TL_DCA']['tl_fussball_team'] = array(
             'flag'                    => 8,
             'search'                  => false,
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-        )
+        ),
+        'default_time' => array(
+
+            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['default_time'],
+            'search'                  => false,
+            'inputType'               => 'text',
+            'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'time', 'mandatory' => true),
+            'sql'                     => "varchar(5) NOT NULL default ''",
+        ),
+        'default_platzart' => array(
+
+            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_team']['default_platzart'],
+            'search'                  => false,
+            'inputType'               => 'select',
+            'options'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES,
+            'default'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES[0],
+            'eval'                    => array('tl_class' => 'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''",
+        ),
 
 
     ) //fields

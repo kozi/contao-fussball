@@ -50,7 +50,13 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
     (
         'tables'     => array('tl_fussball_tournament'),
         'icon'       => 'system/modules/fussball/assets/icons/tournament.png',
+    ),
+    'fussball_verein' => array
+    (
+        'tables'     => array('tl_fussball_verein'),
+        'icon'       => 'system/modules/fussball/assets/icons/verein.png',
     )
+
 ));
 
 if(TL_MODE === 'BE') {

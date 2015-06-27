@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'search'                  => true,
             'sorting'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'datim', 'datepicker' => true),
+            'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'datim', 'datepicker' => true, 'mandatory' => true),
             'sql'                     => "int(10) unsigned NULL"
 	),
     'heimspiel' => array(
@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'search'                  => true,
         'sorting'                 => false,
         'inputType'               => 'text',
-        'eval'                    => array('tl_class' => 'w50'),
+        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true),
         'sql'                     => "varchar(255) NOT NULL default ''"
     ),
     'title' => array(
@@ -155,7 +155,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_match']['location'],
         'search'                  => false,
         'inputType'               => 'textarea',
-        'eval'                    => array('tl_class' => 'long'),
+        'eval'                    => array('tl_class' => 'clr long'),
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
     'platzart' => array
@@ -276,6 +276,10 @@ if (Input::get('do') == 'fussball_matches')
     unset($a['config']['ptable']);
 
     $a['config']['closed']        = true;
+    // $a['config']['notEditable']   = true;
+    // $a['config']['notDeletable']  = true;
+    // $a['list']['operations']      = [];
+
     $a['list']['sorting']['mode'] = 2;
 
     unset($a['list']['sorting']['disableGrouping']);

@@ -195,6 +195,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
     'startDate' => array
     (
         'label'                   => &$GLOBALS['TL_LANG']['tl_calendar_events']['startDate'],
+        'flag'                    => 8,
         'default'                 => time(),
         'exclude'                 => true,
         'sorting'                 => true,
@@ -299,7 +300,6 @@ class tl_fussball_tournament extends Backend {
 
         ];
 
-
         $strRow  = '';
         $strTmpl = '<div class="tl_fussball_cell %s">%s</div>';
         foreach($arrRow as $k => $v) {
@@ -308,4 +308,26 @@ class tl_fussball_tournament extends Backend {
 
         return $strRow;
     }
+}
+
+// Adjust DCA for listing all matches
+if (Input::get('do') == 'fussball_tournament') {
+
+    $a = &$GLOBALS['TL_DCA']['tl_fussball_tournament'];
+
+    unset($a['config']['ptable']);
+
+    $a['config']['closed']        = true;
+    $a['list']['sorting']['mode'] = 2;
+
+    unset($a['list']['sorting']['disableGrouping']);
+    unset($a['list']['sorting']['headerFields']);
+    unset($a['list']['sorting']['child_record_callback']);
+    unset($a['list']['sorting']['child_record_class']);
+
+    $a['list']['label'] = array(
+        'fields'                  => array('startDate', 'pid', 'title'),
+        'label_callback'          => array('tl_fussball_tournament', 'listTournament')
+    );
+
 }

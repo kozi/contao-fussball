@@ -205,25 +205,39 @@ class FussballDataManager extends \System {
     }
 
     public function matchResult() {
-        $matchId  = \Input::get('match');
-        $result   = \Input::get('result');
+        $strErg   = '';
+        $result   = static::cleanupResult(\Input::get('result'));
+        $objMatch = FussballMatchModel::findByPk(\Input::get('match'));
 
-        // TODO Check for correct value!
-
-        $ergebnis = '';
-        if ($result && $matchId) {
-            $this->Database->prepare("UPDATE tl_fussball_match SET ergebnis = ? WHERE id = ?")
-                ->execute($result, $matchId);
-        }
-
-        $result = $this->Database->prepare("SELECT ergebnis FROM tl_fussball_match WHERE id = ?")
-            ->execute($matchId);
-        if ($result->numRows === 1) {
-            $ergebnis = $result->ergebnis;
+        if ($objMatch != null && preg_match('/^(\d{1,4}):(\d{1,4})$/', $result)) {
+            $objMatch->ergebnis = $result;
+            $objMatch->save();
+            $objMatch->refresh();
+            $strErg = $objMatch->ergebnis;
         }
 
         header('HTTP/1.0 200 OK');
-        echo $ergebnis;
+        echo $strErg;
         exit;
+    }
+
+    public static function cleanupResult($result) {
+        // Check for correct value!
+        $divider = ':';
+        $t = preg_replace ('/[^0-9]/',' ', $result);
+        $t = preg_replace ('/\s+/', $divider, $t);
+
+        if (strlen($t) < 3) {
+            return '';
+        }
+
+        $tmp = explode($divider, $t);
+
+        if(strlen($tmp[0]) < 1 && strlen($tmp[1]) < 1) {
+            return '';
+        }
+        $h = intval($tmp[0], 10);
+        $a = intval($tmp[1], 10);
+        return $h.$divider.$a;
     }
 }

@@ -59,7 +59,7 @@ td.col_confirmed {
     width:2rem;
 }
 .tl_fussball_cell.title {
-    width:22rem;
+    width:20rem;
 }
 
 .tl_fussball_match .tl_fussball_cell.title {
@@ -68,14 +68,14 @@ td.col_confirmed {
 
 .tl_fussball_cell.start,
 .tl_fussball_cell.end {
-    width:7rem;
+    width:7.4rem;
     text-align:right;
 }
 
 .tl_fussball_cell.confirmed,
 .tl_fussball_cell.field_type {
-    width:2rem;
-    text-align:center;
+    width:1.6rem;
+    text-align:right;
 }
 
 .tl_fussball_cell.anstoss {
@@ -83,9 +83,12 @@ td.col_confirmed {
 }
 
 .tl_fussball_cell.ergebnis {
+    font-family: "Andale Mono", monospace;
+    color:#aaaaaa;
+    float:right;
     text-align:right;
     font-size:1.1rem;
-    width:3rem;
+    width:4rem;
     padding:0;
 }
 .tl_fussball_cell.ergebnis .result .currentValue { display:inherit; }
@@ -96,7 +99,7 @@ td.col_confirmed {
 
 
 .tl_fussball_cell.ergebnis .editField input {
-    background-color:#dddddd;
+    background-color:#f9f9f9;
     font-size:1.2rem;
     padding:0;
     margin:0;

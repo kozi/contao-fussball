@@ -22,7 +22,6 @@ function saveResult(matchId) {
                 $('value'+ matchId).set('text', resultString);
                 $('value'+ matchId).show();
             }
-            console.log('SAVE !!!');
         },
         url: 'contao/main.php?do=fussball_matches&key=result&match=' + matchId + '&result=' + matchResult,
         method:'get'
