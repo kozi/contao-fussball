@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'sorting'                 => false,
         'inputType'               => 'select',
         'options_callback'        => ['tl_fussball_match', 'getTeamNames'],
-        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true),
+        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true, 'includeBlankOption' => true),
         'sql'                     => "varchar(255) NOT NULL default ''"
     ),
     'title' => array(
@@ -184,6 +184,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
 
 use ContaoFussball\Models\FussballMatchModel;
 use ContaoFussball\Models\FussballTeamModel;
+use ContaoFussball\Models\FussballVereinModel;
 
 class tl_fussball_match extends Backend {
     private $teams = array();
@@ -268,8 +269,17 @@ class tl_fussball_match extends Backend {
     }
 
     public function getTeamNames() {
-        $arrNames = [];
-        return array(1,2,3);
+        $arrNames         = [];
+        $vereinCollection = FussballVereinModel::findAll(['order' => 'name ASC']);
+        if ($vereinCollection != null) {
+            foreach($vereinCollection as $objVerein) {
+                $arrTeams = deserialize($objVerein->teams);
+                foreach($arrTeams as $k => $arrTeam) {
+                    $arrNames[] = $arrTeam['value'];
+                }
+            }
+        }
+        return $arrNames;
     }
 
 }

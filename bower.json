@@ -1,6 +1,5 @@
 {
   "name": "contao-fussball",
   "dependencies": {
-    "rbecheras-awesomplete": "~0.1.0"
   }
 }

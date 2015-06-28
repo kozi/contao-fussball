@@ -61,10 +61,6 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
 ));
 
 if(TL_MODE === 'BE') {
-    // awesomplete
-    $GLOBALS['TL_CSS'][]          = 'system/modules/fussball/assets/rbecheras-awesomplete/awesomplete.css|static';
-    $GLOBALS['TL_JAVASCRIPT'][]   = 'system/modules/fussball/assets/rbecheras-awesomplete/awesomplete.min.js|static';
-
     // common js
     $GLOBALS['TL_CSS'][]          = 'system/modules/fussball/assets/be_style.css|static';
     $GLOBALS['TL_JAVASCRIPT'][]   = 'system/modules/fussball/assets/be_script.js|static';

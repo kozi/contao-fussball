@@ -28,37 +28,22 @@ function saveResult(matchId) {
     }).send();
 }
 
-function fussball_match_title(heimspiel, gegner) {
-    var team  = $$('#tl_fussball_match input[name=name_external]').get('value')[0];
-    var value = (heimspiel) ? team + " - " + gegner : (gegner + " - " + team);
+var fussball_match_title = function() {
+    var gegner    = $$('#tl_fussball_match select[name=gegner]').getSelected()[0].get('text');
+    var heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
+    var team      = $$('#tl_fussball_match input[name=name_external]').get('value')[0];
+    var value     = (heimspiel) ? team + " - " + gegner : (gegner + " - " + team);
     $$('#tl_fussball_match input[name=title]').set('value', value);
 }
 
 window.addEvent('domready', function() {
 
     // init
-    heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
-    gegner    = $$('#tl_fussball_match select[name=gegner]').get('value')[0];
-    fussball_match_title(heimspiel, gegner);
+    fussball_match_title();
 
     // fussball_widget
-    $$('#tl_fussball_match input[name=heimspiel]').addEvent('change', function(event) {
-        var gegner    = $$('#tl_fussball_match select[name=gegner]').get('value')[0];
-        fussball_match_title(this.checked, gegner);
-    });
-
-    $$('#tl_fussball_match select[name=gegner]').addEvent('change', function(event) {
-        var heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
-        fussball_match_title(heimspiel, this.value);
-    });
-
-
-    /* Awesomplete
-    var input = document.getElementById('ctrl_gegner');
-    if (input) {
-        new Awesomplete(input, {list: "#gegner_list"});
-    }
-    */
-
+    $$('#tl_fussball_match input[name=heimspiel]').addEvent('change', fussball_match_title);
+    $$('#tl_fussball_match select[name=gegner]').addEvent('change', fussball_match_title);
+    
 });
 
