@@ -16,6 +16,7 @@ namespace ContaoFussball\Elements;
 
 use ContaoFussball\Models\FussballMatchModel;
 use ContaoFussball\Models\FussballTeamModel;
+use ContaoFussball\Models\FussballVereinModel;
 
 /**
  * Class ContentFussballMatches
@@ -118,8 +119,22 @@ class ContentFussballMatches extends \ContentElement {
 
     private function getMatch($match) {
 
-        $match->team        = $match->getRelated('pid');
-        $match->title       = $match->getTitle();
+        $match->team          = $match->getRelated('pid');
+        $match->title         = $match->getTitle();
+
+        $match->verein        = FussballVereinModel::findOneBy('home', '1');;
+        $match->verein_gegner = $match->getRelated('verein_gegner');
+
+        // Wappen holen
+        if ($match->verein !== null) {
+            $objFile = \FilesModel::findByUuid($match->verein->wappen);
+            $match->wappen = ($objFile !== null) ? $objFile->path : null;
+        }
+        if ($match->verein_gegner !== null) {
+            $objFile = \FilesModel::findByUuid($match->verein_gegner->wappen);
+            $match->wappen_gegner = ($objFile !== null) ? $objFile->path : null;
+
+        }
 
         // In der Vergangenheit?
         $match->inPast = ($match->anstoss < $this->now);

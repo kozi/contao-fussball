@@ -23,6 +23,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
     'ptable'                      => 'tl_fussball_team',
     'switchToEdit'                => true,
     'enableVersioning'            => true,
+    'onsubmit_callback'           => [['tl_fussball_match', 'setVereinGegner']],
     'sql' => array(
         'keys' => array(
             'id'  => 'primary',
@@ -82,7 +83,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
     (
         'foreignKey'              => 'tl_fussball_team.name',
         'sql'                     => "int(10) unsigned NOT NULL default '0'",
-        'relation'                => array('type'=>'belongsTo', 'load'=>'lazy'),
+        'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
         'input_field_callback'    => array('tl_fussball_match', 'inputFieldCallback'),
         'eval'                    => array('tl_class' => 'long', 'readonly' => true),
 
@@ -122,6 +123,15 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'options_callback'        => ['tl_fussball_match', 'getTeamNames'],
         'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true, 'includeBlankOption' => true),
         'sql'                     => "varchar(255) NOT NULL default ''"
+    ),
+    'verein_gegner' => array(
+        'label'                   => ['VEREIN_GEGNER', 'VEREIN_GEGNER'],
+        'exclude'                 => true,
+        'search'                  => false,
+        'sorting'                 => false,
+        'foreignKey'              => 'tl_fussball_verein.name',
+        'relation'                => array('type'=>'hasOne', 'load'=>'eager'),
+        'sql'                     => "int(10) unsigned NOT NULL default '0'",
     ),
     'title' => array(
         'label'                   => $GLOBALS['TL_LANG']['tl_fussball_match']['title'],
@@ -266,6 +276,22 @@ class tl_fussball_match extends Backend {
         );
 
         return $strRow;
+    }
+
+    public function setVereinGegner($dc) {
+        if ($dc->activeRecord === null) {
+            return false;
+        }
+        $length    = strlen($dc->activeRecord->gegner);
+        $strSearch = '%{s:5:"value";s:'.$length.':"'.$dc->activeRecord->gegner.'";%';
+
+        $objMatch  = FussballMatchModel::findByPk($dc->activeRecord->id);
+        $objVerein = FussballVereinModel::findBy(['teams LIKE ?'], [$strSearch]);
+
+        if ($objMatch !== null && $objVerein !== null) {
+            $objMatch->verein_gegner = $objVerein->id;
+            $objMatch->save();
+        }
     }
 
     public function getTeamNames() {

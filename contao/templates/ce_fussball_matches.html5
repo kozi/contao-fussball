@@ -10,7 +10,7 @@
     <tr>
         <th class="typ">Typ</th>
         <th class="anstoss">Anstoß</th>
-        <th class="spiel">Spiel</th>
+        <th colspan="2" class="spiel">Spiel</th>
         <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</abbr></th>
         <th class="link" colspan="2">&nbsp;</th>
     </tr>
@@ -21,6 +21,11 @@
         <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->id; ?>">
             <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
             <td class="anstoss"><?php echo $match->datum; ?></td>
+            <td class="wappen" style="white-space:nowrap;">
+                <?php if ($match->wappen && $match->wappen_gegner): ?>
+                    <?php echo \Image::getHtml(\Image::get($match->wappen, 32, 32, 'center_center')); ?>&nbsp;<?php echo \Image::getHtml(\Image::get($match->wappen_gegner, 32, 32, 'center_center')); ?>
+                <?php endif; ?>
+            </td>
             <td class="spiel">
                 <?php if ($match->isHeimspiel()): ?>
                     <span class="name"><?php echo $match->team->name_external; ?></span>
