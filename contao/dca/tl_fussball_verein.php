@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['location'],
             'search'                  => false,
             'inputType'               => 'textarea',
-            'eval'                    => array('tl_class' => 'clr long'),
+            'eval'                    => array('tl_class' => 'clr'),
             'sql'                     => "varchar(255) NOT NULL default ''",
         ),
         'wappen' => array
@@ -133,7 +133,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'search'                  => false,
             'sorting'                 => false,
             'inputType'		          => 'fileTree',
-            'eval'			          => array('tl_class' => 'clr long', 'mandatory'=> false, 'files' => true, 'filesOnly' => true, 'fieldType' => 'radio'),
+            'eval'			          => array('tl_class' => 'clr', 'mandatory'=> false, 'files' => true, 'filesOnly' => true, 'fieldType' => 'radio'),
             'sql'                     => "binary(16) NULL",
         ),
         'teams' => array
@@ -152,6 +152,10 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
 
 class tl_fussball_verein extends Backend {
 
+}
+if (Input::get('do') == 'fussball_verein') {
+    $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Mannschaftsname';
+    $GLOBALS['TL_LANG']['MSC']['ow_label'] = 'Abkürzung';
 }
 
 

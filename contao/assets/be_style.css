@@ -106,3 +106,25 @@ td.col_confirmed {
     border:1px solid #aaaaaa;
     width:40px;
 }
+
+
+
+/* tl_fussball_verein - Teams
+----------------------------------------------------*/
+
+#ctrl_teams tr th:nth-child(3),
+#ctrl_teams tr th:nth-child(4),
+#ctrl_teams tr td:nth-child(3),
+#ctrl_teams tr td:nth-child(4) {
+    display:none;
+    visibility: collapse;
+}
+
+#ctrl_teams.tl_optionwizard input.tl_text_2 {
+    width: 320px;
+}
+
+#ctrl_teams.tl_optionwizard tr td:nth-child(2) input.tl_text_2 {
+    width: 80px;
+}
+

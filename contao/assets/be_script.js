@@ -38,31 +38,27 @@ window.addEvent('domready', function() {
 
     // init
     heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
-    gegner    = $$('#tl_fussball_match input[name=gegner]').get('value')[0];
+    gegner    = $$('#tl_fussball_match select[name=gegner]').get('value')[0];
     fussball_match_title(heimspiel, gegner);
 
     // fussball_widget
     $$('#tl_fussball_match input[name=heimspiel]').addEvent('change', function(event) {
-        var gegner    = $$('#tl_fussball_match input[name=gegner]').get('value')[0];
+        var gegner    = $$('#tl_fussball_match select[name=gegner]').get('value')[0];
         fussball_match_title(this.checked, gegner);
     });
 
-    $$('#tl_fussball_match input[name=gegner]').addEvent('input', function(event) {
-        var heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
-        fussball_match_title(heimspiel, this.value);
-    });
-
-    $$('#tl_fussball_match input[name=gegner]').addEvent('change', function(event) {
+    $$('#tl_fussball_match select[name=gegner]').addEvent('change', function(event) {
         var heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
         fussball_match_title(heimspiel, this.value);
     });
 
 
-    // Awesomplete
+    /* Awesomplete
     var input = document.getElementById('ctrl_gegner');
     if (input) {
         new Awesomplete(input, {list: "#gegner_list"});
     }
+    */
 
 });
 

@@ -118,8 +118,9 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'exclude'                 => true,
         'search'                  => true,
         'sorting'                 => false,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true),
+        'inputType'               => 'select',
+        'options_callback'        => ['tl_fussball_match', 'getTeamNames'],
+        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true),
         'sql'                     => "varchar(255) NOT NULL default ''"
     ),
     'title' => array(
@@ -206,7 +207,7 @@ class tl_fussball_match extends Backend {
             $strTeam .= '<h2>'.$objTeam->name.'</h2>';
             $strTeam .= '<input type="hidden" name="name_external" value="'.$objTeam->name_external.'">';
 
-            // Gegnerliste generieren [#gegner_list]
+            /* Gegnerliste generieren [#gegner_list]
             $arrGegner       = [];
             $matchCollection = FussballMatchModel::findBy('pid', $objMatch->pid);
             foreach($matchCollection as $m) {
@@ -215,6 +216,7 @@ class tl_fussball_match extends Backend {
                 }
             }
             $strTeam .= '<ul id="gegner_list"><li>'.implode('</li><li>', $arrGegner).'</li></ul>';
+            */
         }
         return $strTeam;
     }
@@ -263,6 +265,11 @@ class tl_fussball_match extends Backend {
         );
 
         return $strRow;
+    }
+
+    public function getTeamNames() {
+        $arrNames = [];
+        return array(1,2,3);
     }
 
 }

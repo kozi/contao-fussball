@@ -21,6 +21,7 @@ $GLOBALS['fussball']['team_attributes'] = array(
 $GLOBALS['TL_MODELS']['tl_fussball_team']                  = '\ContaoFussball\Models\FussballTeamModel';
 $GLOBALS['TL_MODELS']['tl_fussball_match']                 = '\ContaoFussball\Models\FussballMatchModel';
 $GLOBALS['TL_MODELS']['tl_fussball_tournament']            = '\ContaoFussball\Models\FussballTournamentModel';
+$GLOBALS['TL_MODELS']['tl_fussball_verein']                = '\ContaoFussball\Models\FussballVereinModel';
 
 $GLOBALS['TL_CRON']['hourly'][]                            = array('ContaoFussball\FussballDataManager', 'updateCalendar');
 
@@ -54,7 +55,7 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, array(
     'fussball_verein' => array
     (
         'tables'     => array('tl_fussball_verein'),
-        'icon'       => 'system/modules/fussball/assets/icons/verein.png',
+        'icon'       => 'system/modules/fussball/assets/icons/drawer.png',
     )
 
 ));
