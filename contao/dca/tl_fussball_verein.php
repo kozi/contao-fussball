@@ -41,6 +41,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
         (
             'fields'                  => array('wappen', 'name_short', 'name', 'location'),
             'showColumns'             => true,
+            'label_callback'          => array('tl_fussball_verein', 'addPreviewImage')
         ),
 
 
@@ -151,6 +152,20 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
 );
 
 class tl_fussball_verein extends Backend {
+
+    public function addPreviewImage($row, $label, DataContainer $dc, $args = null) {
+
+        $objFile = FilesModel::findByUuid($row['wappen']);
+        if ($objFile !== null)
+        {
+            // wappen
+            $args[0] = '<img src="' . TL_FILES_URL . Image::get($objFile->path, 32, 32, 'center_center') . '" width="32" height="32" alt="" class="wappen">';
+        }
+
+        // location
+        $args[3] = str_replace("\n", "<br>", $args[3]);
+        return $args;
+    }
 
 }
 if (Input::get('do') == 'fussball_verein') {
