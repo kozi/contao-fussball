@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
         ),
         'label' => array
         (
-            'fields'                  => array('wappen', 'name', 'name_short', 'location'),
+            'fields'                  => array('wappen', 'name', 'name_short', 'location', 'platzart'),
             'showColumns'             => true,
             'label_callback'          => array('tl_fussball_verein', 'addPreviewImage')
         ),
@@ -173,15 +173,19 @@ class tl_fussball_verein extends Backend {
             $args[0] = '<img src="' . TL_FILES_URL . Image::get($objFile->path, 32, 32, 'center_center') . '" width="32" height="32" alt="" class="wappen">';
         }
 
+        // location
+        $args[3] = str_replace("\n", "<br>", $args[3]);
+
+        // platzart
+        $args[4] = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16), $row['platzart'], 'title="'.$row['platzart'].'"');
+
+
         if ($isHomeTeam)
         {
             $args[1] = '<strong>'.$args[1].'</strong>';
             $args[2] = '<strong>'.$args[2].'</strong>';
             $args[3] = '<strong>'.$args[3].'</strong>';
         }
-
-        // location
-        $args[3] = str_replace("\n", "<br>", $args[3]);
 
         return $args;
     }
