@@ -282,19 +282,30 @@ class tl_fussball_match extends Backend {
         if ($dc->activeRecord === null) {
             return false;
         }
-        $length    = strlen($dc->activeRecord->gegner);
-        $strSearch = '%{s:5:"value";s:'.$length.':"'.$dc->activeRecord->gegner.'";%';
 
         $objMatch  = FussballMatchModel::findByPk($dc->activeRecord->id);
-        $objVerein = FussballVereinModel::findBy(['teams LIKE ?'], [$strSearch]);
-
-        // TODO Fill location and platzart
-
-
-        if ($objMatch !== null && $objVerein !== null) {
-            $objMatch->verein_gegner = $objVerein->id;
-            $objMatch->save();
+        if ($objMatch === null) {
+            return false;
         }
+
+        // set verein id in match
+        $length    = strlen($dc->activeRecord->gegner);
+        $strSearch = '%{s:5:"value";s:'.$length.':"'.$dc->activeRecord->gegner.'";%';
+        $objVerein = FussballVereinModel::findBy(['teams LIKE ?'], [$strSearch]);
+        $objMatch->verein_gegner = ($objVerein !== null) ? $objVerein->id : 0;
+
+        // Bei einem Heimspiel müssen die Daten vom Heimatverein gelesen werden
+        if ($dc->activeRecord->heimspiel === '1') {
+            $objVerein = FussballVereinModel::findOneBy('home', '1');
+        }
+
+        if ($objVerein !== null) {
+            $objMatch->platzart = $objVerein->platzart;
+            $objMatch->location = $objVerein->location;
+        }
+
+        $objMatch->save();
+
     }
 
     public function getTeamNames() {
