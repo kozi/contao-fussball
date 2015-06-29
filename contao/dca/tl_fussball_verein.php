@@ -68,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
     // Palettes
     'palettes' => array
     (
-        'default' => '{title_legend},name,name_short,platzart,home,location,teams,wappen'
+        'default' => '{title_legend},name,name_short,platzart,homepage,location,teams,wappen,home'
     ),
 
     // Fields
@@ -107,6 +107,17 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'flag'                    => 1,
             'inputType'               => 'text',
             'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''",
+        ),
+        'homepage' => array
+        (
+            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['homepage'],
+            'exclude'                 => true,
+            'search'                  => true,
+            'sorting'                 => true,
+            'flag'                    => 1,
+            'inputType'               => 'text',
+            'eval'                    => array('maxlength'=>255, 'tl_class' => 'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''",
         ),
         'home' => array
