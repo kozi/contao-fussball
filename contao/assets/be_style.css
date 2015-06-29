@@ -5,11 +5,6 @@
  *
  */
 
-
-#gegner_list {
-    display:none;
-}
-
 span.fussball_team {
 	display:inline-block;
 	width:180px;
@@ -106,8 +101,6 @@ td.col_confirmed {
     border:1px solid #aaaaaa;
     width:40px;
 }
-
-
 
 /* tl_fussball_verein - Teams
 ----------------------------------------------------*/
