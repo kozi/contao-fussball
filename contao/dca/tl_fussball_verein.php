@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
         ),
         'label' => array
         (
-            'fields'                  => array('wappen', 'name_short', 'name', 'location'),
+            'fields'                  => array('wappen', 'name', 'name_short', 'location'),
             'showColumns'             => true,
             'label_callback'          => array('tl_fussball_verein', 'addPreviewImage')
         ),
@@ -144,7 +144,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'search'                  => false,
             'sorting'                 => false,
             'inputType'		          => 'optionWizard',
-            'eval'			          => array('mandatory'=> false),
+            'eval'			          => array('mandatory'=> false, 'tl_class' => 'tl_fussball_teamlist'),
             'sql'                     => "blob NULL",
         ),
     ) //fields
