@@ -78,7 +78,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
 'palettes' => array
 (
     '__selector__'                => array('addTime'),
-    'default'                     => '{title_legend},title,team_id,host,location,field_type,confirmed;{date_legend},addTime,startDate,endDate;{details_legend},details'
+    'default'                     => '{title_legend},title,team_id,host,location,platzart,confirmed;{date_legend},addTime,startDate,endDate;{details_legend},details'
 ),
 
 // Subpalettes
@@ -125,8 +125,8 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
         'sql'                     => "varchar(255) NOT NULL default ''",
     ),
 
-    'field_type' => array(
-        'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'],
+    'platzart' => array(
+        'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_tournament']['platzart'],
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'select',
@@ -288,14 +288,14 @@ class tl_fussball_tournament extends Backend {
         }
 
         $confirmedImg = \Image::get('system/modules/fussball/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
-        $typeImg      = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['field_type']).'.png', 16, 16);
+        $typeImg      = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16);
 
         $arrRow = [
             'team'       => $team->name_short,
             'title'      => String::substr($row['title'], 52),
             'start'      => '&nbsp;'.$strStart,
             'end'        => '&nbsp;'.$strEnd,
-            'field_type' => \Image::getHtml($typeImg),
+            'platzart'   => \Image::getHtml($typeImg),
             'confirmed'  => \Image::getHtml($confirmedImg)
 
         ];

@@ -22,8 +22,8 @@
             </td>
             <td><?php echo $tourn->date; ?></td>
             <td rowspan="2" class="type">
-		<span class="<?php echo standardize($tourn->field_type); ?>"
-              title="<?php echo $tourn->field_type; ?>"></span>
+		<span class="<?php echo standardize($tourn->platzart); ?>"
+              title="<?php echo $tourn->platzart; ?>"></span>
             </td>
             <td rowspan="2" class="confirm"><span class="confirmed<?php echo $tourn->confirmed; ?>"></span></td>
         </tr>

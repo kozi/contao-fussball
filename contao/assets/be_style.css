@@ -68,7 +68,7 @@ td.col_confirmed {
 }
 
 .tl_fussball_cell.confirmed,
-.tl_fussball_cell.field_type {
+.tl_fussball_cell.platzart {
     width:1.6rem;
     text-align:right;
 }

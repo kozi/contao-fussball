@@ -102,7 +102,7 @@ class FussballDataManager extends \System {
             .'<span class="host"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['host'][0].':</strong> '. $objTourn->host.'</span>'
             .'<span class="confirmed"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['confirmed'][0].':</strong> '.($objTourn->confirmed == '1' ? 'Ja': 'Nein').'</span>'
             .'<span class="location"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['location'][0].':</strong> '.$objTourn->location.'</span>'
-            .'<span class="field_type"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['field_type'][0].':</strong> '.$objTourn->field_type.'</span>'
+            .'<span class="platzart"><strong>'.$GLOBALS['TL_LANG']['tl_fussball_tournament']['platzart'][0].':</strong> '.$objTourn->platzart.'</span>'
             .'<span class="details">'.$objTourn->details.'</span>';
 
         $calEventModel = \CalendarEventsModel::findOneBy('fussball_tournament_id', $objTourn->id);

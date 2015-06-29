@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'search'                  => true,
             'sorting'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50 m12'),
+            'eval'                    => array('tl_class'=>'w50 m12', 'submitOnChange' => true),
             'sql'                     => "char(1) NOT NULL default ''",
     ),
     'gegner' => array(
@@ -121,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'sorting'                 => false,
         'inputType'               => 'select',
         'options_callback'        => ['tl_fussball_match', 'getTeamNames'],
-        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true, 'includeBlankOption' => true),
+        'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true, 'includeBlankOption' => true, 'submitOnChange' => true),
         'sql'                     => "varchar(255) NOT NULL default ''"
     ),
     'verein_gegner' => array(
@@ -287,6 +287,9 @@ class tl_fussball_match extends Backend {
 
         $objMatch  = FussballMatchModel::findByPk($dc->activeRecord->id);
         $objVerein = FussballVereinModel::findBy(['teams LIKE ?'], [$strSearch]);
+
+        // TODO Fill location and platzart
+
 
         if ($objMatch !== null && $objVerein !== null) {
             $objMatch->verein_gegner = $objVerein->id;
