@@ -177,8 +177,9 @@ class tl_fussball_verein extends Backend {
         $args[3] = str_replace("\n", "<br>", $args[3]);
 
         // platzart
-        $args[4] = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16), $row['platzart'], 'title="'.$row['platzart'].'"');
-
+        if (strlen($row['platzart']) > 0) {
+            $args[4] = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16), $row['platzart'], 'title="'.$row['platzart'].'"');
+        }
 
         if ($isHomeTeam)
         {
