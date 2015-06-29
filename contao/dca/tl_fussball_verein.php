@@ -68,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
     // Palettes
     'palettes' => array
     (
-        'default' => '{title_legend},name,name_short,home,wappen,location,teams'
+        'default' => '{title_legend},name,name_short,platzart,home,location,teams,wappen'
     ),
 
     // Fields
@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'sorting'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'long'),
+            'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''",
         ),
         'name_short' => array
@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'search'                  => true,
             'sorting'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50 m12'),
+            'eval'                    => array('tl_class'=>'w50 m12', 'unique' => true),
             'sql'                     => "char(1) NOT NULL default ''",
         ),
         'location' => array
@@ -125,6 +125,16 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
             'search'                  => false,
             'inputType'               => 'textarea',
             'eval'                    => array('tl_class' => 'clr'),
+            'sql'                     => "varchar(255) NOT NULL default ''",
+        ),
+        'platzart' => array
+        (
+            'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['platzart'],
+            'search'                  => false,
+            'inputType'               => 'select',
+            'options'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES,
+            'default'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES[0],
+            'eval'                    => array('tl_class' => 'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''",
         ),
         'wappen' => array
@@ -155,15 +165,24 @@ class tl_fussball_verein extends Backend {
 
     public function addPreviewImage($row, $label, DataContainer $dc, $args = null) {
 
-        $objFile = FilesModel::findByUuid($row['wappen']);
+        $isHomeTeam = ($row['home'] === '1');
+        $objFile    = FilesModel::findByUuid($row['wappen']);
         if ($objFile !== null)
         {
             // wappen
             $args[0] = '<img src="' . TL_FILES_URL . Image::get($objFile->path, 32, 32, 'center_center') . '" width="32" height="32" alt="" class="wappen">';
         }
 
+        if ($isHomeTeam)
+        {
+            $args[1] = '<strong>'.$args[1].'</strong>';
+            $args[2] = '<strong>'.$args[2].'</strong>';
+            $args[3] = '<strong>'.$args[3].'</strong>';
+        }
+
         // location
         $args[3] = str_replace("\n", "<br>", $args[3]);
+
         return $args;
     }
 

@@ -3,7 +3,7 @@
 $GLOBALS['TL_LANG']['tl_fussball_match']['title_legend']  = 'Spiel';
 $GLOBALS['TL_LANG']['tl_fussball_match']['team_id']       = array('Team', 'Team');
 $GLOBALS['TL_LANG']['tl_fussball_match']['anstoss']       = array('Anstoß', 'Anstoß');
-$GLOBALS['TL_LANG']['tl_fussball_match']['heimspiel']     = array('Heimmannschaft', 'Ist das Spiel ein Heimspiel?');
+$GLOBALS['TL_LANG']['tl_fussball_match']['heimspiel']     = array('Heimspiel', 'Ist das Spiel ein Heimspiel?');
 $GLOBALS['TL_LANG']['tl_fussball_match']['gegner']        = array('Gegner', 'Name der gegnerischen Mannschaft.');
 $GLOBALS['TL_LANG']['tl_fussball_match']['title']         = array('Begegnung', 'Wird aus der Angabe von Heimspiel und Gegner generiert.');
 $GLOBALS['TL_LANG']['tl_fussball_match']['platzart']      = array('Platzart', 'Auf welchem Untergrund wird gespielt?');
