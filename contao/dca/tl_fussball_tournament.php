@@ -220,6 +220,7 @@ $GLOBALS['TL_DCA']['tl_fussball_tournament'] = array(
 
 );
 
+use \ContaoFussball\FussballDataManager;
 
 class tl_fussball_tournament extends Backend {
     private $teams = array();
@@ -287,15 +288,24 @@ class tl_fussball_tournament extends Backend {
 
         }
 
+
+
+
         $confirmedImg = \Image::get('system/modules/fussball/assets/icons/confirmed'.$row['confirmed'].'.png', 16, 16);
-        $typeImg      = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16);
+        $typeImg      = '';
+        if (in_array($row['platzart'], FussballDataManager::$FIELD_TYPES))
+        {
+            $typeImg = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16);
+            $typeImg = \Image::getHtml($typeImg);
+        }
+
 
         $arrRow = [
             'team'       => $team->name_short,
             'title'      => String::substr($row['title'], 52),
             'start'      => '&nbsp;'.$strStart,
             'end'        => '&nbsp;'.$strEnd,
-            'platzart'   => \Image::getHtml($typeImg),
+            'platzart'   => $typeImg,
             'confirmed'  => \Image::getHtml($confirmedImg)
 
         ];
