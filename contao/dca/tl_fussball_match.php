@@ -344,7 +344,7 @@ class tl_fussball_match extends Backend {
         }
 
         // Anstoss anpassen
-        $strDate  = \Date::parse('Y-m-d', $dc->activeRecord->anstoss);
+        $strDate  = \Date::parse(Config::get('dateFormat'), $dc->activeRecord->anstoss);
         $strTime  = (strlen($dc->activeRecord->time) > 0) ? \Date::parse(' H:i', $dc->activeRecord->time) : ' 00:00';
         $objDate  = new \Date($strDate.$strTime, \Date::getFormatFromRgxp('datim'));
 
