@@ -161,7 +161,7 @@ class FussballDataManager extends \System {
             'alias'     => standardize($title.' '.date("d-m-Y", $objMatch->anstoss)),
             'teaser'    => $text,
             'location'  => $loc,
-            'addTime'   => 1,
+            'addTime'   => (strlen($objMatch->time) > 0) ? '1' : '',
             'startTime' => $objMatch->anstoss,
             'endTime'   => $objMatch->anstoss + static::MATCH_LENGTH_SEC,
             'startDate' => $objMatch->anstoss,
