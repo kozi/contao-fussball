@@ -14,6 +14,8 @@
  */
 namespace ContaoFussball\Elements;
 
+use ContaoFussball\Models\FussballTeamModel;
+
 /**
  * Class ContentFussballWidget
  *
@@ -23,7 +25,8 @@ namespace ContaoFussball\Elements;
  */
 
 class ContentFussballWidget extends \ContentElement {
-    const FUSSBALL_API = 'http://www.fussball.de/static/egm//js/widget2.js';
+    const FUSSBALL_API     = 'http://www.fussball.de/static/egm//js/widget2.js';
+
 	protected $strTemplate = 'ce_fussball_widget';
 
 	/**
@@ -49,20 +52,10 @@ class ContentFussballWidget extends \ContentElement {
         // Die Dateien müssen natürlich nur einmal eingebunden werden
         if(!in_array(ContentFussballWidget::FUSSBALL_API, $GLOBALS['TL_JAVASCRIPT'])) {
             $GLOBALS['TL_JAVASCRIPT'][] = ContentFussballWidget::FUSSBALL_API;
-            $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball/assets/fussball-widget.js|static';
+            // $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball/assets/fussball-widget.js|static';
         }
 
-        // Get external team name
-        $result = $this->Database->prepare("SELECT * FROM tl_fussball_team WHERE id = ?")->execute($this->fussball_team_id);
-        if ($result->numRows === 1) {
-            $this->Template->fussball_team = $result->name_external;
-        }
-
+        // TODO Add team
+        // FussballTeamModel::findByPk($id);
 	}
-    /*
-    <div id="widget1"></div>
-    <script type="text/javascript">
-        new fussballdeWidgetAPI().showWidget('widget1', '01O99IGINC000000VS541L4GVVT6PI5S');
-    </script>
-     */
 }

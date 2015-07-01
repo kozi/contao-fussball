@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
 	(
         'mode'                    => 4,
         'fields'                  => array('anstoss ASC'),
-        'panelLayout'             => 'sort, limit',
+        'panelLayout'             => 'filter, sort, limit',
         'disableGrouping'         => true,
         'headerFields'            => array('name', 'name_external'),
         'child_record_callback'   => array('tl_fussball_match', 'listMatch'),
@@ -84,6 +84,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
     (
         'foreignKey'              => 'tl_fussball_team.name',
         'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        'filter'                  => true,
         'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
         'input_field_callback'    => array('tl_fussball_match', 'inputFieldCallback'),
         'eval'                    => array('tl_class' => 'long', 'readonly' => true),
@@ -112,7 +113,6 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'flag'                    => 8,
         'exclude'                 => true,
         'search'                  => true,
-        'sorting'                 => true,
         'inputType'               => 'text',
         'load_callback'           => [['tl_fussball_match', 'loadDefaultTime']],
         'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'time'),

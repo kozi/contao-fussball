@@ -1,18 +1,10 @@
 <?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball/assets/fussball-widget.css|screen"; ?>
-<?php $id = 'fw'.str_replace('-', '_', $this->fussball_wettbewerbs_id.'_'.$this->fussball_widget_typ); ?>
 
 <div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
 
-    <?php if ($this->headline): ?>
-    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
-<?php endif;?>
-
-<div id="id<?php echo $id;?>"><noscript><strong>Bitte Javascript aktivieren.</strong></noscript></div>
-
-<script type="text/javascript">
-    var <?php echo $id;?> = new FussballWidget();
-    <?php echo $id;?>.init('<?php echo implode("','", array($id, $this->fussball_wettbewerbs_id, $this->fussball_team)); ?>');
-    <?php echo $id;?>.<?php echo $this->fussball_widget_typ;?>();
-</script>
+    <div id="fw<?=$this->id?>"></div>
+    <script type="text/javascript">
+        new fussballdeWidgetAPI().showWidget('fw<?=$this->id?>', '<?=$this->fussball_website_key?>');
+    </script>
 
 </div>
