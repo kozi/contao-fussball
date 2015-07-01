@@ -23,3 +23,22 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tournament_id'] = a
     'sql'                     => "int(10) unsigned NOT NULL default '0'",
 );
 
+$GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] =
+    array('tl_calendar_events_fussball', 'listEvents');
+
+class tl_calendar_events_fussball extends tl_calendar_events
+{
+    public function listEvents($arrRow)
+    {
+        $strReturn = parent::listEvents($arrRow);
+        $isTourn   = (strlen($arrRow['fussball_tournament_id']) > 0);
+        $isMatch   = (strlen($arrRow['fussball_matches_id']) > 0);
+
+        if ($isTourn || $isMatch)
+        {
+            $cssClass  = ($isMatch) ? ' fussball_matches' : ' fussball_tournament';
+            $strReturn = '<div class="fussball_event'.$cssClass.'">'.$strReturn.'</div>';
+        }
+        return $strReturn;
+    }
+}
