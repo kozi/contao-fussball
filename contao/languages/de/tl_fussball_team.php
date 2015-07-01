@@ -19,6 +19,7 @@ $GLOBALS['TL_LANG']['tl_fussball_team']['default_typ']          = ['Spieltyp', '
 $GLOBALS['TL_LANG']['tl_fussball_team']['match']                = ['Spiele', 'Spiele eintragen'];
 $GLOBALS['TL_LANG']['tl_fussball_team']['tournament']           = ['Turniere', 'Turniere eintragen'];
 
+$GLOBALS['TL_LANG']['tl_fussball_team']['new']                  = ['Neue Mannschaft', 'Eine neue Mannschaft hinzufügen.'];
 $GLOBALS['TL_LANG']['tl_fussball_team']['edit']                 = ['Editieren', 'Dieses Mannschaft editieren'];
 $GLOBALS['TL_LANG']['tl_fussball_team']['delete']               = ['Löschen', 'Dieses Mannschaft löschen'];
 
