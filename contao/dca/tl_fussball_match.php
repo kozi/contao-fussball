@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
     'ptable'                      => 'tl_fussball_team',
     'switchToEdit'                => true,
     'enableVersioning'            => true,
-    'onsubmit_callback'           => [['tl_fussball_match', 'setVereinGegner']],
+    'onsubmit_callback'           => [['tl_fussball_match', 'postSubmitMatch']],
     'onload_callback'             => [['tl_fussball_match', 'adjustLegend']],
     'sql' => array(
         'keys' => array(
@@ -97,14 +97,14 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
     ),
     'anstoss' => array
 	(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['anstoss'],
-            'flag'                    => 8,
-            'exclude'                 => true,
-            'search'                  => true,
-            'sorting'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'date', 'datepicker' => true, 'mandatory' => true),
-            'sql'                     => "int(10) unsigned NULL"
+        'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['anstoss'],
+        'flag'                    => 8,
+        'exclude'                 => true,
+        'search'                  => true,
+        'sorting'                 => true,
+        'inputType'               => 'text',
+        'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'date', 'datepicker' => true, 'mandatory' => true),
+        'sql'                     => "varchar(10) NOT NULL default ''"
 	),
     'time' => array
     (
@@ -116,16 +116,16 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
         'inputType'               => 'text',
         'load_callback'           => [['tl_fussball_match', 'loadDefaultTime']],
         'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'time'),
-        'sql'                     => "varchar(5) NOT NULL default ''"
+        'sql'                     => "varchar(10) NOT NULL default ''"
     ),
     'heimspiel' => array(
-            'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['heimspiel'],
-            'exclude'                 => true,
-            'search'                  => true,
-            'sorting'                 => false,
-            'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'long', 'submitOnChange' => true),
-            'sql'                     => "char(1) NOT NULL default ''",
+        'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['heimspiel'],
+        'exclude'                 => true,
+        'search'                  => true,
+        'sorting'                 => false,
+        'inputType'               => 'checkbox',
+        'eval'                    => array('tl_class'=>'long', 'submitOnChange' => true),
+        'sql'                     => "char(1) NOT NULL default ''",
     ),
     'gegner' => array(
         'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['gegner'],
@@ -265,7 +265,7 @@ class tl_fussball_match extends Backend {
         $arrRow = [
             'type'      => $imgSRC,
             'team'      => $team->name_short,
-            'anstoss'   => \Date::parse('d.m.Y H:i', $row['anstoss']),
+            'anstoss'   => (strlen($row['time']) > 0) ? \Date::parse('d.m.Y H:i', $row['anstoss']) : \Date::parse('d.m.Y', $row['anstoss']),
             'title'     => $title
         ];
 
@@ -315,7 +315,7 @@ class tl_fussball_match extends Backend {
         return true;
     }
 
-    public function setVereinGegner($dc)
+    public function postSubmitMatch($dc)
     {
         if ($dc->activeRecord === null)
         {
@@ -327,7 +327,7 @@ class tl_fussball_match extends Backend {
             return false;
         }
 
-        // set verein id in match
+        // Setze die ID des gegner vereins im match
         $length    = strlen($dc->activeRecord->gegner);
         $strSearch = '%{s:5:"value";s:'.$length.':"'.$dc->activeRecord->gegner.'";%';
         $objVerein = FussballVereinModel::findBy(['teams LIKE ?'], [$strSearch]);
@@ -343,8 +343,15 @@ class tl_fussball_match extends Backend {
             $objMatch->location = $objVerein->location;
         }
 
-        $objMatch->save();
+        // Anstoss anpassen
+        $strDate  = \Date::parse('Y-m-d', $dc->activeRecord->anstoss);
+        $strTime  = (strlen($dc->activeRecord->time) > 0) ? \Date::parse(' H:i', $dc->activeRecord->time) : ' 00:00';
+        $objDate  = new \Date($strDate.$strTime, \Date::getFormatFromRgxp('datim'));
 
+        $objMatch->anstoss = $objDate->tstamp;
+
+
+        $objMatch->save();
     }
 
     public function getTeamNames() {
