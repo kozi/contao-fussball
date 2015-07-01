@@ -29,11 +29,14 @@ function saveResult(matchId) {
 }
 
 var fussball_match_title = function() {
-    var gegner    = $$('#tl_fussball_match select[name=gegner]').getSelected()[0].get('text');
-    var heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
-    var team      = $$('#tl_fussball_match input[name=name_external]').get('value')[0];
-    var value     = (heimspiel) ? team + " - " + gegner : (gegner + " - " + team);
-    $$('#tl_fussball_match input[name=title]').set('value', value);
+    if ($$('#tl_fussball_match select[name=gegner]').getLast() != null)
+    {
+        var gegner    = $$('#tl_fussball_match select[name=gegner]').getSelected()[0].get('text');
+        var heimspiel = $$('#tl_fussball_match input[name=heimspiel]').get('checked')[1];
+        var team      = $$('#tl_fussball_match input[name=name_external]').get('value')[0];
+        var value     = (heimspiel) ? team + " - " + gegner : (gegner + " - " + team);
+        $$('#tl_fussball_match input[name=title]').set('value', value);
+    }
 }
 
 window.addEvent('domready', function() {
