@@ -2,7 +2,8 @@
 
 $GLOBALS['TL_LANG']['tl_fussball_match']['title_legend']  = 'Spiel';
 $GLOBALS['TL_LANG']['tl_fussball_match']['team_id']       = array('Team', 'Team');
-$GLOBALS['TL_LANG']['tl_fussball_match']['anstoss']       = array('Anstoß', 'Anstoß');
+$GLOBALS['TL_LANG']['tl_fussball_match']['anstoss']       = array('Anstoß (Datum)', 'An welchem Tag findet as Spiel statt?');
+$GLOBALS['TL_LANG']['tl_fussball_match']['time']          = array('Anstoß (Uhrzeit)', 'Wann ist Anstoß?');
 $GLOBALS['TL_LANG']['tl_fussball_match']['heimspiel']     = array('Heimspiel', 'Ist das Spiel ein Heimspiel?');
 $GLOBALS['TL_LANG']['tl_fussball_match']['gegner']        = array('Gegner', 'Name der gegnerischen Mannschaft.');
 $GLOBALS['TL_LANG']['tl_fussball_match']['title']         = array('Begegnung', 'Wird aus der Angabe von Heimspiel und Gegner generiert.');
