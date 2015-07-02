@@ -31,8 +31,8 @@ class tl_calendar_events_fussball extends tl_calendar_events
     public function listEvents($arrRow)
     {
         $strReturn = parent::listEvents($arrRow);
-        $isTourn   = (strlen($arrRow['fussball_tournament_id']) > 0);
-        $isMatch   = (strlen($arrRow['fussball_matches_id']) > 0);
+        $isTourn   = ($arrRow['fussball_tournament_id'] !== '0');
+        $isMatch   = ($arrRow['fussball_matches_id']    !== '0');
 
         if ($isTourn || $isMatch)
         {

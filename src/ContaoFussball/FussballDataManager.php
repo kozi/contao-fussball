@@ -142,7 +142,7 @@ class FussballDataManager extends \System {
 
         $text  = implode(" <br>", array(
             $title,
-            date('d.m.Y H:i', $objMatch->anstoss),
+            (strlen($objMatch->time) > 0) ? date('d.m.Y H:i', $objMatch->anstoss) : date('d.m.Y', $objMatch->anstoss),
             $loc,
             (strlen($erg) > 0) ?  'Ergebnis:'.$erg : ''
         ));
