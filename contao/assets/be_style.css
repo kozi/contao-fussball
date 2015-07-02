@@ -121,6 +121,7 @@ td.col_confirmed {
     width: 120px;
 }
 
+
 .fussball_event_wrap .tl_content_right a.copy,
 .fussball_event_wrap .tl_content_right a.cut,
 .fussball_event_wrap .tl_content_right a.toggle,
@@ -130,12 +131,12 @@ td.col_confirmed {
     display:none;
 }
 
-.fussball_event_wrap .fussball_matches .tl_content_left {
+.fussball_event_wrap .fussball_matches {
     background:url('icons/soccer-12x12.png') no-repeat 0 center;
     padding-left:16px;
 }
 
-.fussball_event_wrap .fussball_tournament .tl_content_left {
+.fussball_event_wrap .fussball_tournament {
     background:url('icons/tournament-12x12.png') no-repeat 0 center;
     padding-left:16px;
 }
