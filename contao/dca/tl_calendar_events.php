@@ -36,8 +36,10 @@ class tl_calendar_events_fussball extends tl_calendar_events
 
         if ($isTourn || $isMatch)
         {
-            $cssClass  = ($isMatch) ? ' fussball_matches' : ' fussball_tournament';
-            $strReturn = '<div class="fussball_event'.$cssClass.'">'.$strReturn.'</div>';
+            $cssClass  = 'tl_content_left fussball_event';
+            $cssClass .= ($isMatch) ? ' fussball_matches' : ' fussball_tournament';
+
+            $strReturn = str_replace('tl_content_left', $cssClass, $strReturn);
         }
         return $strReturn;
     }
