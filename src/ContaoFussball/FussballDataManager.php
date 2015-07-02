@@ -136,15 +136,15 @@ class FussballDataManager extends \System {
     }
 
     private function calendarEventMatch($calendar, $objMatch) {
-        $title = $objMatch->getTitle();
-        $erg   = (strlen($objMatch->ergebnis) > 0) ? ' '.$objMatch->ergebnis : '';
-        $loc   = str_replace("\n", ' <br>', $objMatch->location);
+
+        $hasErg = (strlen($objMatch->ergebnis) > 0);
+        $loc    = str_replace("\n", ' <br>', $objMatch->location);
+        $title  = $objMatch->getTitle().(($hasErg) ? ' ('.$objMatch->ergebnis.')': '');
 
         $text  = implode(" <br>", array(
             $title,
             (strlen($objMatch->time) > 0) ? date('d.m.Y H:i', $objMatch->anstoss) : date('d.m.Y', $objMatch->anstoss),
-            $loc,
-            (strlen($erg) > 0) ?  'Ergebnis:'.$erg : ''
+            $loc
         ));
 
         $calEventModel = \CalendarEventsModel::findOneBy('fussball_matches_id', $objMatch->id);
@@ -209,8 +209,9 @@ class FussballDataManager extends \System {
         $result   = static::cleanupResult(\Input::get('result'));
         $objMatch = FussballMatchModel::findByPk(\Input::get('match'));
 
-        if ($objMatch != null){
-            header('HTTP/1.0 200 OK');
+        if ($objMatch === null)
+        {
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             echo $strErg;
             exit;
         }
@@ -219,15 +220,17 @@ class FussballDataManager extends \System {
         {
             $objMatch->ergebnis = '';
             $objMatch->save();
+            $strErg = '-';
         }
-        elseif (preg_match('/^(\d{1,4}):(\d{1,4})$/', $result)) {
+        elseif (preg_match('/^(\d{1,4}):(\d{1,4})$/', $result))
+        {
             $objMatch->ergebnis = $result;
             $objMatch->save();
             $objMatch->refresh();
             $strErg = $objMatch->ergebnis;
         }
-        
-        header('HTTP/1.0 200 OK');
+
+        header($_SERVER['SERVER_PROTOCOL'].' 200 OK', true, 200);
         echo $strErg;
         exit;
     }
