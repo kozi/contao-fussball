@@ -209,13 +209,24 @@ class FussballDataManager extends \System {
         $result   = static::cleanupResult(\Input::get('result'));
         $objMatch = FussballMatchModel::findByPk(\Input::get('match'));
 
-        if ($objMatch != null && preg_match('/^(\d{1,4}):(\d{1,4})$/', $result)) {
+        if ($objMatch != null){
+            header('HTTP/1.0 200 OK');
+            echo $strErg;
+            exit;
+        }
+
+        if (\Input::get('result') === '-')
+        {
+            $objMatch->ergebnis = '';
+            $objMatch->save();
+        }
+        elseif (preg_match('/^(\d{1,4}):(\d{1,4})$/', $result)) {
             $objMatch->ergebnis = $result;
             $objMatch->save();
             $objMatch->refresh();
             $strErg = $objMatch->ergebnis;
         }
-
+        
         header('HTTP/1.0 200 OK');
         echo $strErg;
         exit;
