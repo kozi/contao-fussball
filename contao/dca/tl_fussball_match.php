@@ -258,10 +258,16 @@ class tl_fussball_match extends Backend {
      */
     public function listMatch($row)
     {
-        $team   = $this->teams[$row['pid']];
-
+        $team     = $this->teams[$row['pid']];
+        $platzart = '';
         if (strlen($row['platzart']) > 0) {
-            $platzart = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16), $row['platzart'], 'title="'.$row['platzart'].'"');
+            $img      = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16);
+            $platzart = $row['platzart'];
+
+            if($img !== null)
+            {
+                $platzart = \Image::getHtml($img, $row['platzart'], 'title="'.$row['platzart'].'"');
+            }
         }
 
         $strLoc = '';

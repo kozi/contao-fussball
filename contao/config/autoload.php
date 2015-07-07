@@ -13,8 +13,7 @@
  * @filesource
  */
 
-TemplateLoader::addFiles(array
-(
+TemplateLoader::addFiles([
     // ContentElement Templates
 	'ce_fussball_goalgetter'      => 'system/modules/fussball/templates',	
 	'ce_fussball_matches'         => 'system/modules/fussball/templates',
@@ -24,4 +23,4 @@ TemplateLoader::addFiles(array
     'ce_fussball_team'            => 'system/modules/fussball/templates',
     'fussball_team_list'          => 'system/modules/fussball/templates',
     'fussball_team_single'        => 'system/modules/fussball/templates',
-));
+]);
