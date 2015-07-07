@@ -20,12 +20,12 @@ $GLOBALS['fussball']['team_attributes'] = [
 
 $GLOBALS['TL_HOOKS']['getAllEvents']['fussball']           = ['\ContaoFussball\FussballEventManager', 'eventHook'];
 
+$GLOBALS['TL_CRON']['hourly'][]                            = ['\ContaoFussball\FussballEventManager', 'updateCalendar'];
+
 $GLOBALS['TL_MODELS']['tl_fussball_team']                  = '\ContaoFussball\Models\FussballTeamModel';
 $GLOBALS['TL_MODELS']['tl_fussball_match']                 = '\ContaoFussball\Models\FussballMatchModel';
 $GLOBALS['TL_MODELS']['tl_fussball_tournament']            = '\ContaoFussball\Models\FussballTournamentModel';
 $GLOBALS['TL_MODELS']['tl_fussball_verein']                = '\ContaoFussball\Models\FussballVereinModel';
-
-$GLOBALS['TL_CRON']['hourly'][]                            = ['\ContaoFussball\FussballDataManager', 'updateCalendar'];
 
 $GLOBALS['TL_CTE']['fussball']['fussball_goalgetter']      = 'ContaoFussball\Elements\ContentFussballGoalgetter';
 $GLOBALS['TL_CTE']['fussball']['fussball_tournament']      = 'ContaoFussball\Elements\ContentFussballTournament';
