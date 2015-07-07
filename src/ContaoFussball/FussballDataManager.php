@@ -151,6 +151,9 @@ class FussballDataManager extends \System
         $hasErg = (strlen($objMatch->ergebnis) > 0);
         $loc    = str_replace("\n", ' <br>', $objMatch->location);
         $title  = $objMatch->getTitle().(($hasErg) ? ' ('.$objMatch->ergebnis.')': '');
+        
+        // Add type to title
+        $title .= ' ['.strtoupper($objMatch->typ).']';
 
         $text  = implode(" <br>", array(
             $title,
