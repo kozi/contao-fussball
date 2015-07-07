@@ -259,7 +259,12 @@ class tl_fussball_match extends Backend {
     public function listMatch($row)
     {
         $team   = $this->teams[$row['pid']];
-        $imgSRC = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 12, 12));
+
+        $imgSRC = '';
+        $img    = \Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 12, 12);
+        if($img != null) {
+            $imgSRC = \Image::getHtml($img);
+        }
 
         $title = ($row['heimspiel'] === '1') ? ($team->name_external.' - '.$row['gegner']): ($row['gegner'].' - '.$team->name_external);
         $arrRow = [
