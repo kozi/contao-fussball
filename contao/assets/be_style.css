@@ -57,10 +57,6 @@ td.col_confirmed {
     width:20rem;
 }
 
-.tl_fussball_match .tl_fussball_cell.title {
-    width:25rem;
-}
-
 .tl_fussball_cell.start,
 .tl_fussball_cell.end {
     width:7.4rem;
