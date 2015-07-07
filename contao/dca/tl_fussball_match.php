@@ -328,7 +328,8 @@ class tl_fussball_match extends Backend {
         }
 
         $objMatch  = FussballMatchModel::findByPk($dc->activeRecord->id);
-        if ($objMatch === null) {
+        if ($objMatch === null)
+        {
             return false;
         }
 
@@ -339,22 +340,27 @@ class tl_fussball_match extends Backend {
         $objMatch->verein_gegner = ($objVerein !== null) ? $objVerein->id : 0;
 
         // Bei einem Heimspiel müssen die Daten vom Heimatverein gelesen werden
-        if ($dc->activeRecord->heimspiel === '1') {
+        if ($dc->activeRecord->heimspiel === '1')
+        {
             $objVerein = FussballVereinModel::findOneBy('home', '1');
         }
 
-        if ($objVerein !== null) {
+        if ($objVerein !== null)
+        {
             $objMatch->platzart = $objVerein->platzart;
             $objMatch->location = $objVerein->location;
         }
 
         // Anstoss anpassen
-        $strDate  = \Date::parse(Config::get('dateFormat'), $dc->activeRecord->anstoss);
-        $strTime  = (strlen($dc->activeRecord->time) > 0) ? \Date::parse(' H:i', $dc->activeRecord->time) : ' 00:00';
-        $objDate  = new \Date($strDate.$strTime, \Date::getFormatFromRgxp('datim'));
+        if (!$dc->activeRecord->anstoss === '')
+        {
+            $strDate  = \Date::parse(Config::get('dateFormat'), $dc->activeRecord->anstoss);
+            $strTime  = (strlen($dc->activeRecord->time) > 0) ? \Date::parse(' H:i', $dc->activeRecord->time) : ' 00:00';
+            $objDate  = new \Date($strDate.$strTime, \Date::getFormatFromRgxp('datim'));
 
-        $objMatch->anstoss = $objDate->tstamp;
+            $objMatch->anstoss = $objDate->tstamp;
 
+        }
 
         $objMatch->save();
     }
