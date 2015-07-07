@@ -26,7 +26,8 @@ use ContaoFussball\Models\FussballTournamentModel;
  * @package    Controller
  */
 
-class FussballDataManager extends \System {
+class FussballDataManager extends \System
+{
 
     public static $FIELD_TYPES = [
         "Asche",
@@ -42,7 +43,8 @@ class FussballDataManager extends \System {
     const MATCH_LENGTH_SEC     = 6300;
 	private $now               = 0;
 
-	function __construct() {
+	function __construct()
+    {
 		$this->now     = time();
 		$this->import('Database');
 		parent::__construct();
@@ -52,7 +54,8 @@ class FussballDataManager extends \System {
         $this->loadLanguageFile('tl_fussball_tournament');
 
         // Update calendar color if field is available
-        if($this->Database->fieldExists('fullcal_color', 'tl_calendar')) {
+        if($this->Database->fieldExists('fullcal_color', 'tl_calendar'))
+        {
             self::updateCalendarColors();
         }
 
@@ -68,7 +71,8 @@ class FussballDataManager extends \System {
 
         $result = $this->Database->execute("SELECT id, title, fussball_team_id
                     FROM tl_calendar WHERE fussball_team_id != 0");
-        while($result->next()) {
+        while($result->next())
+        {
             $cal = (Object) $result->row();
             $this->updateCalenderEvents($cal);
         }
@@ -78,8 +82,10 @@ class FussballDataManager extends \System {
         // Get all matches from tl_fussball_match for $calendar->fussball_team_id
         $matchCollection = FussballMatchModel::findBy('pid', $calendar->fussball_team_id);
 
-        if ($matchCollection != null) {
-            foreach($matchCollection as $match) {
+        if ($matchCollection != null)
+        {
+            foreach($matchCollection as $match)
+            {
                 $this->calendarEventMatch($calendar, $match);
             }
         }
@@ -87,8 +93,10 @@ class FussballDataManager extends \System {
         // Get all tournaments from tl_fussball_tournament for $calendar->fussball_team_id
         $tournamentCollection = FussballTournamentModel::findBy('pid', $calendar->fussball_team_id);
 
-        if ($tournamentCollection != null) {
-            foreach($tournamentCollection as $tournament) {
+        if ($tournamentCollection != null)
+        {
+            foreach($tournamentCollection as $tournament)
+            {
                 $this->calendarEventTournament($calendar, $tournament);
             }
         }
@@ -107,7 +115,8 @@ class FussballDataManager extends \System {
 
         $calEventModel = \CalendarEventsModel::findOneBy('fussball_tournament_id', $objTourn->id);
 
-        if(!$calEventModel) {
+        if(!$calEventModel)
+        {
             $calEventModel = new \CalendarEventsModel();
         }
 
@@ -125,9 +134,11 @@ class FussballDataManager extends \System {
             'startDate' => $objTourn->startDate,
             'endDate'   => $objTourn->endDate,
             'published' => 1,
+            'cssClass'  => 'fussball_tournament'
         );
 
-        foreach($eventData as $key => $value) {
+        foreach($eventData as $key => $value)
+        {
             $calEventModel->__set($key, $value);
         }
 
@@ -149,7 +160,8 @@ class FussballDataManager extends \System {
 
         $calEventModel = \CalendarEventsModel::findOneBy('fussball_matches_id', $objMatch->id);
 
-        if(!$calEventModel) {
+        if(!$calEventModel)
+        {
             $calEventModel = new \CalendarEventsModel();
         }
 
@@ -167,9 +179,11 @@ class FussballDataManager extends \System {
             'startDate' => $objMatch->anstoss,
             'endDate'   => NULL,
             'published' => 1,
+            'cssClass'  => 'fussball_match fussball_match_'.strtolower($objMatch->typ)
         );
 
-        foreach($eventData as $key => $value) {
+        foreach($eventData as $key => $value)
+        {
             $calEventModel->__set($key, $value);
         }
         $calEventModel->save();
@@ -180,7 +194,8 @@ class FussballDataManager extends \System {
         foreach($calObj as $calendar) {
             $teamObj = FussballTeamModel::findByPk($calendar->fussball_team_id);
 
-            if ($teamObj !== null && $calendar->fullcal_color !== $teamObj->bgcolor) {
+            if ($teamObj !== null && $calendar->fullcal_color !== $teamObj->bgcolor)
+            {
                 $calendar->fullcal_color = $teamObj->bgcolor;
                 $calendar->save();
             }
@@ -192,11 +207,14 @@ class FussballDataManager extends \System {
         $up    = \Input::get('sort') === 'up';
         $count = 1;
         $teams = FussballTeamModel::findAll(array('order' => 'sorting ASC'));
-        foreach ($teams as $teamObj) {
-            if ($teamObj->id == $id) {
+        foreach ($teams as $teamObj)
+        {
+            if ($teamObj->id == $id)
+            {
                     $teamObj->sorting = ($up) ? (($count-1) * 16)-1 : ($count * 16)+1;
             }
-            else {
+            else
+            {
                 $teamObj->sorting = ($count++ * 16);
             }
             $teamObj->save();
@@ -241,13 +259,15 @@ class FussballDataManager extends \System {
         $t = preg_replace ('/[^0-9]/',' ', $result);
         $t = preg_replace ('/\s+/', $divider, $t);
 
-        if (strlen($t) < 3) {
+        if (strlen($t) < 3)
+        {
             return '';
         }
 
         $tmp = explode($divider, $t);
 
-        if(strlen($tmp[0]) < 1 && strlen($tmp[1]) < 1) {
+        if(strlen($tmp[0]) < 1 && strlen($tmp[1]) < 1)
+        {
             return '';
         }
         $h = intval($tmp[0], 10);
