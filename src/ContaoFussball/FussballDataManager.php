@@ -36,7 +36,7 @@ class FussballDataManager extends \System {
         "Rasen",
     ];
 
-    public static $MATCH_TYPES = ['me', 'fs', 'po'];
+    public static $MATCH_TYPES = ['me', 'fs', 'po', 'kt'];
 
     const ONE_DAY_SEC          = 86400;
     const MATCH_LENGTH_SEC     = 6300;
