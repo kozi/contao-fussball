@@ -125,16 +125,23 @@ class ContentFussballMatches extends \ContentElement {
         $match->verein        = FussballVereinModel::findOneBy('home', '1');;
         $match->verein_gegner = $match->getRelated('verein_gegner');
 
+        $arrWappen = [null, null];
         // Wappen holen
         if ($match->verein !== null) {
             $objFile = \FilesModel::findByUuid($match->verein->wappen);
             $match->wappen = ($objFile !== null) ? $objFile->path : null;
+            $index = ($match->isHeimspiel()) ? 0 : 1;
+            $arrWappen[$index] = $match->wappen;
         }
         if ($match->verein_gegner !== null) {
             $objFile = \FilesModel::findByUuid($match->verein_gegner->wappen);
             $match->wappen_gegner = ($objFile !== null) ? $objFile->path : null;
-
+            $index = ($match->isHeimspiel()) ? 1 : 0;
+            $arrWappen[$index] = $match->wappen_gegner;
         }
+
+        $match->hasWappen = ($arrWappen[0] !== null && $arrWappen[1] !== null);
+        $match->arrWappen = $arrWappen;
 
         // In der Vergangenheit?
         $match->inPast = ($match->anstoss < $this->now);

@@ -23,15 +23,9 @@
             <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
             <td class="anstoss"><?php echo $match->datum; ?></td>
             <td class="wappen" style="white-space:nowrap;">
-
-                <?php if ($match->wappen && $match->wappen_gegner): ?>
-                    <?php if ($match->isHeimspiel()): ?>
-                        <?php echo \Image::getHtml(\Image::get($match->wappen, 32, 32, 'center_center')); ?>&nbsp;<?php echo \Image::getHtml(\Image::get($match->wappen_gegner, 32, 32, 'center_center')); ?>
-                    <?php else: ?>
-                        <?php echo \Image::getHtml(\Image::get($match->wappen_gegner, 32, 32, 'center_center')); ?>&nbsp;<?php echo \Image::getHtml(\Image::get($match->wappen, 32, 32, 'center_center')); ?>
-                    <?php endif; ?>
+                <?php if ($match->hasWappen): ?>
+                    <span class="wappen wappen0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 0, 32, 'proportional'))?></span>&nbsp;<span class="wappen wappen1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 0, 32, 'proportional'))?></span>
                 <?php endif; ?>
-
             </td>
             <td class="spiel">
                 <?php if ($match->isHeimspiel()): ?>

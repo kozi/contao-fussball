@@ -228,6 +228,15 @@ class FussballEventManager extends \System
                         {
                             $e['location'] .= '<span class="row'.$i++.'">'.$row.(($i==1||$i==2)? ', ': '').'</span>';
                         }
+
+                        if($e['fussball_matches_id'] != '0')
+                        {
+                            $e['match'] = FussballMatchModel::findByPk($e['fussball_matches_id']);
+                        }
+                        else
+                        {
+                            $e['tournament'] = FussballTournamentModel::findByPk($e['fussball_tournament_id']);
+                        }
                     }
                 }
             }
