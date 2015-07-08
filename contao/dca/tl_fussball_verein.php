@@ -181,7 +181,7 @@ class tl_fussball_verein extends Backend {
         if ($objFile !== null)
         {
             // wappen
-            $args[0] = '<img src="' . TL_FILES_URL . Image::get($objFile->path, 32, 32, 'center_center') . '" width="32" height="32" alt="" class="wappen">';
+            $args[0] = \Image::getHtml(\Image::get($objFile->path, 32, 32, 'proportional'),'Wappen', 'class="wappen"');
         }
 
         // location
