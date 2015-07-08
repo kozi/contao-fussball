@@ -44,6 +44,7 @@
 .ce_fussball_matches td.wappen table,
 .ce_fussball_matches td.wappen tr,
 .ce_fussball_matches td.wappen td {
+    border:none;
     margin:0;
     padding:0;
 }
