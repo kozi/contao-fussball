@@ -38,5 +38,18 @@
 }
 
 .ce_fussball_matches td.points span.ball {
-	display:none;
+    display:none;
 }
+
+.ce_fussball_matches td.wappen table,
+.ce_fussball_matches td.wappen tr,
+.ce_fussball_matches td.wappen td {
+    margin:0;
+    padding:0;
+}
+
+.ce_fussball_matches td.wappen img { display:block; }
+.ce_fussball_matches td .col0 img  { float:right; margin-right:2px; }
+.ce_fussball_matches td .col1 img  { float:left;  margin-left:2px;  }
+
+

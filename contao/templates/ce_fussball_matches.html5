@@ -22,10 +22,14 @@
         <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->id; ?>">
             <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
             <td class="anstoss"><?php echo $match->datum; ?></td>
-            <td class="wappen" style="white-space:nowrap;">
+            <td class="wappen">
                 <?php if ($match->hasWappen): ?>
-                    <span class="wappen wappen0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 0, 32, 'proportional'))?></span>&nbsp;<span class="wappen wappen1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 0, 32, 'proportional'))?></span>
+                    <table><tr>
+                        <td style="width:42px;" class="col0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 0, 42, 'proportional'))?></td>
+                        <td style="width:42px;" class="col1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 0, 42, 'proportional'))?></td>
+                    </tr></table>
                 <?php endif; ?>
+
             </td>
             <td class="spiel">
                 <?php if ($match->isHeimspiel()): ?>
