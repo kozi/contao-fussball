@@ -25,8 +25,8 @@
             <td class="wappen">
                 <?php if ($match->hasWappen): ?>
                     <table><tr>
-                        <td style="width:42px;" class="col0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 0, 42, 'proportional'))?></td>
-                        <td style="width:42px;" class="col1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 0, 42, 'proportional'))?></td>
+                        <td style="width:32px;" class="col0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 0, 32, 'proportional'))?></td>
+                        <td style="width:32px;" class="col1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 0, 32, 'proportional'))?></td>
                     </tr></table>
                 <?php endif; ?>
 

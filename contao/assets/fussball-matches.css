@@ -49,7 +49,7 @@
 }
 
 .ce_fussball_matches td.wappen img { display:block; }
-.ce_fussball_matches td .col0 img  { float:right; margin-right:2px; }
-.ce_fussball_matches td .col1 img  { float:left;  margin-left:2px;  }
+.ce_fussball_matches td.wappen .col0 img  { float:right; margin-right:2px; }
+.ce_fussball_matches td.wappen .col1 img  { float:left;  margin-left:2px;  }
 
 
