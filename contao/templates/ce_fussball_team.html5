@@ -1,16 +1,16 @@
-<div class="<?php echo $this->class; ?> ce_fussball_team block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+<div class="<?=$this->class?> ce_fussball_team block"<?=$this->cssID?><?php if ($this->style): ?> style="<?=$this->style?>"<?php endif; ?>>
 
     <?php if ($this->team): ?>
-        <h1><?php echo $this->team->name; ?></h1>
+        <h1><?=$this->team->name?></h1>
 
         <div class="ce_list">
             <ul class="team_attributes">
                 <?php foreach($this->team->attributes as $objAttr) : ?>
                     <?php if ($objAttr->isLink): ?>
-                        <li><strong><?php echo $objAttr->key; ?></strong>:
-                            <a href="<?php echo $objAttr->raw; ?>" target="_blank"><?php echo $objAttr->label48; ?></a></li>
+                        <li><strong><?=$objAttr->key?></strong>:
+                            <a href="<?=$objAttr->raw?>" target="_blank"><?=$objAttr->label48?></a></li>
                     <?php else: ?>
-                        <li><strong><?php echo $objAttr->key; ?></strong>: <?php echo $objAttr->value; ?></li>
+                        <li><strong><?=$objAttr->key?></strong>: <?=$objAttr->value?></li>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </ul>
@@ -21,9 +21,9 @@
         <table class="team_list">
             <?php foreach($this->arrTeams as $team):?>
                 <tr>
-                    <td class="name"><?php echo $team->name;?></td>
+                    <td class="name"><?=$team->name?></td>
                     <?php if ($team->cal): ?>
-                        <td class="cal"><?php echo $team->cal->alias; ?></td>
+                        <td class="cal"><?=$team->cal->alias?></td>
                     <?php endif;?>
                 </tr>
             <?php endforeach;?>

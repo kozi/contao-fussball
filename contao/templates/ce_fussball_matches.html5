@@ -1,9 +1,9 @@
 <?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball/assets/fussball-matches.css|screen"; ?>
 
-<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+<div class="<?=$this->class?> block"<?=$this->cssID?><?php if ($this->style): ?> style="<?=$this->style?>"<?php endif; ?>>
 
-<?php if ($this->headline): ?>
-    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+    <?php if ($this->headline): ?>
+    <<?=$this->hl?>><?=$this->headline?></<?=$this->hl?>>
 <?php endif;?>
 
 <table>
@@ -13,47 +13,44 @@
         <th class="anstoss">Anstoß</th>
         <th colspan="2" class="spiel">Spiel</th>
         <th class="ergebnis" colspan="2"><abbr title="Ergebnis/Punkte">Erg.</abbr></th>
-        <th class="link" colspan="2">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
 
     <?php $i=0; foreach($this->matches as $match): $match->cssClass .= ($i++ % 2 ==0) ? ' odd': ' even'; ?>
-        <tr class="<?php echo $match->cssClass; ?>" id="spiel_<?php echo $match->id; ?>">
-            <td class="typ"><img src="/system/modules/fussball/assets/icons/<?php echo $match->typ_icon; ?>" /></td>
-            <td class="anstoss"><?php echo $match->datum; ?></td>
+        <tr class="<?=$match->cssClass?>" id="spiel_<?=$match->id?>">
+            <td class="typ"><img src="/system/modules/fussball/assets/icons/<?=$match->typ_icon?>" /></td>
+            <td class="anstoss"><?=$match->datum?></td>
             <td class="wappen">
                 <?php if ($match->hasWappen): ?>
                     <table><tr>
-                        <td style="width:36px;" class="col0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 32, 32, 'proportional'))?></td>
-                        <td style="width:36px;" class="col1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 32, 32, 'proportional'))?></td>
-                    </tr></table>
+                            <td style="width:36px;" class="col0"><?=\Image::getHtml(\Image::get($match->arrWappen[0], 32, 32, 'proportional'))?></td>
+                            <td style="width:36px;" class="col1"><?=\Image::getHtml(\Image::get($match->arrWappen[1], 32, 32, 'proportional'))?></td>
+                        </tr></table>
                 <?php endif; ?>
 
             </td>
             <td class="spiel">
                 <?php if ($match->isHeimspiel()): ?>
-                    <span class="name"><?php echo $match->team->name_external; ?></span>
-                    <span class="name_short"><?php echo $match->team->name_short_external; ?></span>
+                    <span class="name"><?=$match->team->name_external?></span>
+                    <span class="name_short"><?=$match->team->name_short_external?></span>
                 <?php else: ?>
-                    <?php echo $match->gegner; ?>
+                    <?=$match->gegner?>
                 <?php endif; ?>
-                 -
+                -
                 <?php if (!$match->isHeimspiel()): ?>
-                    <span class="name"><?php echo $match->team->name_external; ?></span>
-                    <span class="name_short"><?php echo $match->team->name_short_external; ?></span>
+                    <span class="name"><?=$match->team->name_external?></span>
+                    <span class="name_short"><?=$match->team->name_short_external?></span>
                 <?php else: ?>
-                    <?php echo $match->gegner; ?>
+                    <?=$match->gegner?>
                 <?php endif; ?>
             </td>
-            <td class="ergebnis"><?php echo $match->ergebnis; ?></td>
-            <td class="points"><?php if ($match->points != -1) echo $match->points; ?></td>
-            <td class="link">
-                <?php if ($match->link):?>
-                    <a title="Weitere Infos auf fussball.de" href="<?php echo $match->link; ?>" target="_blank"><img src="<?php echo Image::get("system/modules/fussball/assets/fussball.de-logo.png", 0, 16); ?>"></a>
+            <td class="ergebnis"><?=$match->ergebnis?></td>
+            <td class="points">
+                <?php if ($match->points != -1):?>
+                    <?=$match->points?>
                 <?php endif; ?>
             </td>
-
         </tr>
     <?php endforeach; ?>
     </tbody></table>

@@ -13,27 +13,25 @@
 
 <?php foreach($this->tournaments as $tourn) : ?>
 
-
-
-        <tr id="tourn<?php echo $tourn->id; ?>" class="<?php echo $tourn->cssClass; ?>">
+        <tr id="tourn<?=$tourn->id?>" class="<?=$tourn->cssClass?>">
             <td rowspan="2">
-                <span title="<?php echo strip_tags($tourn->details); ?>" class="clients"><?php echo $tourn->team_name; ?></span>
-                <h5 title="<?php echo strip_tags($tourn->details); ?>"><?php echo $tourn->title; ?></h5>
+                <span title="<?=strip_tags($tourn->details)?>" class="clients"><?=$tourn->team_name?></span>
+                <h5 title="<?=strip_tags($tourn->details)?>"><?=$tourn->title?></h5>
             </td>
-            <td><?php echo $tourn->date; ?></td>
+            <td><?=$tourn->date?></td>
             <td rowspan="2" class="type">
-		<span class="<?php echo standardize($tourn->platzart); ?>"
-              title="<?php echo $tourn->platzart; ?>"></span>
+		<span class="<?=standardize($tourn->platzart)?>"
+              title="<?=$tourn->platzart?>"></span>
             </td>
-            <td rowspan="2" class="confirm"><span class="confirmed<?php echo $tourn->confirmed; ?>"></span></td>
+            <td rowspan="2" class="confirm"><span class="confirmed<?=$tourn->confirmed?>"></span></td>
         </tr>
-        <tr class="<?php echo $tourn->cssClass; ?>">
-            <td><?php echo $tourn->host; ?><br/><small><?php echo $tourn->location; ?></small></td>
+        <tr class="<?=$tourn->cssClass; ?>">
+            <td><?=$tourn->host; ?><br/><small><?=$tourn->location?></small></td>
         </tr>
 
     <?php if (strlen($tourn->details) > 0) : ?>
-        <tr class="details <?php echo $tourn->cssClass; ?>">
-            <td colspan="4"><?php echo $tourn->details; ?></td>
+        <tr class="details <?=$tourn->cssClass?>">
+            <td colspan="4"><?=$tourn->details?></td>
         </tr>
     <?php endif; ?>
 

@@ -1,8 +1,8 @@
 <?php $GLOBALS['TL_CSS'][] = "/system/modules/fussball/assets/fussball-goalgetter.css|screen"; ?>
-<div class="<?php echo $this->class; ?> fussball_goalgetter block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+<div class="<?=$this->class?> fussball_goalgetter block"<?=$this->cssID?><?php if ($this->style): ?> style="<?=$this->style?>"<?php endif; ?>>
 
 <?php if ($this->headline): ?>
-	<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+	<<?=$this->hl?>><?=$this->headline?></<?=$this->hl?>>
 <?php endif;?>
 
 <table class="goalgetter_table">
@@ -10,10 +10,10 @@
 
 <?php foreach($this->goalgetter_list as $row) :?>
 
-	<tr class="<?php echo $row->cssClass; ?>">
-		<th class="position"><?php echo $row->position; ?>. </th>
-		<td class="names"><?php echo implode(', ', $row->names); ?></td>
-		<td class="goals"><?php echo $row->goals_view; ?></td>
+	<tr class="<?=$row->cssClass?>">
+		<th class="position"><?=$row->position?>. </th>
+		<td class="names"><?=implode(', ', $row->names)?></td>
+		<td class="goals"><?=$row->goals_view?></td>
 	</tr>
 	
 <?php endforeach; ?>
