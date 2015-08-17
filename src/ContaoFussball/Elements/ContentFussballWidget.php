@@ -14,8 +14,6 @@
  */
 namespace ContaoFussball\Elements;
 
-use ContaoFussball\Models\FussballTeamModel;
-
 /**
  * Class ContentFussballWidget
  *
@@ -24,9 +22,9 @@ use ContaoFussball\Models\FussballTeamModel;
  * @package    Controller
  */
 
-class ContentFussballWidget extends \ContentElement {
-    const FUSSBALL_API     = 'http://www.fussball.de/static/egm//js/widget2.js';
-
+class ContentFussballWidget extends \ContentElement
+{
+	const FUSSBALL_API     = 'http://www.fussball.de/static/egm//js/widget2.js';
 	protected $strTemplate = 'ce_fussball_widget';
 
 	/**
@@ -35,7 +33,8 @@ class ContentFussballWidget extends \ContentElement {
 	 */
 	public function generate()
 	{
-		if (TL_MODE == 'BE') {
+		if (TL_MODE == 'BE')
+		{
 			$objTemplate           = new \BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### FUSSBALL WIDGET ###';
 			$objTemplate->title    = $this->headline;
@@ -47,10 +46,11 @@ class ContentFussballWidget extends \ContentElement {
 		return parent::generate();
 	}
 
-	protected function compile() {
-
+	protected function compile()
+	{
         // Die Dateien müssen natürlich nur einmal eingebunden werden
-        if(!in_array(ContentFussballWidget::FUSSBALL_API, $GLOBALS['TL_JAVASCRIPT'])) {
+        if(!in_array(ContentFussballWidget::FUSSBALL_API, $GLOBALS['TL_JAVASCRIPT']))
+		{
             $GLOBALS['TL_JAVASCRIPT'][] = ContentFussballWidget::FUSSBALL_API;
             // $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/fussball/assets/fussball-widget.js|static';
         }

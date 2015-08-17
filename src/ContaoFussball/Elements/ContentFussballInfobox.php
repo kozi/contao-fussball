@@ -21,11 +21,12 @@ namespace ContaoFussball\Elements;
  * @package    fussball
  */
 
-class ContentFussballInfobox extends \ContentText {
-
-    protected function compile() {
+class ContentFussballInfobox extends \ContentText
+{
+    protected function compile()
+    {
         parent::compile();
         $this->Template->class .= 'infobox '.$this->Template->class;
     }
-}
 
+}

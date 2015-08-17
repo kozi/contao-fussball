@@ -22,7 +22,8 @@ namespace ContaoFussball\Models;
  * @package    fussball
  */
 
-class FussballMatchModel extends \Model {
+class FussballMatchModel extends \Model
+{
 
     /**
      * Table name
@@ -30,19 +31,23 @@ class FussballMatchModel extends \Model {
      */
     protected static $strTable = 'tl_fussball_match';
 
-    public function getTitle() {
+    public function getTitle()
+    {
         $objTeam  = FussballTeamModel::findByPk($this->pid);
-        if ($this->isHeimspiel()) {
-            $title    = $objTeam->name_external.' - '.$this->gegner;
+        if ($this->isHeimspiel())
+        {
+            $title = $objTeam->name_external.' - '.$this->gegner;
         }
-        else {
-            $title    = $this->gegner.' - '.$objTeam->name_external;
+        else
+        {
+            $title = $this->gegner.' - '.$objTeam->name_external;
         }
 
         return $title;
     }
 
-    public function isHeimspiel() {
+    public function isHeimspiel()
+    {
         return ($this->heimspiel === '1');
     }
 }

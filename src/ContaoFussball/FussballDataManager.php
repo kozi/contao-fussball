@@ -42,7 +42,7 @@ class FussballDataManager extends \System
         $id    = \Input::get('id');
         $up    = \Input::get('sort') === 'up';
         $count = 1;
-        $teams = FussballTeamModel::findAll(array('order' => 'sorting ASC'));
+        $teams = FussballTeamModel::findAll(['order' => 'sorting ASC']);
         foreach ($teams as $teamObj)
         {
             if ($teamObj->id == $id)

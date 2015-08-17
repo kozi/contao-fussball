@@ -126,11 +126,11 @@ class FussballEventManager extends \System
         // Add type to title
         $title .= ' ['.strtoupper($objMatch->typ).']';
 
-        $text  = implode(" <br>", array(
+        $text  = implode(" <br>", [
             $title,
             (strlen($objMatch->time) > 0) ? date('d.m.Y H:i', $objMatch->anstoss) : date('d.m.Y', $objMatch->anstoss),
             $loc
-        ));
+        ]);
 
         $calEventModel = \CalendarEventsModel::findOneBy('fussball_matches_id', $objMatch->id);
 
@@ -139,7 +139,7 @@ class FussballEventManager extends \System
             $calEventModel = new \CalendarEventsModel();
         }
 
-        $eventData      = array(
+        $eventData      = [
             'fussball_matches_id' => $objMatch->id,
             'tstamp'    => $this->now,
             'pid'       => $calendar->id,
@@ -154,7 +154,7 @@ class FussballEventManager extends \System
             'endDate'   => NULL,
             'published' => 1,
             'cssClass'  => 'fussball_match fussball_match_'.strtolower($objMatch->typ)
-        );
+        ];
 
         foreach($eventData as $key => $value)
         {
@@ -181,7 +181,7 @@ class FussballEventManager extends \System
             $calEventModel = new \CalendarEventsModel();
         }
 
-        $eventData      = array(
+        $eventData      = [
             'fussball_tournament_id' => $objTourn->id,
             'tstamp'    => $this->now,
             'pid'       => $calendar->id,
@@ -196,7 +196,7 @@ class FussballEventManager extends \System
             'endDate'   => $objTourn->endDate,
             'published' => 1,
             'cssClass'  => 'fussball_tournament'
-        );
+        ];
 
         foreach($eventData as $key => $value)
         {

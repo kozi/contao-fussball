@@ -31,7 +31,7 @@ class ContentFussballMatches extends \ContentElement {
     private $team          = null;
     private $now           = 0;
     private $sum_points    = 0;
-	private $sum_goals     = array(0, 0);
+	private $sum_goals     = [0, 0];
 
 	public function generate() {
 

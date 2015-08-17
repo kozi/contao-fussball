@@ -49,7 +49,7 @@ class ContentFussballGoalgetter extends \ContentElement {
 	}
 			
 	protected function compile() {
-		$arr = array();
+		$arr = [];
 		foreach ($this->ggArr as $gg) {
 			$name  = $gg['fussball_gg_name'];
 			$goals = $gg['fussball_gg_goals'];
@@ -59,7 +59,7 @@ class ContentFussballGoalgetter extends \ContentElement {
 			} else {
 				$arr[$goals] = new \stdClass();
 				$arr[$goals]->goals = $goals;
-				$arr[$goals]->names = array($name);
+				$arr[$goals]->names = [$name];
 			}
 		}
 		

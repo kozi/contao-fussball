@@ -22,8 +22,8 @@ namespace ContaoFussball\Models;
  * @package    fussball
  */
 
-class FussballTournamentModel extends \Model {
-
+class FussballTournamentModel extends \Model
+{
     /**
      * Table name
      * @var string

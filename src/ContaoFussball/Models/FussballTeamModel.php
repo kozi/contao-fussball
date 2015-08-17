@@ -21,7 +21,8 @@ namespace ContaoFussball\Models;
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  */
-class FussballTeamModel extends \Model {
+class FussballTeamModel extends \Model
+{
 
     /**
      * Table name
@@ -30,7 +31,8 @@ class FussballTeamModel extends \Model {
     protected static $strTable = 'tl_fussball_team';
 
 
-    public static function findWithArray(array $arrOptions) {
+    public static function findWithArray(array $arrOptions)
+    {
         return self::find($arrOptions);
     }
 

@@ -24,3 +24,4 @@ TemplateLoader::addFiles([
     'fussball_team_list'          => 'system/modules/fussball/templates',
     'fussball_team_single'        => 'system/modules/fussball/templates',
 ]);
+

@@ -13,168 +13,147 @@
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_fussball_verein'] = array(
+$GLOBALS['TL_DCA']['tl_fussball_verein'] = [
 
     // Config
-    'config' => array
-    (
-        'dataContainer'               => 'Table',
-        'switchToEdit'                => true,
-        'enableVersioning'            => true,
-        'sql' => array(
-            'keys' => array('id' => 'primary')
-        )
-    ),
+    'config' => [
+        'dataContainer'     => 'Table',
+        'switchToEdit'      => true,
+        'enableVersioning'  => true,
+        'sql'               => ['keys' => ['id' => 'primary']]
+    ],
 
-
-// List
-    'list' => array
-    (
-        'sorting' => array
-        (
+    // List
+    'list' => [
+        'sorting' => [
             'mode'                    => 1,
-            'fields'                  => array('name ASC'),
+            'fields'                  => ['name ASC'],
             'flag'                    => 11,
             'panelLayout'             => 'filter, search, limit'
-        ),
-        'label' => array
-        (
-            'fields'                  => array('wappen', 'name', 'name_short', 'location', 'platzart'),
+        ],
+        'label' => [
+            'fields'                  => ['wappen', 'name', 'name_short', 'location', 'platzart'],
             'showColumns'             => true,
-            'label_callback'          => array('tl_fussball_verein', 'addPreviewImage')
-        ),
+            'label_callback'          => ['tl_fussball_verein', 'addPreviewImage']
+        ],
 
-
-        'operations' => array
-        (
-            'edit' => array
-            (
+        'operations' => [
+            'edit' => [
                 'label'               => &$GLOBALS['TL_LANG']['tl_fussball_verein']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif',
                 'attributes'          => 'class="contextmenu"'
-            ),
-            'delete' => array
-            (
+            ],
+            'delete' => [
                 'label'               => &$GLOBALS['TL_LANG']['tl_fussball_verein']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_fussball_verein']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
-            )
-        )
+           ]
+        ]
 
-    ),
+    ],
 
     // Palettes
-    'palettes' => array
-    (
+    'palettes' => [
         'default' => '{title_legend},name,name_short,platzart,homepage,location,teams,wappen,home'
-    ),
+    ],
 
     // Fields
-    'fields' => array
-    (
-        'id' => array
-        (
-            'label'                   => array('ID'),
+    'fields' => [
+
+        'id' => [
+            'label'                   => ['ID'],
             'search'                  => false,
             'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-        ),
-        'tstamp' => array
-        (
-            'label'                   => array('TSTAMP'),
+        ],
+        'tstamp' => [
+            'label'                   => ['TSTAMP'],
             'search'                  => false,
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-        ),
-
-        'name' => array
-        (
+        ],
+        'name' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['name'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'),
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'name_short' => array
-        (
+        ],
+        'name_short' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['name_short'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'),
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>255, 'tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'homepage' => array
-        (
+        ],
+        'homepage' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['homepage'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,
             'flag'                    => 1,
             'inputType'               => 'text',
-            'eval'                    => array('maxlength'=>255, 'tl_class' => 'w50'),
+            'eval'                    => ['maxlength'=>255, 'tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'home' => array
-        (
+        ],
+        'home' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['home'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'w50 m12', 'unique' => true),
+            'eval'                    => ['tl_class'=>'w50 m12', 'unique' => true],
             'sql'                     => "char(1) NOT NULL default ''",
-        ),
-        'location' => array
-        (
+        ],
+        'location' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['location'],
             'search'                  => false,
             'inputType'               => 'textarea',
-            'eval'                    => array('tl_class' => 'clr'),
+            'eval'                    => ['tl_class' => 'clr'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'platzart' => array
-        (
+        ],
+        'platzart' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['platzart'],
             'search'                  => false,
             'inputType'               => 'select',
             'options'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES,
             'default'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES[0],
-            'eval'                    => array('tl_class' => 'w50'),
+            'eval'                    => ['tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'wappen' => array
-        (
+        ],
+        'wappen' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['wappen'],
             'exclude'                 => true,
             'search'                  => false,
             'sorting'                 => false,
             'inputType'		          => 'fileTree',
-            'eval'			          => array('tl_class' => 'clr', 'mandatory'=> false, 'files' => true, 'filesOnly' => true, 'fieldType' => 'radio'),
+            'eval'			          => ['tl_class' => 'clr', 'mandatory'=> false, 'files' => true, 'filesOnly' => true, 'fieldType' => 'radio'],
             'sql'                     => "binary(16) NULL",
-        ),
-        'teams' => array
-        (
+        ],
+        'teams' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['teams'],
             'exclude'                 => true,
             'search'                  => false,
             'sorting'                 => false,
             'inputType'		          => 'optionWizard',
-            'eval'			          => array('mandatory'=> false, 'tl_class' => 'tl_fussball_teamlist'),
+            'eval'			          => ['mandatory'=> false, 'tl_class' => 'tl_fussball_teamlist'],
             'sql'                     => "blob NULL",
-        ),
-    ) //fields
+        ],
+    ] //fields
 
-);
+];
 
-class tl_fussball_verein extends Backend {
+class tl_fussball_verein extends Backend
+{
 
-    public function addPreviewImage($row, $label, DataContainer $dc, $args = null) {
+    public function addPreviewImage($row, $label, DataContainer $dc, $args = null)
+    {
 
         $isHomeTeam = ($row['home'] === '1');
         $objFile    = FilesModel::findByUuid($row['wappen']);
@@ -188,7 +167,8 @@ class tl_fussball_verein extends Backend {
         $args[3] = str_replace("\n", "<br>", $args[3]);
 
         // platzart
-        if (strlen($row['platzart']) > 0) {
+        if (strlen($row['platzart']) > 0)
+        {
             $args[4] = \Image::getHtml(\Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16), $row['platzart'], 'title="'.$row['platzart'].'"');
         }
 
@@ -203,9 +183,8 @@ class tl_fussball_verein extends Backend {
     }
 
 }
-if (Input::get('do') == 'fussball_verein') {
+if (Input::get('do') == 'fussball_verein')
+{
     $GLOBALS['TL_LANG']['MSC']['ow_value'] = 'Mannschaftsname';
     $GLOBALS['TL_LANG']['MSC']['ow_label'] = 'Abkürzung';
 }
-
-

@@ -14,147 +14,129 @@
  */
 
 
-$GLOBALS['TL_DCA']['tl_fussball_match'] = array(
+$GLOBALS['TL_DCA']['tl_fussball_match'] = [
 
-// Config
-    'config' => array
-    (
-        'dataContainer'               => 'Table',
-        'ptable'                      => 'tl_fussball_team',
-        'switchToEdit'                => true,
-        'enableVersioning'            => true,
-        'onsubmit_callback'           => [['tl_fussball_match', 'postSubmitMatch']],
-        'onload_callback'             => [['tl_fussball_match', 'adjustLegend']],
-        'sql' => array(
-            'keys' => array(
-                'id'  => 'primary',
-                'pid' => 'index'
-            )
-        )
-    ),
+    // Config
+    'config' => [
+        'dataContainer'         => 'Table',
+        'ptable'                => 'tl_fussball_team',
+        'switchToEdit'          => true,
+        'enableVersioning'      => true,
+        'onsubmit_callback'     => [['tl_fussball_match', 'postSubmitMatch']],
+        'onload_callback'       => [['tl_fussball_match', 'adjustLegend']],
+        'sql'                   => ['keys' => ['id'  => 'primary', 'pid' => 'index']]
+    ],
 
-// List
-    'list' => array
-    (
-        'sorting' => array
-        (
+    // List
+    'list' => [
+        'sorting' => [
             'mode'                    => 4,
-            'fields'                  => array('anstoss ASC'),
+            'fields'                  => ['anstoss ASC'],
             'panelLayout'             => 'filter, sort, limit',
             'disableGrouping'         => true,
-            'headerFields'            => array('name', 'name_external'),
-            'child_record_callback'   => array('tl_fussball_match', 'listMatch'),
+            'headerFields'            => ['name', 'name_external'],
+            'child_record_callback'   => ['tl_fussball_match', 'listMatch'],
             'child_record_class'      => 'tl_fussball tl_fussball_match'
-        ),
-        'operations' => array
-        (
-            'edit' => array
-            (
+        ],
+        'operations' => [
+
+            'edit' => [
                 'label'               => &$GLOBALS['TL_LANG']['tl_fussball_match']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif',
                 'attributes'          => 'class="contextmenu"'
-            ),
-            'delete' => array
-            (
+            ],
+            'delete' => [
                 'label'               => &$GLOBALS['TL_LANG']['tl_fussball_match']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_fussball_match']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
-            )
-        )
+            ]
+        ]
+    ],
 
-    ),
-
-// Palettes
-    'palettes' => array
-    (
+    // Palettes
+    'palettes' => [
         'default'                     => '{title_legend}, heimspiel, pid, gegner, typ, title, anstoss, time, ergebnis, platzart, location',
-    ),
-// Fields
-    'fields' => array
-    (
-        'id' => array
-        (
-            'label'                   => array('ID'),
+    ],
+
+    // Fields
+    'fields' => [
+        'id' => [
+            'label'                   => ['ID'],
             'search'                  => false,
             'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-        ),
-        'pid' => array
-        (
+        ],
+        'pid' => [
             'foreignKey'              => 'tl_fussball_team.name',
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
             'filter'                  => true,
-            'relation'                => array('type'=>'belongsTo', 'load'=>'eager'),
-            'input_field_callback'    => array('tl_fussball_match', 'inputFieldCallback'),
-            'eval'                    => array('tl_class' => 'long', 'readonly' => true),
-
-        ),
-        'tstamp' => array
-        (
-            'label'                   => array('TSTAMP'),
+            'relation'                => ['type'=>'belongsTo', 'load'=>'eager'],
+            'input_field_callback'    => ['tl_fussball_match', 'inputFieldCallback'],
+            'eval'                    => ['tl_class' => 'long', 'readonly' => true],
+        ],
+        'tstamp' => [
+            'label'                   => ['TSTAMP'],
             'search'                  => false,
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-        ),
-        'anstoss' => array
-        (
+        ],
+        'anstoss' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['anstoss'],
             'flag'                    => 8,
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => true,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'date', 'datepicker' => true, 'mandatory' => true),
+            'eval'                    => ['tl_class' => 'w50', 'rgxp' => 'date', 'datepicker' => true, 'mandatory' => true],
             'sql'                     => "varchar(10) NOT NULL default ''"
-        ),
-        'time' => array
-        (
+        ],
+        'time' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['time'],
             'flag'                    => 8,
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
             'load_callback'           => [['tl_fussball_match', 'loadDefaultTime']],
-            'eval'                    => array('tl_class' => 'w50', 'rgxp' => 'time'),
+            'eval'                    => ['tl_class' => 'w50', 'rgxp' => 'time'],
             'sql'                     => "varchar(10) NOT NULL default ''"
-        ),
-        'heimspiel' => array(
+        ],
+        'heimspiel' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['heimspiel'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => false,
             'inputType'               => 'checkbox',
-            'eval'                    => array('tl_class'=>'long', 'submitOnChange' => true),
+            'eval'                    => ['tl_class'=>'long', 'submitOnChange' => true],
             'sql'                     => "char(1) NOT NULL default ''",
-        ),
-        'gegner' => array(
+        ],
+        'gegner' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['gegner'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => false,
             'inputType'               => 'select',
             'options_callback'        => ['tl_fussball_match', 'getTeamNames'],
-            'eval'                    => array('tl_class' => 'w50', 'mandatory' => true, 'chosen' => true, 'includeBlankOption' => true, 'submitOnChange' => true),
+            'eval'                    => ['tl_class' => 'w50', 'mandatory' => true, 'chosen' => true, 'includeBlankOption' => true, 'submitOnChange' => true],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'verein_gegner' => array(
+        ],
+        'verein_gegner' => [
             'label'                   => ['VEREIN_GEGNER', 'VEREIN_GEGNER'],
             'exclude'                 => true,
             'search'                  => false,
             'sorting'                 => false,
             'foreignKey'              => 'tl_fussball_verein.name',
-            'relation'                => array('type'=>'hasOne', 'load'=>'eager'),
+            'relation'                => ['type'=>'hasOne', 'load'=>'eager'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-        ),
-        'title' => array(
+        ],
+        'title' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['title'],
             'exclude'                 => true,
             'search'                  => true,
             'sorting'                 => false,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'long clr', 'readonly' => true),
-        ),
-        'typ' => array(
+            'eval'                    => ['tl_class' => 'long clr', 'readonly' => true],
+        ],
+        'typ' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['typ'],
             'exclude'                 => true,
             'search'                  => true,
@@ -163,61 +145,62 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = array(
             'reference'               => &$GLOBALS['TL_LANG']['contao_fussball']['match_types'],
             'default'                 => \ContaoFussball\FussballDataManager::$MATCH_TYPES[0],
             'inputType'               => 'select',
-            'eval'                    => array('tl_class' => 'w50'),
+            'eval'                    => ['tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'ergebnis' => array(
+        ],
+        'ergebnis' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['ergebnis'],
             'exclude'                 => true,
             'search'                  => true,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'w50'),
+            'eval'                    => ['tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'location' => array
-        (
+        ],
+        'location' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['location'],
             'search'                  => false,
             'inputType'               => 'textarea',
-            'eval'                    => array('tl_class' => 'clr long'),
+            'eval'                    => ['tl_class' => 'clr long'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'platzart' => array
-        (
+        ],
+        'platzart' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['platzart'],
             'search'                  => false,
             'inputType'               => 'select',
             'options'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES,
             'default'                 => \ContaoFussball\FussballDataManager::$FIELD_TYPES[0],
-            'eval'                    => array('tl_class' => 'w50'),
+            'eval'                    => ['tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
-        'link' => array
-        (
+        ],
+        'link' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['link'],
             'search'                  => false,
             'inputType'               => 'text',
-            'eval'                    => array('tl_class' => 'w50'),
+            'eval'                    => ['tl_class' => 'w50'],
             'sql'                     => "varchar(255) NOT NULL default ''",
-        ),
+        ],
 
-    ) //fields
+    ] //fields
 
-);
+];
 
 use ContaoFussball\Models\FussballMatchModel;
 use ContaoFussball\Models\FussballTeamModel;
 use ContaoFussball\Models\FussballVereinModel;
 
-class tl_fussball_match extends Backend {
-    private $teams = array();
-    public function __construct() {
+class tl_fussball_match extends Backend
+{
+    private $teams = [];
+
+    public function __construct()
+    {
         parent::__construct();
         $this->import('BackendUser', 'User');
 
         $result = $this->Database->execute('SELECT * FROM tl_fussball_team');
 
-        while($result->next()) {
+        while($result->next())
+        {
             $team                   = (Object) $result->row();
             $this->teams[$team->id] = $team;
         }
@@ -260,7 +243,8 @@ class tl_fussball_match extends Backend {
     {
         $team     = $this->teams[$row['pid']];
         $platzart = '';
-        if (strlen($row['platzart']) > 0) {
+        if (strlen($row['platzart']) > 0)
+        {
             $img      = \Image::get('system/modules/fussball/assets/icons/type-'.standardize($row['platzart']).'.png', 16, 16);
             $platzart = $row['platzart'];
 
@@ -281,7 +265,8 @@ class tl_fussball_match extends Backend {
 
         $imgSRC = '';
         $img    = \Image::get('system/modules/fussball/assets/icons/match_typ_'.standardize($row['typ']).'.png', 12, 12);
-        if($img != null) {
+        if($img != null)
+        {
             $imgSRC = \Image::getHtml($img);
         }
 
@@ -442,9 +427,9 @@ if (Input::get('do') == 'fussball_matches')
     unset($a['list']['sorting']['child_record_callback']);
     unset($a['list']['sorting']['child_record_class']);
 
-    $a['list']['label'] = array(
-        'fields'                  => array('typ', 'pid', 'anstoss', 'title', 'ergebnis'),
-        'label_callback'          => array('tl_fussball_match', 'listMatch')
-    );
+    $a['list']['label'] = [
+        'fields'                  => ['typ', 'pid', 'anstoss', 'title', 'ergebnis'],
+        'label_callback'          => ['tl_fussball_match', 'listMatch']
+    ];
 
 }

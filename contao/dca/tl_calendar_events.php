@@ -26,6 +26,7 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['fussball_tournament_id'] = [
 $GLOBALS['TL_DCA']['tl_calendar_events']['list']['sorting']['child_record_callback'] =
     ['tl_calendar_events_fussball', 'listEvents'];
 
+
 class tl_calendar_events_fussball extends tl_calendar_events
 {
     public function listEvents($arrRow)

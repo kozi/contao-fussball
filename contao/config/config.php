@@ -58,7 +58,8 @@ array_insert($GLOBALS['BE_MOD']['fussball'], 0, [
 
 ]);
 
-if(TL_MODE === 'BE') {
+if(TL_MODE === 'BE')
+{
     // common js
     $GLOBALS['TL_CSS'][]          = 'system/modules/fussball/assets/be_style.css|static';
     $GLOBALS['TL_JAVASCRIPT'][]   = 'system/modules/fussball/assets/be_script.js|static';

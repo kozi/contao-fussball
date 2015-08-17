@@ -25,14 +25,14 @@ namespace ContaoFussball\Elements;
 class ContentFussballTournament extends \ContentElement {
     protected $strTemplate   = 'ce_fussball_tournament';
     private $teams           = NULL;
-    private $team_ids        = array();
+    private $team_ids        = [];
     private $now             = 0;
     private $oneDayInSeconds = 86400;
 
     public function generate() {
 
         $this->now    = time();
-        $this->teams  = array();
+        $this->teams  = [];
         $result       = $this->Database->execute('SELECT id, name FROM tl_fussball_team '
             .'WHERE id IN ('.implode(',', unserialize($this->fussball_team_id_array)).')'
         );
@@ -63,7 +63,7 @@ class ContentFussballTournament extends \ContentElement {
 
     protected function compile() {
 
-        $tournaments = array();
+        $tournaments = [];
         $db_limit    = 0;
 
         $result   = $this->Database->prepare('SELECT tl_fussball_tournament.*, tl_fussball_team.name AS team_name, tl_fussball_team.name_short AS team_name_short'

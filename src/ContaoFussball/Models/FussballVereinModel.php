@@ -21,8 +21,8 @@ namespace ContaoFussball\Models;
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    fussball
  */
-class FussballVereinModel extends \Model {
-
+class FussballVereinModel extends \Model
+{
     /**
      * Table name
      * @var string
