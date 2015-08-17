@@ -383,13 +383,17 @@ class tl_fussball_match extends Backend {
         $objMatch->save();
     }
 
-    public function getTeamNames() {
+    public function getTeamNames()
+    {
         $arrNames         = [];
         $vereinCollection = FussballVereinModel::findAll(['order' => 'name ASC']);
-        if ($vereinCollection != null) {
-            foreach($vereinCollection as $objVerein) {
+        if ($vereinCollection != null)
+        {
+            foreach($vereinCollection as $objVerein)
+            {
                 $arrTeams = deserialize($objVerein->teams);
-                foreach($arrTeams as $k => $arrTeam) {
+                foreach($arrTeams as $k => $arrTeam)
+                {
                     $arrNames[] = $arrTeam['value'];
                 }
             }
@@ -413,6 +417,25 @@ if (Input::get('do') == 'fussball_matches')
     // $a['list']['operations']      = [];
 
     $a['list']['sorting']['mode'] = 2;
+
+    $oneDayinSeconds = 86400;
+    $countDays       = (Input::get('days')) ? Input::get('days') : 7;
+
+    $a['list']['sorting']['filter'] = [
+        ['anstoss < ?', time()],
+        ['anstoss > ?', (time() - ($countDays * $oneDayinSeconds))]
+    ];
+
+    // TODO
+    /*
+    $a['list']['global_operations'] = [
+        'sync' => [
+            'label'               => &$GLOBALS['TL_LANG']['tl_files']['sync'],
+            'href'                => 'act=sync',
+            'class'               => 'header_sync'
+        ],
+    ];
+    */
 
     unset($a['list']['sorting']['disableGrouping']);
     unset($a['list']['sorting']['headerFields']);
