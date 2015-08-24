@@ -149,7 +149,7 @@ class FussballEventManager extends \System
             'location'  => $loc,
             'addTime'   => (strlen($objMatch->time) > 0) ? '1' : '',
             'startTime' => $objMatch->anstoss,
-            'endTime'   => $objMatch->anstoss + static::MATCH_LENGTH_SEC,
+            'endTime'   => $objMatch->anstoss, // + static::MATCH_LENGTH_SEC
             'startDate' => $objMatch->anstoss,
             'endDate'   => NULL,
             'published' => 1,
