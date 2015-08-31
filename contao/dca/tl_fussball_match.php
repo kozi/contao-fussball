@@ -57,7 +57,7 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = [
 
     // Palettes
     'palettes' => [
-        'default'                     => '{title_legend}, heimspiel, pid, gegner, typ, title, anstoss, time, ergebnis, platzart, location',
+        'default'                     => '{title_legend}, heimspiel, pid, gegner, typ, title, anstoss, time, ergebnis, platzart, location, detail',
     ],
 
     // Fields
@@ -162,6 +162,13 @@ $GLOBALS['TL_DCA']['tl_fussball_match'] = [
             'inputType'               => 'textarea',
             'eval'                    => ['tl_class' => 'clr long'],
             'sql'                     => "varchar(255) NOT NULL default ''",
+        ],
+        'detail' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['detail'],
+            'search'                  => false,
+            'inputType'               => 'textarea',
+            'eval'                    => ['tl_class' => 'clr long', 'style'=>'height:80px;'],
+            'sql'                     => "text NULL",
         ],
         'platzart' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_fussball_match']['platzart'],

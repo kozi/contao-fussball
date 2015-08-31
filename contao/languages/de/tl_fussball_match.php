@@ -11,6 +11,7 @@ $GLOBALS['TL_LANG']['tl_fussball_match']['platzart']      = ['Platzart', 'Auf we
 $GLOBALS['TL_LANG']['tl_fussball_match']['typ']           = ['Typ', 'Typ'];
 $GLOBALS['TL_LANG']['tl_fussball_match']['ergebnis']      = ['Ergebnis', 'Ergebnis (Beispiele: 1:1, 2:0, 3:5)'];
 $GLOBALS['TL_LANG']['tl_fussball_match']['location']      = ['Ort/Adresse', '1.Zeile: "Stadion-/Platzname", 2. Zeile: Straße und Hausnummer, 3. Zeile: PLZ und Ort (Bei Änderung der Felder Heimspiel oder Gegner wird dieses Feld überschrieben)'];
+$GLOBALS['TL_LANG']['tl_fussball_match']['detail']        = ['Details', 'Details zu dem Spiel (Spielbericht, Torschützen)'];
 
 $GLOBALS['TL_LANG']['tl_fussball_match']['new']           = ['Neues Spiel', 'Ein neues Spiel für diese Mannschaft hinzufügen.'];
 $GLOBALS['TL_LANG']['tl_fussball_match']['edit']          = ['Editieren', 'Dieses Spiel editieren'];
