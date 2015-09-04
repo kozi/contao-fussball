@@ -8,17 +8,27 @@
 <table class="goalgetter_table">
 <tbody>
 
-<?php foreach($this->goalgetter_list as $row) :?>
+<?php if ($this->goalgetterList): ?>
+
+<?php foreach($this->goalgetterList as $row):?>
 
 	<tr class="<?=$row->cssClass?>">
 		<th class="position"><?=$row->position?>. </th>
 		<td class="names"><?=implode(', ', $row->names)?></td>
-		<td class="goals"><?=$row->goals_view?></td>
+		<td class="goals"><?=$row->goalsView?></td>
 	</tr>
 	
 <?php endforeach; ?>
 
+	<tfoot>
+		<tr>
+			<td colspan="3" class="goals_sum"><?=$this->goalsSum?></td>
+		</tr>
+	</tfoot>
+
 </tbody>
 </table>
+
+<?php endif;?>
 
 </div>
