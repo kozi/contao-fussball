@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_fussball_verein'] = [
             'search'                  => false,
             'inputType'               => 'textarea',
             'eval'                    => ['tl_class' => 'clr'],
-            'sql'                     => "varchar(255) NOT NULL default ''",
+            'sql'                     => "text NULL",
         ],
         'platzart' => [
             'label'                   => $GLOBALS['TL_LANG']['tl_fussball_verein']['platzart'],

@@ -26,25 +26,36 @@ use ContaoFussball\Models\FussballVereinModel;
  * @package    Controller
  */
 
-class ContentFussballMatches extends \ContentElement {
+class ContentFussballMatches extends \ContentElement
+{
 	protected $strTemplate = 'ce_fussball_matches';
     private $team          = null;
     private $now           = 0;
     private $sum_points    = 0;
 	private $sum_goals     = [0, 0];
 
-	public function generate() {
-
-
+	public function generate()
+    {
         $objTeam = FussballTeamModel::findByPk($this->fussball_team_id);
-        if ($objTeam != null) {
+        if ($objTeam != null)
+        {
             $this->team = (Object) $objTeam->row();
         }
 
-		if (TL_MODE == 'BE') {
-			$objTemplate = new \BackendTemplate('be_wildcard');
+		if (TL_MODE == 'BE')
+        {
+            $strTeam     = ($this->team) ? $this->team->name : 'ALL';
 
-			$objTemplate->wildcard = '### FUSSBALL MATCHES ###<br>Team: '.$this->team->name;
+            $objTemplate           = new \BackendTemplate('be_wildcard');
+            $objTemplate->wildcard = "### FUSSBALL MATCHES ###<br>
+                Team: $strTeam [ID $this->fussball_team_id]<br>
+                typ: $this->fussball_typ<br>
+                future: $this->fussball_future<br>
+                past: $this->fussball_past<br>
+                order: $this->fussball_order<br>
+                from: $this->fussball_from<br>
+                to: $this->fussball_to<br>
+            ";
 			$objTemplate->title    = $this->headline;
 			$objTemplate->id       = $this->id;
 			$objTemplate->link     = $this->name;
@@ -55,47 +66,57 @@ class ContentFussballMatches extends \ContentElement {
 		return parent::generate();
 	}
 
-	protected function compile() {
+	protected function compile()
+    {
+        // TODO fussball_from und fussball_to auswerten
+
 
         $this->now      = time();
         $matches_future = [];
         $matches_past   = [];
 
-        $arrWhere  = [
-            'pid'     => 'pid = ?',
-            'anstoss' => 'anstoss > ?'
-        ];
-        $arrValues = [
-            'pid'     => $this->fussball_team_id,
-            'anstoss' => $this->now
-        ];
+        $arrWhere  = ['anstoss' => 'anstoss > ?'];
+        $arrValues = ['anstoss' => $this->now];
+        if($this->team)
+        {
+            // TODO array of team ids
+            $arrWhere['pid']  = 'pid = ?';
+            $arrValues['pid'] = $this->fussball_team_id;
+        }
 
-        if (strlen($this->fussball_typ) > 0) {
+        if (strlen($this->fussball_typ) > 0)
+        {
             $arrWhere['typ']  = 'typ = ?';
             $arrValues['typ'] = $this->fussball_typ;
         }
 
         // Zukünftige Spiele
-        if ($this->fussball_future != '0') {
+        if ($this->fussball_future != '0')
+        {
             $options = ['limit' => intval($this->fussball_future), 'order' => 'anstoss ASC'];
             $arrWhere['anstoss']  = 'anstoss > ?';
 
             $matchesCollection = FussballMatchModel::findBy($arrWhere, $arrValues, $options);
-            if ($matchesCollection != null) {
-                foreach($matchesCollection as $objMatch) {
+            if ($matchesCollection != null)
+            {
+                foreach($matchesCollection as $objMatch)
+                {
                     $matches_future[] =$this->getMatch($objMatch);
                 }
             }
         }
 
         // Vergangene Spiele
-        if ($this->fussball_past != '0') {
-            $options     = ['limit' => intval($this->fussball_future), 'order' => 'anstoss DESC'];
-            $arrWhere['anstoss']  = 'anstoss <= ?';
+        if ($this->fussball_past != '0')
+        {
+            $options             = ['limit' => intval($this->fussball_past), 'order' => 'anstoss DESC'];
+            $arrWhere['anstoss'] = 'anstoss <= ?';
+            $matchesCollection   = FussballMatchModel::findBy($arrWhere, $arrValues, $options);
 
-            $matchesCollection = FussballMatchModel::findBy($arrWhere, $arrValues, $options);
-            if ($matchesCollection != null) {
-                foreach($matchesCollection as $objMatch) {
+            if ($matchesCollection != null)
+            {
+                foreach($matchesCollection as $objMatch)
+                {
                     $matches_past[] =$this->getMatch($objMatch);
                 }
             }
@@ -104,9 +125,12 @@ class ContentFussballMatches extends \ContentElement {
         $matches = array_merge($matches_future, $matches_past);
 
         // Sort by matches_order
-        if ($this->fussball_order == 'desc') {
+        if ($this->fussball_order == 'desc')
+        {
             usort($matches, function($a, $b) { return ($b->anstoss - $a->anstoss); });
-        } else {
+        }
+        else
+        {
             usort($matches, function($a, $b) { return ($a->anstoss - $b->anstoss); });
         }
 
@@ -117,23 +141,30 @@ class ContentFussballMatches extends \ContentElement {
 
 	}
 
-    private function getMatch($match) {
-
+    private function getMatch($match)
+    {
         $match->team          = $match->getRelated('pid');
         $match->title         = $match->getTitle();
 
         $match->verein        = FussballVereinModel::findOneBy('home', '1');;
-        $match->verein_gegner = $match->getRelated('verein_gegner');
+
+
+        if (is_string($match->verein_gegner))
+        {
+            $match->verein_gegner = $match->getRelated('verein_gegner');
+        }
 
         $arrWappen = [null, null];
         // Wappen holen
-        if ($match->verein !== null) {
+        if ($match->verein !== null)
+        {
             $objFile = \FilesModel::findByUuid($match->verein->wappen);
             $match->wappen = ($objFile !== null) ? $objFile->path : null;
             $index = ($match->isHeimspiel()) ? 0 : 1;
             $arrWappen[$index] = $match->wappen;
         }
-        if ($match->verein_gegner !== null) {
+        if ($match->verein_gegner !== null)
+        {
             $objFile = \FilesModel::findByUuid($match->verein_gegner->wappen);
             $match->wappen_gegner = ($objFile !== null) ? $objFile->path : null;
             $index = ($match->isHeimspiel()) ? 1 : 0;
@@ -161,35 +192,39 @@ class ContentFussballMatches extends \ContentElement {
         return $match;
     }
 
-    private function getPoints($match) {
-
-        if (!$match->inPast) {
+    private function getPoints($match)
+    {
+        if (!$match->inPast)
+        {
             return -1;
         }
 
         $isHome = ($match->isHeimspiel() == '1');
         $arr    = explode(':', $match->ergebnis);
 
-        if (count($arr) !== 2) {
+        if (count($arr) !== 2)
+        {
             return -1;
         }
 
         $score_h = intval($arr[0]);
         $score_g = intval($arr[1]);
 
-        if ($score_h === $score_g) {
+        if ($score_h === $score_g)
+        {
             return 1;
         }
 
-        if (($score_h > $score_g) && $isHome) {
+        if (($score_h > $score_g) && $isHome)
+        {
             return 3;
         }
 
-        if (($score_h < $score_g) && !$isHome) {
+        if (($score_h < $score_g) && !$isHome)
+        {
             return 3;
         }
 
         return 0;
     }
 }
-
