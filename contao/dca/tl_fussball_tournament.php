@@ -274,7 +274,7 @@ class tl_fussball_tournament extends Backend
 
         $arrRow = [
             'team'       => $team->name_short,
-            'title'      => String::substr($row['title'], 52),
+            'title'      => StringUtil::substr($row['title'], 52),
             'start'      => '&nbsp;'.$strStart,
             'end'        => '&nbsp;'.$strEnd,
             'platzart'   => $typeImg,
