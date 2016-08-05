@@ -115,8 +115,8 @@ class ContentFussballTeam extends \ContentElement
                     ['', '', '', ''],
                     $raw
                 );
-                $labelShort48 = \String::substr($label, 48, '…');
-                $labelShort32 = \String::substr($label, 32, '…');
+                $labelShort48 = \StringUtil::substr($label, 48, '…');
+                $labelShort32 = \StringUtil::substr($label, 32, '…');
             }
 
             $team->attributes[] = (object) [
