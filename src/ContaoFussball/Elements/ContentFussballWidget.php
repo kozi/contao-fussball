@@ -24,7 +24,7 @@ namespace ContaoFussball\Elements;
 
 class ContentFussballWidget extends \ContentElement
 {
-	const FUSSBALL_API     = 'https://www.fussball.de/static/egm//js/widget2.js';
+	const FUSSBALL_API     = '//www.fussball.de/static/egm//js/widget2.js';
 	protected $strTemplate = 'ce_fussball_widget';
 
 	/**
